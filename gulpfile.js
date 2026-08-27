@@ -1,4 +1,6 @@
 const gulp = require('gulp');
+const fs = require('fs');
+const path = require('path');
 const clean = require('gulp-clean');
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
@@ -33,19 +35,7 @@ function beautifyHtml() {
 }
 // Copy other resource files
 function copyAssets() {
-    return gulp
-        .src(
-            [
-                'src/assets/css/**/*',
-                'src/assets/fonts/**/*',
-                'src/assets/images/**/*',
-                'src/assets/imgs/**/*',                
-                'src/assets/img/**/*',
-                'src/assets/js/**/*',
-            ],
-            { base: 'src/assets' },
-        )
-        .pipe(gulp.dest('dist/assets'));
+    return gulp.src(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], { base: 'src/assets' }).pipe(gulp.dest('dist/assets'));
 }
 // Copy other resource files
 function copyAssetsChanged() {
@@ -60,14 +50,38 @@ gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',
-    gulp.series('build', function () {        
+    gulp.series('build', function () {
         // Watch tasks
         gulp.watch('src/views/**/*.html', gulp.series(includeHtml));
         gulp.watch('src/assets/scss/**/**/*', gulp.series(buildStyles));
-        gulp.watch(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*','src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], copyAssetsChanged);
+        gulp.watch(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], copyAssetsChanged);
         browserSync.init({
             server: {
                 baseDir: 'dist',
+                middleware: [
+                    function (req, res, next) {
+                        const url = req.url.split('?')[0];
+                        const filePath = path.join(__dirname, 'dist', url);
+                        // If file exists directly or is root directory, proceed normally
+                        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+                            return next();
+                        }
+                        if (url === '/' || url === '') {
+                            return next();
+                        }
+                        // If .html file exists for this route (clean URLs support)
+                        if (fs.existsSync(filePath + '.html')) {
+                            return next();
+                        }
+                        // Otherwise serve 404.html
+                        const file404 = path.join(__dirname, 'dist', '404.html');
+                        if (fs.existsSync(file404)) {
+                            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                            return res.end(fs.readFileSync(file404));
+                        }
+                        next();
+                    },
+                ],
             },
             hot: true,
         });
