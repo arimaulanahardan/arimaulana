@@ -1,9 +1,10 @@
 /**
  * medium-feed.js
- * Fetches Medium articles via rss2json API and renders Zelio blog cards.
+ * Fetches Medium articles and renders them as Zelio blog cards.
  *
- * Fix: rss2json free tier does NOT support the `count` param — removed.
- *      Items are sliced client-side after fetch.
+ * Strategy (tiered, most-reliable first):
+ *  1. cors.sh proxy  → fetch Medium RSS XML, parse with DOMParser (real-time, no cache)
+ *  2. rss2json       → fallback if cors.sh is down (may cache up to ~30 min)
  *
  * Targets:
  *   #medium-recent-blog  → Homepage "Recent Blog" section (limit: 3)
@@ -19,9 +20,11 @@
         username: 'ari-dev',
         homeLimit: 3,
         listLimit: 9,
-        // NOTE: do NOT append &count=N — that requires a paid API key.
-        // rss2json returns up to 10 items on free tier by default.
-        apiUrl: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40ari-dev',
+        mediumFeedUrl: 'https://medium.com/feed/@ari-dev',
+        // Tier 1: CORS proxy → returns raw XML, real-time
+        corsProxyUrl: 'https://proxy.cors.sh/https://medium.com/feed/@ari-dev',
+        // Tier 2: rss2json → returns JSON, may be cached ~30min (free tier, no count param)
+        rss2jsonUrl: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40ari-dev',
         fallbackImages: [
             'assets/imgs/blog/blog-1/img-1.png',
             'assets/imgs/blog/blog-1/img-2.png',
@@ -39,17 +42,78 @@
     };
 
     /* =========================================================
+     * XML PARSER — parse RSS XML text into item objects
+     * ========================================================= */
+    function parseRSS(xmlText) {
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+        var parseError = xmlDoc.querySelector('parsererror');
+        if (parseError) throw new Error('XML parse error');
+
+        var itemNodes = xmlDoc.querySelectorAll('item');
+        var items = [];
+
+        itemNodes.forEach(function (node) {
+            // title
+            var titleNode = node.querySelector('title');
+            var title = titleNode ? titleNode.textContent.trim() : '';
+
+            // link — <link> in RSS is tricky (text node after tag), use guid as fallback
+            var link = '';
+            var linkNode = node.querySelector('link');
+            if (linkNode) link = linkNode.textContent.trim();
+            if (!link) {
+                var guidNode = node.querySelector('guid');
+                if (guidNode) link = guidNode.textContent.trim();
+            }
+
+            // pubDate
+            var pubDateNode = node.querySelector('pubDate');
+            var pubDate = pubDateNode ? pubDateNode.textContent.trim() : '';
+
+            // content:encoded (rich HTML)
+            var contentNode = node.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0];
+            var content = contentNode ? contentNode.textContent : '';
+
+            // description (plain fallback)
+            var descNode = node.querySelector('description');
+            var description = descNode ? descNode.textContent : content;
+
+            // categories
+            var catNodes = node.querySelectorAll('category');
+            var categories = [];
+            catNodes.forEach(function (c) {
+                var v = c.textContent.trim();
+                if (v) categories.push(v);
+            });
+
+            // thumbnail: media:content or media:thumbnail
+            var thumbnail = '';
+            var mediaContent = node.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0];
+            var mediaThumb = node.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
+            if (mediaContent) thumbnail = mediaContent.getAttribute('url') || '';
+            if (!thumbnail && mediaThumb) thumbnail = mediaThumb.getAttribute('url') || '';
+            // Fallback: first real <img> in content
+            if (!thumbnail) thumbnail = extractImageFromContent(content) || '';
+
+            items.push({ title: title, link: link, pubDate: pubDate, content: content, description: description, categories: categories, thumbnail: thumbnail });
+        });
+
+        return items;
+    }
+
+    /* =========================================================
      * HELPERS
      * ========================================================= */
 
-    /** Extract first real <img> src from HTML, skip tracking pixels */
+    /** Extract first real <img> src, skipping tracking 1x1 pixels */
     function extractImageFromContent(html) {
         if (!html) return null;
-        var imgRegex = /<img[^>]+src="([^"]+)"[^>]*>/gi;
+        var regex = /<img[^>]+src="([^"]+)"[^>]*/gi;
         var match;
-        while ((match = imgRegex.exec(html)) !== null) {
+        while ((match = regex.exec(html)) !== null) {
             var tag = match[0];
-            // Skip 1x1 tracking pixels
             if (tag.indexOf('width="1"') !== -1 || tag.indexOf('height="1"') !== -1) continue;
             if (match[1].indexOf('stat?event') !== -1) continue;
             return match[1];
@@ -58,14 +122,7 @@
     }
 
     function getThumbnail(item, index) {
-        // rss2json gives thumbnail as a direct property
-        if (item.thumbnail && item.thumbnail.trim().length > 0) {
-            return item.thumbnail;
-        }
-        // Try extracting from content HTML
-        var fromContent = extractImageFromContent(item.content || '');
-        if (fromContent) return fromContent;
-        // Local fallback cycling
+        if (item.thumbnail && item.thumbnail.trim().length > 0) return item.thumbnail;
         return CONFIG.fallbackImages[index % CONFIG.fallbackImages.length];
     }
 
@@ -81,7 +138,6 @@
         var date = new Date(pubDate);
         var options = { year: 'numeric', month: 'short', day: 'numeric' };
         var dateStr = isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-US', options);
-        // Estimate read time from stripped word count
         var wordCount = (content || '').replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length;
         var minutes = Math.max(1, Math.round(wordCount / 200));
         return (dateStr ? dateStr + ' \u2022 ' : '') + minutes + ' min read';
@@ -93,16 +149,10 @@
         return plain || 'Read more on Medium.';
     }
 
-    /* =========================================================
-     * SECURITY HELPERS
-     * ========================================================= */
     function escapeHtml(str) {
         return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
 
     function escapeAttr(str) {
@@ -144,7 +194,7 @@
     }
 
     /* =========================================================
-     * CARD TEMPLATE — identical structure to blog-card.html
+     * CARD TEMPLATE — mirrors blog-card.html structure exactly
      * ========================================================= */
     function renderCard(item, index) {
         var thumbnail   = getThumbnail(item, index);
@@ -187,10 +237,10 @@
     /* =========================================================
      * ERROR STATE
      * ========================================================= */
-    function renderError(container, message) {
+    function renderError(container) {
         container.innerHTML =
             '<div class="col-12 text-center py-5">' +
-                '<p class="text-200 fs-5 mb-4">' + (message || 'Could not load articles right now.') + '</p>' +
+                '<p class="text-200 fs-5 mb-4">Could not load articles right now.</p>' +
                 '<a href="https://medium.com/@' + CONFIG.username + '" ' +
                     'target="_blank" rel="noopener noreferrer" class="btn btn-gradient">' +
                     'Read on Medium &nbsp;<i class="ri-external-link-line"></i>' +
@@ -199,29 +249,59 @@
     }
 
     /* =========================================================
-     * FETCH — rss2json (free tier, no count param)
+     * TIER 1: Fetch via cors.sh proxy → raw XML → DOMParser
+     *         Real-time, no caching.
      * ========================================================= */
-    function fetchFeed(limit, onSuccess, onError) {
-        fetch(CONFIG.apiUrl)
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('HTTP ' + response.status);
-                }
-                return response.json();
+    function fetchViaCorsProxy(limit, onSuccess, onError) {
+        fetch(CONFIG.corsProxyUrl, {
+            headers: { 'x-requested-with': 'XMLHttpRequest' }
+        })
+            .then(function (r) {
+                if (!r.ok) throw new Error('cors.sh HTTP ' + r.status);
+                return r.text();
+            })
+            .then(function (xml) {
+                var items = parseRSS(xml);
+                if (!items || items.length === 0) throw new Error('0 items from cors.sh');
+                onSuccess(items.slice(0, limit));
+            })
+            .catch(function (err) {
+                console.warn('[medium-feed] cors.sh failed:', err.message, '— trying rss2json fallback...');
+                onError();
+            });
+    }
+
+    /* =========================================================
+     * TIER 2: Fetch via rss2json → JSON (may be cached ~30min)
+     * ========================================================= */
+    function fetchViaRss2json(limit, onSuccess, onError) {
+        fetch(CONFIG.rss2jsonUrl)
+            .then(function (r) {
+                if (!r.ok) throw new Error('rss2json HTTP ' + r.status);
+                return r.json();
             })
             .then(function (data) {
-                if (data.status !== 'ok') {
-                    throw new Error('rss2json error: ' + (data.message || data.status));
-                }
-                if (!data.items || data.items.length === 0) {
-                    throw new Error('Feed returned 0 items');
-                }
+                if (data.status !== 'ok') throw new Error('rss2json: ' + (data.message || data.status));
+                if (!data.items || data.items.length === 0) throw new Error('rss2json: 0 items');
                 onSuccess(data.items.slice(0, limit));
             })
             .catch(function (err) {
-                console.error('[medium-feed]', err.message);
+                console.error('[medium-feed] rss2json also failed:', err.message);
                 onError();
             });
+    }
+
+    /* =========================================================
+     * MAIN FETCH — try Tier 1, fallback to Tier 2
+     * ========================================================= */
+    function fetchFeed(limit, onSuccess, onError) {
+        fetchViaCorsProxy(
+            limit,
+            onSuccess,
+            function () {
+                fetchViaRss2json(limit, onSuccess, onError);
+            }
+        );
     }
 
     /* =========================================================
@@ -230,9 +310,7 @@
     function initHomeBlog() {
         var container = document.getElementById('medium-recent-blog');
         if (!container) return;
-
         renderSkeletons(container, CONFIG.homeLimit);
-
         fetchFeed(
             CONFIG.homeLimit,
             function (items) {
@@ -247,9 +325,7 @@
     function initBlogList() {
         var container = document.getElementById('medium-blog-list');
         if (!container) return;
-
         renderSkeletons(container, CONFIG.listLimit);
-
         fetchFeed(
             CONFIG.listLimit,
             function (items) {
@@ -262,7 +338,7 @@
     }
 
     /* =========================================================
-     * BOOTSTRAP — safe for script-at-bottom-of-body placement
+     * BOOTSTRAP
      * ========================================================= */
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
@@ -270,7 +346,6 @@
             initBlogList();
         });
     } else {
-        // DOM already ready (script loaded after DOMContentLoaded fired)
         initHomeBlog();
         initBlogList();
     }

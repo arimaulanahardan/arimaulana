@@ -420,6 +420,38 @@
         }
     }
     /*=============================================
+	=           Active Nav Link       =
+    =============================================*/
+    function activeNavLink() {
+        var path = window.location.pathname.split('/').pop();
+        if (!path || path === '') {
+            path = 'index.html';
+        }
+        $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').removeClass('active');
+        
+        var matchFound = false;
+        $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').each(function () {
+            var href = $(this).attr('href');
+            if (href && href === path) {
+                $(this).addClass('active');
+                $(this).closest('.has-children').children('.nav-link').addClass('active');
+                matchFound = true;
+            }
+        });
+
+        if (!matchFound && (path === 'index.html' || path === '')) {
+            $('.navbar-nav > li:first-child > .nav-link, .mobile-menu > li:first-child > .nav-link').addClass('active');
+        }
+
+        $('.navbar-nav .nav-link, .mobile-menu .nav-link').on('click', function () {
+            var href = $(this).attr('href');
+            if (href && href.startsWith('#')) {
+                $('.navbar-nav .nav-link, .mobile-menu .nav-link').removeClass('active');
+                $(this).addClass('active');
+            }
+        });
+    }
+    /*=============================================
 	=           Page Load       =
     =============================================*/
     $(window).on('load', function () {
@@ -438,5 +470,6 @@
         inputFocus();
         mobileHeaderActive();
         cardScroll();
+        activeNavLink();
     });
 })(jQuery);

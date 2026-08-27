@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const clean = require('gulp-clean');
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
@@ -6,6 +7,10 @@ const includeHTML = require('gulp-file-include');
 const beautify = require('gulp-html-beautify');
 const browserSync = require('browser-sync').create();
 const once = require('gulp-once');
+// Clean dist folder
+function cleanDist() {
+    return gulp.src('dist', { read: false, allowEmpty: true }).pipe(clean());
+}
 // Include HTML files
 function includeHtml() {
     return gulp
@@ -50,8 +55,8 @@ function copyAssetsChanged() {
 function buildStyles() {
     return gulp.src('src/assets/scss/main.scss').pipe(sourcemaps.init()).pipe(sass().on('error', sass.logError)).pipe(autoprefixer()).pipe(sourcemaps.write('')).pipe(gulp.dest('src/assets/css/'));
 }
-// Build task
-gulp.task('build', gulp.series(includeHtml, beautifyHtml, buildStyles, copyAssets));
+// Build task: clean dist first, then rebuild everything fresh
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets));
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',
