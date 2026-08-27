@@ -10,7 +10,8 @@
         <main>
             <!-- prettier-ignore -->
             @@include("../sections/blog/blog-list.html")
-            @@include("../partials/pagination.html")
+            <!-- Pagination disabled: Medium RSS feed does not require static pagination -->
+            <!-- @@include("../partials/pagination.html") -->
             @@include("../sections/static/static-1.html", { "background": "bg-6" })
             @@include("../sections/contact/contact-1.html")
         </main>

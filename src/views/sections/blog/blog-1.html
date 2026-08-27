@@ -13,35 +13,9 @@
                 </a>
             </div>
         </div>
-        <div class="row mt-8">
-            <!--prettier-ignore-->
-            @@loop('blog-card.html', [ 
-                { 
-                "image": "assets/imgs/blog/blog-1/img-1.png", 
-                "title": "5 UI/UX Trends to Watch in 2024", 
-                "description": "Stay ahead of the curve with these emerging trends in UI/UX design.", 
-                "date": "March 28, 2023 • 3 min read", 
-                "link": "blog-details.html", 
-                "tag": "App Design", 
-                },
-                { 
-                "image": "assets/imgs/blog/blog-1/img-2.png", 
-                "title": "The Importance of User Research", 
-                "description": "Stay ahead of the curve with these emerging trends in UI/UX design.", 
-                "date": "March 28, 2023 • 3 min read", 
-                "link": "blog-details.html", 
-                "tag": "Branding", 
-                },
-                { 
-                "image": "assets/imgs/blog/blog-1/img-3.png", 
-                "title": "The Role of Color Psychology", 
-                "description": "Stay ahead of the curve with these emerging trends in UI/UX design.", 
-                "date": "March 28, 2023 • 3 min read", 
-                "link": "blog-details.html", 
-                "tag": "Mockup",
-                }, 
-            ]
-            )
+        <!-- medium-feed.js dynamically renders cards into this container -->
+        <div class="row mt-8" id="medium-recent-blog">
+            <!-- Cards injected by medium-feed.js (limit: 3) -->
         </div>
     </div>
 </section>
