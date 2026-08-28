@@ -428,7 +428,7 @@
             path = 'index.html';
         }
         $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').removeClass('active');
-        
+
         var matchFound = false;
         $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').each(function () {
             var href = $(this).attr('href');
@@ -452,6 +452,32 @@
         });
     }
     /*=============================================
+	=       Contact Form WhatsApp Redirect        =
+    =============================================*/
+    function contactFormWhatsApp() {
+        $(document).on('submit', '.section-contact-1 form, .section-contact-2 form, form.contact-form', function (e) {
+            e.preventDefault();
+            var $form = $(this);
+            var name = ($form.find('input[name="name"], #name').val() || '').trim();
+            var email = ($form.find('input[name="email"], #email').val() || '').trim();
+            var phone = ($form.find('input[name="phone"], #phone').val() || '').trim();
+            var subject = ($form.find('input[name="subject"], #subject').val() || '').trim();
+            var message = ($form.find('textarea[name="message"], #message').val() || '').trim();
+
+            var whatsappNumber = '6281228512171';
+
+            var text = 'Hello Ari,\n\nI am contacting you from your website portfolio:\n';
+            if (name) text += 'Name: ' + name + '\n';
+            if (email) text += 'Email: ' + email + '\n';
+            if (phone) text += 'Phone: ' + phone + '\n';
+            if (subject) text += 'Subject: ' + subject + '\n';
+            if (message) text += '\n Message:\n' + message;
+
+            var waUrl = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(text);
+            window.open(waUrl, '_blank');
+        });
+    }
+    /*=============================================
 	=           Page Load       =
     =============================================*/
     $(window).on('load', function () {
@@ -471,5 +497,6 @@
         mobileHeaderActive();
         cardScroll();
         activeNavLink();
+        contactFormWhatsApp();
     });
 })(jQuery);
