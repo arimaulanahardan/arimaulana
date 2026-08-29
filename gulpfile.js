@@ -3,6 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const clean = require('gulp-clean');
 const sass = require('gulp-sass')(require('sass'));
+const sassOptions = {
+    api: 'modern',
+    silenceDeprecations: ['legacy-js-api', 'import'],
+};
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const includeHTML = require('gulp-file-include');
@@ -43,7 +47,7 @@ function copyAssetsChanged() {
 }
 // Sass
 function buildStyles() {
-    return gulp.src('src/assets/scss/main.scss').pipe(sourcemaps.init()).pipe(sass().on('error', sass.logError)).pipe(autoprefixer()).pipe(sourcemaps.write('')).pipe(gulp.dest('src/assets/css/'));
+    return gulp.src('src/assets/scss/main.scss').pipe(sourcemaps.init()).pipe(sass(sassOptions).on('error', sass.logError)).pipe(autoprefixer()).pipe(sourcemaps.write('')).pipe(gulp.dest('src/assets/css/'));
 }
 // Build task: clean dist first, then rebuild everything fresh
 gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets));
