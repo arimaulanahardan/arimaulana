@@ -488,6 +488,7 @@
             'AI Product Engineer',
             'Software Engineer',
             'Product Designer',
+            'AI Business Automation',
             'Social media & Growth Designer'
         ];
         var currentIndex = 0;
