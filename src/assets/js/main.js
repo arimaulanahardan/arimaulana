@@ -478,6 +478,39 @@
         });
     }
     /*=============================================
+	=       Hero Animated Title Rotator           =
+    =============================================*/
+    function heroTitleRotator() {
+        var $rotator = $('.hero-rotator-text');
+        if (!$rotator.length) return;
+
+        var titles = [
+            'AI Product Engineer',
+            'Software Engineer',
+            'Product Designer',
+            'Social media & Growth Designer'
+        ];
+        var currentIndex = 0;
+        var intervalTime = 3200;
+
+        setInterval(function () {
+            $rotator.addClass('fade-out');
+
+            setTimeout(function () {
+                currentIndex = (currentIndex + 1) % titles.length;
+                $rotator.text(titles[currentIndex]);
+                $rotator.removeClass('fade-out').addClass('fade-prep');
+
+                // Force layout reflow
+                if ($rotator[0]) {
+                    void $rotator[0].offsetWidth;
+                }
+
+                $rotator.removeClass('fade-prep');
+            }, 450);
+        }, intervalTime);
+    }
+    /*=============================================
 	=           Page Load       =
     =============================================*/
     $(window).on('load', function () {
@@ -498,5 +531,6 @@
         cardScroll();
         activeNavLink();
         contactFormWhatsApp();
+        heroTitleRotator();
     });
 })(jQuery);
