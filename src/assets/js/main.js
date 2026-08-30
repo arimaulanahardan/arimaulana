@@ -487,9 +487,7 @@
         var titles = [
             'AI Product Engineer',
             'Software Engineer',
-            'Product Designer',
-            'AI Business Automation',
-            'Social media & Growth Designer'
+            'MVP Builder',
         ];
         var currentIndex = 0;
         var intervalTime = 3200;
