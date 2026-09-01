@@ -1,0 +1,27 @@
+<div class="filter-item col-lg-6 col-12 @@filterClass">
+    <div class="project-item blog-card rounded-4 overflow-hidden position-relative p-md-4 p-3 bg-white mb-6">
+        <div class="blog-card__image position-relative">
+            <div class="zoom-img rounded-3 overflow-hidden">
+                <img class="w-100" src="@@image" alt="@@title" />
+                <!-- category badge: btn-gradient (site accent) -->
+                <a class="position-absolute bottom-0 start-0 m-3 text-white-keep btn btn-gradient fw-medium rounded-3 px-3 py-2" href="@@previewUrl" target="_blank" rel="noopener noreferrer">@@category</a>
+                <!-- hover overlay: blur + Preview text + eye icon -->
+                <a href="@@previewUrl" target="_blank" rel="noopener noreferrer" class="template-preview-overlay rounded-3">
+                    <i class="ri-eye-line"></i> Preview
+                </a>
+            </div>
+        </div>
+        <div class="blog-card__content mt-4">
+            <h3 class="fw-semibold mb-1">@@title</h3>
+            <p class="text-300 mb-3">@@description</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge fw-medium rounded-3 px-2 py-1 fs-7 badge-@@badge1Color">@@badge1</span>
+                <span class="badge fw-medium rounded-3 px-2 py-1 fs-7 badge-@@badge2Color">@@badge2</span>
+                <span class="badge fw-medium rounded-3 px-2 py-1 fs-7 badge-@@badge3Color">@@badge3</span>
+            </div>
+            <a href="#contact" class="btn btn-gradient btn-sm d-inline-flex align-items-center gap-1">
+                Want to build like this? <i class="ri-arrow-right-up-line"></i>
+            </a>
+        </div>
+    </div>
+</div>
