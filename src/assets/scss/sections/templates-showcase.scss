@@ -51,6 +51,43 @@
             .btn-gradient:hover i {
                 transform: rotate(45deg);
             }
+
+            // Preview button hover effect & UX refinement
+            .btn-preview,
+            a[href*="http"].btn-outline-secondary {
+                transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+                font-weight: 500;
+
+                i {
+                    display: inline-flex;
+                    align-items: center;
+                    font-size: 1rem;
+                    line-height: 1;
+                    font-weight: normal;
+                    transition: transform 0.25s ease;
+                }
+
+                &:hover {
+                    background: var(--tc-linear-1) !important;
+                    color: #ffffff !important;
+                    border-color: transparent !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+
+                    i {
+                        color: #ffffff !important;
+                        transform: translateY(-1px);
+                    }
+                }
+
+                // Mobile touch target UX
+                @media (max-width: 575.98px) {
+                    min-width: 36px;
+                    height: 34px;
+                    padding: 0 10px;
+                    justify-content: center;
+                }
+            }
         }
     }
 
