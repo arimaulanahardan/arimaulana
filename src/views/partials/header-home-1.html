@@ -1,31 +1,31 @@
 <!-- Navbar -->
 <header>
     <nav class="navbar navbar-expand-lg @@classList flex-nowrap z-999 p-0">
-        <a href="#" class="navbar-menu p-4 text-center square-100 menu-tigger icon_80 icon-shape d-none d-md-flex" data-bs-target=".offCanvas__info" aria-controls="offCanvas__info">
+        <a href="#" class="navbar-menu p-4 text-center square-100 menu-tigger icon_80 icon-shape d-none d-md-flex" data-bs-target=".offCanvas__info" aria-controls="offCanvas__info" aria-label="Open sidebar menu">
             <i class="ri-menu-2-line"></i>
         </a>
         <div class="container py-3 px-0">
             <a class="navbar-brand d-flex main-logo align-items-center ms-lg-0 ms-md-5 ms-3" href="index.html">
-                <img src="assets/imgs/template/favicon.svg" alt="zelio" />
+                <img src="assets/imgs/template/favicon.svg" alt="Ari Maulana Logo" width="28" height="28" />
                 <span class="fs-4 ms-2">ari maulana</span>
             </a>
             <div class="d-none d-lg-flex">@@include("main-menu.html")</div>
             <div class="navbar-social d-flex align-items-center pe-5 pe-lg-0 me-5 me-lg-0">
                 <div class="d-md-flex d-none gap-3">
-                    <a href="https://www.instagram.com/codewith_ari/" target="_blank">
+                    <a href="https://www.instagram.com/codewith_ari/" target="_blank" aria-label="Instagram">
                         <i class="ri-instagram-fill fs-18"></i>
                     </a>
-                    <a href="http://twitter.com/codewith_ari" target="_blank">
+                    <a href="http://twitter.com/codewith_ari" target="_blank" aria-label="Twitter">
                         <i class="ri-twitter-x-fill fs-18"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/ari-maulana-hardan" target="_blank">
+                    <a href="https://www.linkedin.com/in/ari-maulana-hardan" target="_blank" aria-label="LinkedIn">
                         <i class="ri-linkedin-fill fs-18"></i>
                     </a>
-                    <a href="http://github.com/arimaulanahardan" target="_blank">
+                    <a href="http://github.com/arimaulanahardan" target="_blank" aria-label="GitHub">
                         <i class="ri-github-fill fs-18"></i>
                     </a>
                 </div>
-                <div class="burger-icon burger-icon-white border rounded-3">
+                <div class="burger-icon burger-icon-white border rounded-3" role="button" tabindex="0" aria-label="Toggle navigation menu">
                     <span class="burger-icon-top"></span>
                     <span class="burger-icon-mid"></span>
                     <span class="burger-icon-bottom"></span>

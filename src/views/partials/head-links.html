@@ -21,24 +21,31 @@
 <meta name="twitter:title" content="@@ogTitle" />
 <meta name="twitter:description" content="@@ogDesc" />
 <meta name="twitter:image" content="@@ogImage" />
+<!-- Performance: Preload Critical Hero LCP Asset -->
+<link rel="preload" as="image" href="assets/imgs/hero/hero-1/man.webp" type="image/webp" fetchpriority="high" />
 <!-- Performance: DNS Prefetch -->
-<link rel="dns-prefetch" href="//s6.imgcdn.dev" />
-<link rel="preconnect" href="https://s6.imgcdn.dev" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <script src="assets/js/vendors/color-modes.js"></script>
 <!-- Favicon icon-->
 <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/template/favicon-gradient.svg" />
-<!-- Libs CSS -->
+<!-- Critical CSS -->
 <link rel="stylesheet" href="assets/css/vendors/bootstrap.min.css" />
 <link rel="stylesheet" href="assets/css/vendors/swiper-bundle.min.css" />
-<link rel="stylesheet" href="assets/css/vendors/aos.css" />
-<link rel="stylesheet" href="assets/css/vendors/odometer.css" />
-<link rel="stylesheet" href="assets/css/vendors/carouselTicker.css" />
-<link rel="stylesheet" href="assets/css/vendors/magnific-popup.css" />
 <link rel="stylesheet" href="assets/fonts/remixicon/remixicon.css" />
 <link rel="stylesheet" href="assets/fonts/satoshi/satoshi.css" />
+<!-- Non-critical CSS loaded asynchronously -->
+<link rel="stylesheet" href="assets/css/vendors/aos.css" media="print" onload="this.media='all'" />
+<link rel="stylesheet" href="assets/css/vendors/odometer.css" media="print" onload="this.media='all'" />
+<link rel="stylesheet" href="assets/css/vendors/carouselTicker.css" media="print" onload="this.media='all'" />
+<link rel="stylesheet" href="assets/css/vendors/magnific-popup.css" media="print" onload="this.media='all'" />
+<noscript>
+    <link rel="stylesheet" href="assets/css/vendors/aos.css" />
+    <link rel="stylesheet" href="assets/css/vendors/odometer.css" />
+    <link rel="stylesheet" href="assets/css/vendors/carouselTicker.css" />
+    <link rel="stylesheet" href="assets/css/vendors/magnific-popup.css" />
+</noscript>
 <!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:wght@400..900&family=Urbanist:wght@100..900&display=swap" rel="stylesheet" />
 <!-- Main CSS -->
 <link rel="stylesheet" href="assets/css/main.css" />

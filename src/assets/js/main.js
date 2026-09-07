@@ -4,7 +4,10 @@
 	=              Preloader       =
     =============================================*/
     function preloader() {
-        $('#preloader').delay(0).fadeOut();
+        var $p = $('#preloader');
+        if ($p.length) {
+            $p.css('pointer-events', 'none').fadeOut(200);
+        }
     }
     /*=============================================
     =     Offcanvas Menu      =
@@ -500,23 +503,24 @@
                 $rotator.text(titles[currentIndex]);
                 $rotator.removeClass('fade-out').addClass('fade-prep');
 
-                // Force layout reflow
-                if ($rotator[0]) {
-                    void $rotator[0].offsetWidth;
-                }
-
-                $rotator.removeClass('fade-prep');
+                // Smooth transition without forced layout reflow
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        $rotator.removeClass('fade-prep');
+                    });
+                });
             }, 450);
         }, intervalTime);
     }
     /*=============================================
-	=           Page Load       =
+	=           Page Initialization       =
     =============================================*/
-    $(window).on('load', function () {
+    function initAll() {
         preloader();
+        dataBackground();
+        heroTitleRotator();
         progressPageLoad();
         offcanvasMenu();
-        dataBackground();
         aosAnimation();
         counterState();
         customSwiper();
@@ -530,6 +534,17 @@
         cardScroll();
         activeNavLink();
         contactFormWhatsApp();
-        heroTitleRotator();
+    }
+
+    $(function () {
+        initAll();
+        setTimeout(preloader, 350);
+    });
+
+    $(window).on('load', function () {
+        preloader();
+        if (typeof $.fn.isotope === 'function') {
+            $('.masonry-active').isotope('layout');
+        }
     });
 })(jQuery);

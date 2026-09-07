@@ -267,6 +267,8 @@
     animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
+    will-change: transform;
+    transform: translateZ(0);
 }
 @keyframes ribbonRotate {
     0%,

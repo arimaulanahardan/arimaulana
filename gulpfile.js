@@ -5,6 +5,7 @@ const clean = require('gulp-clean');
 const sass = require('gulp-sass')(require('sass'));
 const sassOptions = {
     api: 'modern',
+    style: 'compressed',
     silenceDeprecations: ['legacy-js-api', 'import'],
 };
 const sourcemaps = require('gulp-sourcemaps');
@@ -37,9 +38,21 @@ function beautifyHtml() {
         .pipe(beautify({ indent_size: 4 }))
         .pipe(gulp.dest('dist'));
 }
+const assetSources = [
+    'src/assets/css/**/*',
+    'src/assets/fonts/**/*',
+    '!src/assets/fonts/remixicon/*.json',
+    '!src/assets/fonts/remixicon/remixicon.symbol.svg',
+    '!src/assets/fonts/remixicon/remixicon.svg',
+    'src/assets/images/**/*',
+    'src/assets/imgs/**/*',
+    'src/assets/img/**/*',
+    'src/assets/js/**/*',
+    '!src/assets/**/*.map',
+];
 // Copy other resource files
 function copyAssets() {
-    return gulp.src(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], { base: 'src/assets' }).pipe(gulp.dest('dist/assets'));
+    return gulp.src(assetSources, { base: 'src/assets' }).pipe(gulp.dest('dist/assets'));
 }
 // Copy root SEO files (robots.txt, sitemap.xml)
 function copyRootFiles() {
@@ -47,11 +60,11 @@ function copyRootFiles() {
 }
 // Copy other resource files
 function copyAssetsChanged() {
-    return gulp.src(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], { base: 'src/assets' }).pipe(once()).pipe(gulp.dest('dist/assets')).pipe(browserSync.stream());
+    return gulp.src(assetSources, { base: 'src/assets' }).pipe(once()).pipe(gulp.dest('dist/assets')).pipe(browserSync.stream());
 }
 // Sass
 function buildStyles() {
-    return gulp.src('src/assets/scss/main.scss').pipe(sourcemaps.init()).pipe(sass(sassOptions).on('error', sass.logError)).pipe(autoprefixer()).pipe(sourcemaps.write('')).pipe(gulp.dest('src/assets/css/'));
+    return gulp.src('src/assets/scss/main.scss').pipe(sass(sassOptions).on('error', sass.logError)).pipe(autoprefixer()).pipe(gulp.dest('src/assets/css/'));
 }
 // Build task: clean dist first, then rebuild everything fresh
 gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, copyRootFiles));

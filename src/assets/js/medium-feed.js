@@ -210,14 +210,14 @@
                 '<div class="blog-card rounded-4 mb-lg-3 mb-md-5 mb-3">' +
                     '<div class="blog-card__image position-relative">' +
                         '<div class="zoom-img rounded-3 overflow-hidden">' +
-                            '<img class="w-100" src="' + escapeAttr(thumbnail) + '" alt="' + escapeAttr(title) + '" ' +
+                            '<img class="w-100" src="' + escapeAttr(thumbnail) + '" alt="' + escapeAttr(title) + '" width="400" height="250" loading="lazy" decoding="async" ' +
                                 'onerror="this.onerror=null;this.src=\'' + fallback + '\'" />' +
                             '<a class="position-absolute bottom-0 start-0 m-3 text-white-keep btn btn-gradient fw-medium rounded-3 px-3 py-2" ' +
                                 'href="' + escapeAttr(link) + '" target="_blank" rel="noopener noreferrer">' +
                                 escapeHtml(tag) +
                             '</a>' +
                             '<a href="' + escapeAttr(link) + '" target="_blank" rel="noopener noreferrer" ' +
-                                'class="blog-card__link position-absolute top-50 start-50 translate-middle icon-md icon-shape bg-linear-1 rounded-circle">' +
+                                'class="blog-card__link position-absolute top-50 start-50 translate-middle icon-md icon-shape bg-linear-1 rounded-circle" aria-label="Read ' + escapeAttr(title) + ' on Medium">' +
                                 '<i class="ri-arrow-right-up-line text-dark"></i>' +
                             '</a>' +
                         '</div>' +
@@ -227,7 +227,7 @@
                         '<h5 class="blog-card__title">' + escapeHtml(title) + '</h5>' +
                         '<p class="blog-card__description fs-6">' + escapeHtml(description) + '</p>' +
                         '<a href="' + escapeAttr(link) + '" target="_blank" rel="noopener noreferrer" ' +
-                            'class="link-overlay position-absolute top-0 start-0 w-100 h-100"></a>' +
+                            'class="link-overlay position-absolute top-0 start-0 w-100 h-100" aria-label="Read article: ' + escapeAttr(title) + '"></a>' +
                     '</div>' +
                 '</div>' +
             '</div>'

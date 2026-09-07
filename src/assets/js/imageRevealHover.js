@@ -34,6 +34,13 @@
     class HoverImgFx1 {
         constructor(el) {
             this.DOM = { el: el };
+            this.DOM.reveal = null;
+            this.DOM.revealInner = null;
+            this.DOM.revealImg = null;
+            this.initEvents();
+        }
+        createRevealElement() {
+            if (this.DOM.reveal) return;
             this.DOM.reveal = document.createElement('div');
             this.DOM.reveal.className = 'tg-img-reveal-wrapper';
             this.DOM.reveal.innerHTML = `<div class="tg-img-reveal-wrapper__inner">
@@ -51,10 +58,10 @@
             this.DOM.revealInner = this.DOM.reveal.querySelector('.tg-img-reveal-wrapper__inner');
             this.DOM.revealInner.style.overflow = 'hidden';
             this.DOM.revealImg = this.DOM.revealInner.querySelector('.tg-img-reveal-wrapper__img');
-            this.initEvents();
         }
         initEvents() {
             this.positionElement = (ev) => {
+                if (!this.DOM.reveal) return;
                 const mousePos = getMousePos(ev);
                 const docScrolls = {
                     left: document.body.scrollLeft + document.documentElement.scrollLeft,
@@ -64,6 +71,7 @@
                 this.DOM.reveal.style.left = `${mousePos.x + 20 - docScrolls.left}px`;
             };
             this.mouseenterFn = (ev) => {
+                this.createRevealElement();
                 this.positionElement(ev);
                 this.showImage();
             };
@@ -79,6 +87,7 @@
             this.DOM.el.addEventListener('mouseleave', this.mouseleaveFn);
         }
         showImage() {
+            if (!this.DOM.reveal || !this.DOM.revealInner || !this.DOM.revealImg) return;
             TweenMax.killTweensOf(this.DOM.revealInner);
             TweenMax.killTweensOf(this.DOM.revealImg);
             this.tl = new TimelineMax({
@@ -106,6 +115,7 @@
                 );
         }
         hideImage() {
+            if (!this.DOM.reveal || !this.DOM.revealInner || !this.DOM.revealImg) return;
             TweenMax.killTweensOf(this.DOM.revealInner);
             TweenMax.killTweensOf(this.DOM.revealImg);
             this.tl = new TimelineMax({
@@ -137,19 +147,22 @@
     [...document.querySelectorAll('[data-fx="pt1"] > .tg-img-reveal-item, .tg-img-reveal-item[data-fx="pt1"]')].forEach((link) => new HoverPTCard1(link));
     [...document.querySelectorAll('[data-fx="1"] > .tg-img-reveal-item, .tg-img-reveal-item[data-fx="1"]')].forEach((link) => new HoverImgFx1(link));
     const contentel = document.querySelector('.content');
-    [...document.querySelectorAll('.block__title, .block__link, .content__text-link')].forEach((el) => {
-        const imgsArr = el.dataset.img.split(',');
-        const imgsSubtitle = el.dataset.subtitle.split(',');
-        const imgsTitle = el.dataset.title.split(',');
-        const imgsDate = el.dataset.metadate.split(',');
-        const imgsAuthor = el.dataset.metaauthor.split(',');
-        for (let i = 0, len = imgsArr.length; i <= len - 1; ++i) {
-            const imgel = document.createElement('img');
-            imgel.style.visibility = 'hidden';
-            imgel.style.width = 0;
-            imgel.src = imgsArr[i];
-            imgel.className = 'preload';
-            contentel.appendChild(imgel);
-        }
-    });
+    if (contentel) {
+        [...document.querySelectorAll('.block__title, .block__link, .content__text-link')].forEach((el) => {
+            if (!el.dataset.img) return;
+            const imgsArr = el.dataset.img.split(',');
+            const imgsSubtitle = (el.dataset.subtitle || '').split(',');
+            const imgsTitle = (el.dataset.title || '').split(',');
+            const imgsDate = (el.dataset.metadate || '').split(',');
+            const imgsAuthor = (el.dataset.metaauthor || '').split(',');
+            for (let i = 0, len = imgsArr.length; i <= len - 1; ++i) {
+                const imgel = document.createElement('img');
+                imgel.style.visibility = 'hidden';
+                imgel.style.width = 0;
+                imgel.src = imgsArr[i];
+                imgel.className = 'preload';
+                contentel.appendChild(imgel);
+            }
+        });
+    }
 }
