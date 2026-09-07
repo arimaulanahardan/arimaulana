@@ -41,6 +41,10 @@ function beautifyHtml() {
 function copyAssets() {
     return gulp.src(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], { base: 'src/assets' }).pipe(gulp.dest('dist/assets'));
 }
+// Copy root SEO files (robots.txt, sitemap.xml)
+function copyRootFiles() {
+    return gulp.src(['src/robots.txt', 'src/sitemap.xml'], { allowEmpty: true }).pipe(gulp.dest('dist'));
+}
 // Copy other resource files
 function copyAssetsChanged() {
     return gulp.src(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], { base: 'src/assets' }).pipe(once()).pipe(gulp.dest('dist/assets')).pipe(browserSync.stream());
@@ -50,7 +54,7 @@ function buildStyles() {
     return gulp.src('src/assets/scss/main.scss').pipe(sourcemaps.init()).pipe(sass(sassOptions).on('error', sass.logError)).pipe(autoprefixer()).pipe(sourcemaps.write('')).pipe(gulp.dest('src/assets/css/'));
 }
 // Build task: clean dist first, then rebuild everything fresh
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets));
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, copyRootFiles));
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',

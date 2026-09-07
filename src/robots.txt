@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://aridev.vercel.app/sitemap.xml
+
+# Block non-essential pages
+Disallow: /404.html
+Disallow: /coming-soon.html
+Disallow: /work-single.html
