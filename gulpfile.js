@@ -66,6 +66,8 @@ function copyAssetsChanged() {
 function buildStyles() {
     return gulp.src('src/assets/scss/main.scss').pipe(sass(sassOptions).on('error', sass.logError)).pipe(autoprefixer()).pipe(gulp.dest('src/assets/css/'));
 }
+exports.buildStyles = buildStyles;
+exports.copyAssets = copyAssets;
 // Build task: clean dist first, then rebuild everything fresh
 gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, copyRootFiles));
 // Initialize BrowserSync and track changes
