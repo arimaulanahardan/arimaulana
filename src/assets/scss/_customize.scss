@@ -1165,9 +1165,13 @@ textarea.form-control {
         opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
         transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: opacity, transform;
+    /* Height shifts between 1-line and 2-line titles are animated
+       smoothly by heroTitleRotator (JS measures and tweens the h1) */
     min-height: 1.15em;
     vertical-align: top;
 }
+/* Hero H1 is two stacked blocks: the rotating title line and a static
+   "for Early Stage Founders" line — see hero-1.html */
 .hero-rotator-text.fade-out {
     opacity: 0;
     transform: translateY(-12px);
@@ -1176,4 +1180,18 @@ textarea.form-control {
     opacity: 0;
     transform: translateY(12px);
     transition: none !important;
+}
+/* FLIP glide, engaged by heroTitleRotator in main.js: when the rotating
+   title wraps to a different number of lines than the previous one, the
+   "for Early Stage Founders" block (h1 > .text-primary) glides into its
+   new position while the h1 height tweens, so the description and all
+   content below shift smoothly instead of teleporting.
+   --hero-flip-delta is set inline (px) by the JS before the class flips. */
+h1.hero-flip-setup .text-primary {
+    transform: translateY(var(--hero-flip-delta, 87px)) !important;
+    transition: none !important;
+}
+h1.hero-flip-run .text-primary {
+    transform: translateY(0) !important;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }

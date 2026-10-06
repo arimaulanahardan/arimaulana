@@ -129,35 +129,40 @@
 	=           masonry Active       =
     =============================================*/
     function masonryFillter() {
-        $('.masonry-active').imagesLoaded(function () {
-            var $filter = '.masonry-active',
-                $filterItem = '.filter-item',
-                $filterMenu = '.filter-menu-active';
-            if ($($filter).length > 0) {
-                var $grid = $($filter).isotope({
-                    itemSelector: $filterItem,
-                    filter: '*',
-                    masonry: {
-                        // use outer width of grid-sizer for columnWidth
-                        // columnWidth: 1,
-                        columnWidth: '.grid-sizer',
-                    },
+        var $filter = '.masonry-active',
+            $filterItem = '.filter-item',
+            $filterMenu = '.filter-menu-active';
+        if ($($filter).length > 0 && typeof $.fn.isotope === 'function') {
+            // Init immediately so filter buttons work right away —
+            // waiting for imagesLoaded delays interactivity and causes
+            // a visible snap when it finally initializes.
+            var $grid = $($filter).isotope({
+                itemSelector: $filterItem,
+                filter: '*',
+                masonry: {
+                    // use outer width of grid-sizer for columnWidth
+                    // columnWidth: 1,
+                    columnWidth: '.grid-sizer',
+                },
+            });
+            // Relayout progressively as images arrive
+            $grid.imagesLoaded().progress(function () {
+                $grid.isotope('layout');
+            });
+            // filter items on button click
+            $($filterMenu).on('click', 'button', function () {
+                var filterValue = $(this).attr('data-filter');
+                $grid.isotope({
+                    filter: filterValue,
                 });
-                // filter items on button click
-                $($filterMenu).on('click', 'button', function () {
-                    var filterValue = $(this).attr('data-filter');
-                    $grid.isotope({
-                        filter: filterValue,
-                    });
-                });
-                // Menu Active Class
-                $($filterMenu).on('click', 'button', function (event) {
-                    event.preventDefault();
-                    $(this).addClass('active');
-                    $(this).siblings('.active').removeClass('active');
-                });
-            }
-        });
+            });
+            // Menu Active Class
+            $($filterMenu).on('click', 'button', function (event) {
+                event.preventDefault();
+                $(this).addClass('active');
+                $(this).siblings('.active').removeClass('active');
+            });
+        }
     }
     function customSwiper() {
         const sliderone = new Swiper('.slider-one', {
@@ -487,6 +492,7 @@
         var $rotator = $('.hero-rotator-text');
         if (!$rotator.length) return;
 
+        var $h1 = $rotator.closest('h1');
         var titles = [
             'AI Product Engineer',
             'Software Engineer',
@@ -494,13 +500,54 @@
         ];
         var currentIndex = 0;
         var intervalTime = 3200;
+        var EASE = 'cubic-bezier(0.25, 1, 0.5, 1)';
+
+        // Measures how tall the h1 would be with a different rotating title
+        function measureTargetHeight(newTitle) {
+            var clone = $h1.clone();
+            clone.find('.hero-rotator-text').text(newTitle);
+            clone.css({ position: 'absolute', visibility: 'hidden', height: 'auto', width: $h1.width() + 'px' });
+            $('body').append(clone);
+            var h = clone.outerHeight();
+            clone.remove();
+            return h;
+        }
 
         setInterval(function () {
+            var targetH = measureTargetHeight(titles[(currentIndex + 1) % titles.length]);
+            var $purple = $h1.children('.text-primary');
+
             $rotator.addClass('fade-out');
 
             setTimeout(function () {
+                var fromTop = Math.round($purple[0].getBoundingClientRect().top);
+                var fromH = Math.round($h1[0].offsetHeight);
+
                 currentIndex = (currentIndex + 1) % titles.length;
                 $rotator.text(titles[currentIndex]);
+
+                // FLIP via class-driven transitions: the purple block jumps to
+                // its new natural position on swap, so hero-flip-setup offsets
+                // it back to where it was, then hero-flip-run glides it to
+                // zero together with the h1 height tween (which drives
+                // everything below) — everything slides instead of teleporting
+                var toTop = Math.round($purple[0].getBoundingClientRect().top);
+                var delta = fromTop - toTop;
+
+                if (delta !== 0) {
+                    var toH = Math.round(targetH);
+                    var $h1Style = {
+                        height: fromH + 'px',
+                        overflow: 'hidden',
+                    };
+                    $h1.css('--hero-flip-delta', delta + 'px');
+                    $h1.addClass('hero-flip-setup');
+                    $h1.css($h1Style);
+                    $h1[0].offsetHeight;
+                    $h1.removeClass('hero-flip-setup').addClass('hero-flip-run');
+                    $h1.css({ transition: 'height 0.45s ' + EASE, height: toH + 'px' });
+                }
+
                 $rotator.removeClass('fade-out').addClass('fade-prep');
 
                 // Smooth transition without forced layout reflow
@@ -509,6 +556,13 @@
                         $rotator.removeClass('fade-prep');
                     });
                 });
+
+                if (delta !== 0) {
+                    setTimeout(function () {
+                        $h1.removeClass('hero-flip-run');
+                        $h1.css({ height: '', overflow: '', transition: '' });
+                    }, 480);
+                }
             }, 450);
         }, intervalTime);
     }
