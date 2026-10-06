@@ -141,8 +141,42 @@ async function fetchBlogFeed(done) {
 }
 exports.fetchBlogFeed = fetchBlogFeed;
 
-// Build task: clean dist first, then rebuild everything fresh
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, copyRootFiles));
+// Generate sitemap.xml at build time so <lastmod> always reflects the
+// latest deploy instead of a hardcoded date that goes stale.
+const SITE_URL = 'https://aridev.vercel.app';
+
+const SITEMAP_PAGES = [
+    { loc: '/', changefreq: 'weekly', priority: '1.0' },
+    { loc: '/services.html', changefreq: 'monthly', priority: '0.9' },
+    { loc: '/work.html', changefreq: 'monthly', priority: '0.9' },
+    { loc: '/templates.html', changefreq: 'monthly', priority: '0.9' },
+    { loc: '/blog-list.html', changefreq: 'weekly', priority: '0.8' },
+    { loc: '/blog-details.html', changefreq: 'monthly', priority: '0.6' },
+    { loc: '/work-ai-avatar-chatbot.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-ai-career-accelerator.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-dashboard-benchmarking.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-hr-voice-reservation.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-neotechpark.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-hipmi-marketplace.html', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-qarigenerator.html', changefreq: 'monthly', priority: '0.7' },
+];
+
+function generateSitemap(done) {
+    const today = new Date().toISOString().slice(0, 10);
+    const rows = SITEMAP_PAGES.map(function (p) {
+        return '  <url><loc>' + SITE_URL + p.loc + '</loc><lastmod>' + today + '</lastmod><changefreq>' + p.changefreq + '</changefreq><priority>' + p.priority + '</priority></url>';
+    });
+    const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows.join('\n') + '\n</urlset>\n';
+    fs.writeFileSync(path.join(__dirname, 'dist', 'sitemap.xml'), xml);
+    console.log('[sitemap] generated with lastmod ' + today);
+    done();
+}
+exports.generateSitemap = generateSitemap;
+
+// Build task: clean dist first, then rebuild everything fresh.
+// generateSitemap runs after copyRootFiles so the generated sitemap
+// (fresh lastmod) overwrites the static copy from src/.
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, copyRootFiles, generateSitemap));
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',
