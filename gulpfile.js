@@ -68,8 +68,81 @@ function buildStyles() {
 }
 exports.buildStyles = buildStyles;
 exports.copyAssets = copyAssets;
+
+// Fetch Medium RSS at build time and write a static snapshot JSON.
+// Runtime blog cards read this first (fresh as of last deploy, no CORS
+// proxy dependency); rss2json stays as a runtime fallback.
+const MEDIUM_FEED_URL = 'https://medium.com/feed/@ari-dev';
+
+function decodeCdata(str) {
+    if (!str) return '';
+    return str.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim();
+}
+
+function extractFirstImage(html) {
+    if (!html) return '';
+    const regex = /<img[^>]+src="([^"]+)"[^>]*/gi;
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+        const tag = match[0];
+        if (tag.indexOf('width="1"') !== -1 || tag.indexOf('height="1"') !== -1) continue;
+        if (match[1].indexOf('stat?event') !== -1) continue;
+        return match[1];
+    }
+    return '';
+}
+
+async function fetchBlogFeed(done) {
+    try {
+        const res = await fetch(MEDIUM_FEED_URL, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; zelio-build)' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const xml = await res.text();
+        const itemBlocks = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
+        const items = itemBlocks.map(function (block) {
+            const pick = function (tag) {
+                const m = block.match(new RegExp('<' + tag + '>([\\s\\S]*?)<\\/' + tag + '>'));
+                return m ? decodeCdata(m[1]) : '';
+            };
+            const contentEncoded = block.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/);
+            const content = contentEncoded ? decodeCdata(contentEncoded[1]) : '';
+            const mediaContent = block.match(/<media:content[^>]*url="([^"]+)"/);
+            const mediaThumb = block.match(/<media:thumbnail[^>]*url="([^"]+)"/);
+            const categories = [];
+            const catRegex = /<category>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/g;
+            let catMatch;
+            while ((catMatch = catRegex.exec(block)) !== null) {
+                const v = catMatch[1].trim();
+                if (v) categories.push(v);
+            }
+            const thumbnail =
+                (mediaContent && mediaContent[1]) ||
+                (mediaThumb && mediaThumb[1]) ||
+                extractFirstImage(content) ||
+                '';
+            const link = pick('guid') || pick('link');
+            return {
+                title: pick('title'),
+                link: link,
+                pubDate: pick('pubDate'),
+                content: content,
+                description: pick('description') || content,
+                categories: categories,
+                thumbnail: thumbnail,
+            };
+        });
+        const out = path.join(__dirname, 'dist', 'assets', 'js', 'blog-feed.json');
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, JSON.stringify({ status: 'ok', items: items }, null, 2));
+        console.log('[blog-feed] snapshot written: ' + items.length + ' items');
+    } catch (err) {
+        console.warn('[blog-feed] fetch failed, skipping snapshot:', err.message);
+    }
+    done();
+}
+exports.fetchBlogFeed = fetchBlogFeed;
+
 // Build task: clean dist first, then rebuild everything fresh
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, copyRootFiles));
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, copyRootFiles));
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',
