@@ -3,8 +3,11 @@
 .template-showcase {
     .blog-card {
         .zoom-img {
-            // Blur image on hover
+            // Reserve layout space before images load so isotope/masonry
+            // doesn't jump when filtering (showcase images are 800x600)
             img {
+                aspect-ratio: 800 / 600;
+                object-fit: cover;
                 transition: filter 0.35s ease, transform 0.35s ease-in-out !important;
             }
             &:hover img {

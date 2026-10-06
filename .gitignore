@@ -110,3 +110,6 @@ $RECYCLE.BIN/
 .eslintcache
 .stylelintcache
 *.tsbuildinfo
+
+# Template screenshot originals (converted to webp in src/assets/imgs/templates/showcase)
+.template-originals/
