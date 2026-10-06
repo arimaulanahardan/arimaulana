@@ -1,14 +1,16 @@
-/**
+﻿/**
  * medium-feed.js
  * Fetches Medium articles and renders them as Zelio blog cards.
  *
  * Strategy (tiered, most-reliable first):
- *  1. cors.sh proxy  → fetch Medium RSS XML, parse with DOMParser (real-time, no cache)
- *  2. rss2json       → fallback if cors.sh is down (may cache up to ~30 min)
+ *  1. rss2json        -> returns JSON (may cache up to ~30 min; its `thumbnail`
+ *                        field is often empty for Medium, so we extract the
+ *                        first <img> from the item content)
+ *  2. cors.sh proxy   -> fetch Medium RSS XML, parse with DOMParser (real-time)
  *
  * Targets:
- *   #medium-recent-blog  → Homepage "Recent Blog" section (limit: 3)
- *   #medium-blog-list    → Blog List page (limit: 9)
+ *   #medium-recent-blog  â†’ Homepage "Recent Blog" section (limit: 3)
+ *   #medium-blog-list    â†’ Blog List page (limit: 9)
  */
 (function () {
     'use strict';
@@ -21,28 +23,28 @@
         homeLimit: 3,
         listLimit: 9,
         mediumFeedUrl: 'https://medium.com/feed/@ari-dev',
-        // Tier 1: CORS proxy → returns raw XML, real-time
+        // Tier 1: CORS proxy â†’ returns raw XML, real-time
         corsProxyUrl: 'https://proxy.cors.sh/https://medium.com/feed/@ari-dev',
-        // Tier 2: rss2json → returns JSON, may be cached ~30min (free tier, no count param)
+        // Tier 2: rss2json â†’ returns JSON, may be cached ~30min (free tier, no count param)
         rss2jsonUrl: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40ari-dev',
         fallbackImages: [
-            'assets/imgs/blog/blog-1/img-1.png',
-            'assets/imgs/blog/blog-1/img-2.png',
-            'assets/imgs/blog/blog-1/img-3.png',
-            'assets/imgs/blog/blog-1/img-4.png',
-            'assets/imgs/blog/blog-1/img-5.png',
-            'assets/imgs/blog/blog-1/img-6.png',
-            'assets/imgs/blog/blog-1/img-7.png',
-            'assets/imgs/blog/blog-1/img-8.png',
-            'assets/imgs/blog/blog-1/img-9.png',
-            'assets/imgs/blog/blog-1/img-10.png',
-            'assets/imgs/blog/blog-1/img-11.png',
-            'assets/imgs/blog/blog-1/img-12.png',
+            'https://picsum.photos/seed/ari-blog-1/800/500',
+            'https://picsum.photos/seed/ari-blog-2/800/500',
+            'https://picsum.photos/seed/ari-blog-3/800/500',
+            'https://picsum.photos/seed/ari-blog-4/800/500',
+            'https://picsum.photos/seed/ari-blog-5/800/500',
+            'https://picsum.photos/seed/ari-blog-6/800/500',
+            'https://picsum.photos/seed/ari-blog-7/800/500',
+            'https://picsum.photos/seed/ari-blog-8/800/500',
+            'https://picsum.photos/seed/ari-blog-9/800/500',
+            'https://picsum.photos/seed/ari-blog-10/800/500',
+            'https://picsum.photos/seed/ari-blog-11/800/500',
+            'https://picsum.photos/seed/ari-blog-12/800/500',
         ],
     };
 
     /* =========================================================
-     * XML PARSER — parse RSS XML text into item objects
+     * XML PARSER â€” parse RSS XML text into item objects
      * ========================================================= */
     function parseRSS(xmlText) {
         var parser = new DOMParser();
@@ -59,7 +61,7 @@
             var titleNode = node.querySelector('title');
             var title = titleNode ? titleNode.textContent.trim() : '';
 
-            // link — <link> in RSS is tricky (text node after tag), use guid as fallback
+            // link â€” <link> in RSS is tricky (text node after tag), use guid as fallback
             var link = '';
             var linkNode = node.querySelector('link');
             if (linkNode) link = linkNode.textContent.trim();
@@ -194,7 +196,7 @@
     }
 
     /* =========================================================
-     * CARD TEMPLATE — mirrors blog-card.html structure exactly
+     * CARD TEMPLATE â€” mirrors blog-card.html structure exactly
      * ========================================================= */
     function renderCard(item, index) {
         var thumbnail   = getThumbnail(item, index);
@@ -249,7 +251,36 @@
     }
 
     /* =========================================================
-     * TIER 1: Fetch via cors.sh proxy → raw XML → DOMParser
+     * TIER 1: Fetch via rss2json -> JSON (may be cached ~30min).
+     *         rss2json's `thumbnail` field is often empty for
+     *         Medium feeds, so extract the first <img> from
+     *         item content before rendering.
+     * ========================================================= */
+    function normalizeRss2jsonItem(item) {
+        return Object.assign({}, item, {
+            thumbnail: (item.thumbnail && String(item.thumbnail).trim()) || extractImageFromContent(item.content || item.description || '') || ''
+        });
+    }
+
+    function fetchViaRss2json(limit, onSuccess, onError) {
+        fetch(CONFIG.rss2jsonUrl)
+            .then(function (r) {
+                if (!r.ok) throw new Error('rss2json HTTP ' + r.status);
+                return r.json();
+            })
+            .then(function (data) {
+                if (data.status !== 'ok') throw new Error('rss2json: ' + (data.message || data.status));
+                if (!data.items || data.items.length === 0) throw new Error('rss2json: 0 items');
+                onSuccess(data.items.map(normalizeRss2jsonItem).slice(0, limit));
+            })
+            .catch(function (err) {
+                console.warn('[medium-feed] rss2json failed:', err.message, '- trying cors.sh fallback...');
+                onError();
+            });
+    }
+
+    /* =========================================================
+     * TIER 2: Fetch via cors.sh proxy -> raw XML -> DOMParser
      *         Real-time, no caching.
      * ========================================================= */
     function fetchViaCorsProxy(limit, onSuccess, onError) {
@@ -266,40 +297,20 @@
                 onSuccess(items.slice(0, limit));
             })
             .catch(function (err) {
-                console.warn('[medium-feed] cors.sh failed:', err.message, '— trying rss2json fallback...');
+                console.error('[medium-feed] cors.sh also failed:', err.message);
                 onError();
             });
     }
 
     /* =========================================================
-     * TIER 2: Fetch via rss2json → JSON (may be cached ~30min)
-     * ========================================================= */
-    function fetchViaRss2json(limit, onSuccess, onError) {
-        fetch(CONFIG.rss2jsonUrl)
-            .then(function (r) {
-                if (!r.ok) throw new Error('rss2json HTTP ' + r.status);
-                return r.json();
-            })
-            .then(function (data) {
-                if (data.status !== 'ok') throw new Error('rss2json: ' + (data.message || data.status));
-                if (!data.items || data.items.length === 0) throw new Error('rss2json: 0 items');
-                onSuccess(data.items.slice(0, limit));
-            })
-            .catch(function (err) {
-                console.error('[medium-feed] rss2json also failed:', err.message);
-                onError();
-            });
-    }
-
-    /* =========================================================
-     * MAIN FETCH — try Tier 1, fallback to Tier 2
+     * MAIN FETCH - try Tier 1, fallback to Tier 2
      * ========================================================= */
     function fetchFeed(limit, onSuccess, onError) {
-        fetchViaCorsProxy(
+        fetchViaRss2json(
             limit,
             onSuccess,
             function () {
-                fetchViaRss2json(limit, onSuccess, onError);
+                fetchViaCorsProxy(limit, onSuccess, onError);
             }
         );
     }
