@@ -292,6 +292,81 @@ function renderBlogCards(done) {
 }
 exports.renderBlogCards = renderBlogCards;
 
+// Stamp the real intrinsic size onto the template showcase images.
+//
+// The 100 showcase screenshots are all 800px wide but range from 343px to
+// 718px tall, so the single `aspect-ratio: 800/600` the stylesheet used to
+// declare cropped roughly a third off most of them. Reading the true size
+// off each file and writing it onto the <img> lets masonry place the cards
+// from real heights -- nothing is cropped, and the space is still reserved
+// before the lazy image loads, so the grid does not shift.
+//
+// Done at build time on purpose: hardcoding 100 height values in the loop
+// data would silently rot the first time an image is replaced.
+function webpSize(buf) {
+    if (buf.length < 30) return null;
+    if (buf.toString('ascii', 0, 4) !== 'RIFF' || buf.toString('ascii', 8, 12) !== 'WEBP') return null;
+    const fmt = buf.toString('ascii', 12, 16);
+    if (fmt === 'VP8 ') {
+        return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff };
+    }
+    if (fmt === 'VP8L') {
+        const bits = buf.readUInt32LE(21);
+        return { w: (bits & 0x3fff) + 1, h: ((bits >> 14) & 0x3fff) + 1 };
+    }
+    if (fmt === 'VP8X') {
+        const w = buf[24] | (buf[25] << 8) | (buf[26] << 16);
+        const h = buf[27] | (buf[28] << 8) | (buf[29] << 16);
+        return { w: w + 1, h: h + 1 };
+    }
+    return null;
+}
+
+const SHOWCASE_PREFIX = 'assets/imgs/templates/showcase/';
+
+function stampShowcaseDimensions(done) {
+    const file = path.join(__dirname, 'dist', 'templates.html');
+    if (!fs.existsSync(file)) {
+        console.warn('[img-dims] dist/templates.html not found, skipping');
+        return done();
+    }
+
+    let html = fs.readFileSync(file, 'utf8');
+    const cache = new Map();
+    let stamped = 0;
+    let missing = 0;
+
+    html = html.replace(/<img\b[^>]*>/g, function (tag) {
+        if (tag.indexOf('width=') !== -1) return tag;
+        const m = tag.match(/src="([^"]+)"/);
+        if (!m || m[1].indexOf(SHOWCASE_PREFIX) !== 0) return tag;
+
+        const rel = m[1];
+        if (!cache.has(rel)) {
+            const abs = path.join(__dirname, 'dist', rel);
+            let size = null;
+            try {
+                if (fs.existsSync(abs)) size = webpSize(fs.readFileSync(abs));
+            } catch (err) {
+                size = null;
+            }
+            cache.set(rel, size);
+        }
+        const size = cache.get(rel);
+        if (!size) {
+            missing++;
+            return tag;
+        }
+        stamped++;
+        return tag.replace('<img', '<img width="' + size.w + '" height="' + size.h + '"');
+    });
+
+    fs.writeFileSync(file, html);
+    console.log('[img-dims] templates.html: ' + stamped + ' showcase images stamped' + (missing ? ', ' + missing + ' unreadable' : ''));
+    done();
+}
+exports.stampShowcaseDimensions = stampShowcaseDimensions;
+
 // Fail the build on unresolved @@include placeholders. A leaked @@canonical
 // renders as a relative URL and points the canonical tag at a 404, which is
 // exactly the kind of bug that is invisible in the browser but costly in Search.
@@ -351,13 +426,14 @@ exports.generateSitemap = generateSitemap;
 // Build task: clean dist first, then rebuild everything fresh.
 // generateSitemap runs after copyRootFiles so the generated sitemap
 // (fresh lastmod) overwrites the static copy from src/.
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, copyRootFiles, generateSitemap, verifyBuild));
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, stampShowcaseDimensions, copyRootFiles, generateSitemap, verifyBuild));
+
 // Initialize BrowserSync and track changes
 gulp.task(
     'dev',
     gulp.series('build', function () {
         // Watch tasks
-        gulp.watch('src/views/**/*.html', gulp.series(includeHtml));
+        gulp.watch('src/views/**/*.html', gulp.series(includeHtml, stampShowcaseDimensions));
         gulp.watch('src/assets/scss/**/**/*', gulp.series(buildStyles));
         gulp.watch(['src/assets/css/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/imgs/**/*', 'src/assets/img/**/*', 'src/assets/js/**/*'], copyAssetsChanged);
         browserSync.init({

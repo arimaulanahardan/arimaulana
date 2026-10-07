@@ -3,11 +3,16 @@
 .template-showcase {
     .blog-card {
         .zoom-img {
-            // Reserve layout space before images load so isotope/masonry
-            // doesn't jump when filtering (showcase images are 800x600)
+            // The screenshots are all 800px wide but 343-718px tall, so the
+            // 800/600 ratio this used to force cropped about a third off most
+            // of them. `height: auto` lets the browser derive each image's own
+            // ratio from the width/height attributes that the build stamps on
+            // (see stampShowcaseDimensions in gulpfile.js), which both shows
+            // the full screenshot and reserves the right space before the lazy
+            // image loads, so masonry has real heights to lay out from.
             img {
-                aspect-ratio: 800 / 600;
-                object-fit: cover;
+                width: 100%;
+                height: auto;
                 transition: filter 0.35s ease, transform 0.35s ease-in-out !important;
             }
             &:hover img {
