@@ -13,6 +13,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const includeHTML = require('gulp-file-include');
 const beautify = require('gulp-html-beautify');
 const browserSync = require('browser-sync').create();
+const cleanUrlMiddleware = require('./tools/clean-urls');
 const once = require('gulp-once');
 // Clean dist folder.
 // Clears the CONTENTS and leaves the directory itself in place: on Windows an
@@ -445,30 +446,7 @@ gulp.task(
         browserSync.init({
             server: {
                 baseDir: 'dist',
-                middleware: [
-                    function (req, res, next) {
-                        const url = req.url.split('?')[0];
-                        const filePath = path.join(__dirname, 'dist', url);
-                        // If file exists directly or is root directory, proceed normally
-                        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-                            return next();
-                        }
-                        if (url === '/' || url === '') {
-                            return next();
-                        }
-                        // If .html file exists for this route (clean URLs support)
-                        if (fs.existsSync(filePath + '.html')) {
-                            return next();
-                        }
-                        // Otherwise serve 404.html
-                        const file404 = path.join(__dirname, 'dist', '404.html');
-                        if (fs.existsSync(file404)) {
-                            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                            return res.end(fs.readFileSync(file404));
-                        }
-                        next();
-                    },
-                ],
+                middleware: [cleanUrlMiddleware],
             },
             hot: true,
         });
