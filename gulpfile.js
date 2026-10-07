@@ -14,9 +14,15 @@ const includeHTML = require('gulp-file-include');
 const beautify = require('gulp-html-beautify');
 const browserSync = require('browser-sync').create();
 const once = require('gulp-once');
-// Clean dist folder
+// Clean dist folder.
+// Clears the CONTENTS and leaves the directory itself in place: on Windows an
+// editor or Explorer window sitting in dist/ keeps a handle on the directory,
+// and rmdir'ing it then fails with EBUSY and kills the whole build.
 function cleanDist() {
-    return gulp.src('dist', { read: false, allowEmpty: true }).pipe(clean());
+    // Top-level entries only ('dist/*', not 'dist/**/*'): clean() already
+    // removes directories recursively, and handing it both a directory and
+    // its children makes it lstat paths the recursive delete just removed.
+    return gulp.src('dist/*', { read: false, allowEmpty: true, dot: true }).pipe(clean());
 }
 // Include HTML files
 function includeHtml() {
