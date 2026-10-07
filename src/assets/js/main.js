@@ -145,13 +145,46 @@
                     columnWidth: '.grid-sizer',
                 },
             });
-            // Relayout progressively as images arrive
-            $grid.imagesLoaded().progress(function () {
+            // Relayout as images arrive, but coalesced and never mid-transition.
+            //
+            // The showcase images are lazy, so filtering into a category for the
+            // first time starts a burst of loads. Relaying out on every single
+            // one restarted the filter animation each time, which is the stutter
+            // you see on the first filter into a category and never again once
+            // the images are cached. Card heights are already reserved in CSS
+            // (aspect-ratio), so a relayout per image buys nothing.
+            var relayoutTimer = null;
+            var relayoutPending = false;
+            var isArranging = false;
+
+            function runRelayout() {
+                relayoutPending = false;
                 $grid.isotope('layout');
+            }
+
+            function scheduleRelayout() {
+                relayoutPending = true;
+                if (relayoutTimer) clearTimeout(relayoutTimer);
+                relayoutTimer = setTimeout(function () {
+                    relayoutTimer = null;
+                    // Mid-filter: leave it to arrangeComplete below, otherwise
+                    // we would interrupt the transition we are trying to protect.
+                    if (isArranging) return;
+                    runRelayout();
+                }, 150);
+            }
+
+            $grid.imagesLoaded().progress(scheduleRelayout);
+
+            $grid.on('arrangeComplete', function () {
+                isArranging = false;
+                if (relayoutPending && !relayoutTimer) runRelayout();
             });
+
             // filter items on button click
             $($filterMenu).on('click', 'button', function () {
                 var filterValue = $(this).attr('data-filter');
+                isArranging = true;
                 $grid.isotope({
                     filter: filterValue,
                 });
