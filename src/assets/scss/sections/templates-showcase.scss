@@ -13,6 +13,23 @@
             img {
                 width: 100%;
                 height: auto;
+
+                // Every screenshot is an 800px-wide crop of the top of the
+                // template, cut at whatever height the capture happened to
+                // stop at -- often mid-sentence, which reads as a broken
+                // image rather than a preview. Fading the last stretch out
+                // makes the cut look deliberate: the shot dissolves into the
+                // card instead of ending on half a line of text.
+                //
+                // A mask rather than a gradient overlay so it fades to
+                // whatever is behind it, which keeps it correct in both the
+                // light and dark card backgrounds without naming a color.
+                // The badge and the hover overlay are siblings of the image,
+                // so neither is touched by this.
+                --showcase-fade: 72px;
+                -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--showcase-fade)), transparent 100%);
+                mask-image: linear-gradient(to bottom, #000 calc(100% - var(--showcase-fade)), transparent 100%);
+
                 transition: filter 0.35s ease, transform 0.35s ease-in-out !important;
             }
             &:hover img {
