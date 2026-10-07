@@ -1,10 +1,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://aridev.vercel.app/sitemap.xml
+# Non-indexable pages carry <meta name="robots" content="noindex">.
+# They are intentionally NOT disallowed here: blocking them would stop
+# Googlebot from reading the noindex directive at all.
 
-# Block non-essential pages
-Disallow: /404.html
-Disallow: /coming-soon.html
-Disallow: /work-single.html
+Sitemap: https://aridev.vercel.app/sitemap.xml

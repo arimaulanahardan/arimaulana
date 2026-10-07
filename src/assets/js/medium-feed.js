@@ -3,6 +3,11 @@
  * Fetches Medium articles and renders them as Zelio blog cards.
  *
  * Strategy (tiered, most-reliable first):
+ *  0. Static HTML     -> gulp renderBlogCards bakes the cards straight into
+ *                        the served HTML and marks the container with
+ *                        data-static-rendered. Crawlers get real content with
+ *                        no JS, so when that marker is present this script
+ *                        stands down entirely.
  *  1. Build snapshot  -> static JSON generated at build time by gulp
  *                        (dist/assets/js/blog-feed.json). Fresh as of the
  *                        last deploy, same-origin, no CORS proxy needed.
@@ -257,12 +262,23 @@
     /* =========================================================
      * INIT
      * ========================================================= */
-    function initHomeBlog() {
-        var container = document.getElementById('medium-recent-blog');
+    /**
+     * Fill a card container, unless the build already did it.
+     *
+     * When gulp renderBlogCards succeeds it writes the cards into the HTML and
+     * sets data-static-rendered on the container. Re-fetching the same snapshot
+     * to paint the same cards would only add a request and a layout flash, so
+     * bail out. The whole client path stays live for a build whose feed fetch
+     * failed, where the container ships empty and unmarked.
+     */
+    function initContainer(id, limit) {
+        var container = document.getElementById(id);
         if (!container) return;
-        renderSkeletons(container, CONFIG.homeLimit);
+        if (container.getAttribute('data-static-rendered') === 'true') return;
+
+        renderSkeletons(container, limit);
         fetchFeed(
-            CONFIG.homeLimit,
+            limit,
             function (items) {
                 var html = '';
                 items.forEach(function (item, i) { html += renderCard(item, i); });
@@ -272,19 +288,12 @@
         );
     }
 
+    function initHomeBlog() {
+        initContainer('medium-recent-blog', CONFIG.homeLimit);
+    }
+
     function initBlogList() {
-        var container = document.getElementById('medium-blog-list');
-        if (!container) return;
-        renderSkeletons(container, CONFIG.listLimit);
-        fetchFeed(
-            CONFIG.listLimit,
-            function (items) {
-                var html = '';
-                items.forEach(function (item, i) { html += renderCard(item, i); });
-                container.innerHTML = html;
-            },
-            function () { renderError(container); }
-        );
+        initContainer('medium-blog-list', CONFIG.listLimit);
     }
 
     /* =========================================================
