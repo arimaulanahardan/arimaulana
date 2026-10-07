@@ -303,6 +303,22 @@
 .grid-item {
     width: 50%;
 }
+// Isotope writes the container height inline the instant a filter is applied,
+// while the cards themselves glide to their new spots over its 0.4s transition.
+// With 100 showcase cards that is a ~27000px height collapse in a single frame,
+// so everything below the grid (footer, and the scroll position with it) snaps
+// before the cards have moved at all. Transitioning height on the same curve
+// and duration lets the container shrink in step with them instead.
+// The class is added a frame after init so the very first layout still lands
+// instantly rather than animating up from zero on page load.
+.masonry-active.is-height-animated {
+    transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+    .masonry-active.is-height-animated {
+        transition: none;
+    }
+}
 .section-case-studies {
     .grid-sizer,
     .grid-item {

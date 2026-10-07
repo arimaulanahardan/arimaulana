@@ -151,8 +151,9 @@
             // first time starts a burst of loads. Relaying out on every single
             // one restarted the filter animation each time, which is the stutter
             // you see on the first filter into a category and never again once
-            // the images are cached. Card heights are already reserved in CSS
-            // (aspect-ratio), so a relayout per image buys nothing.
+            // the images are cached. Card heights are already reserved by the
+            // width/height attributes the build stamps on each image, so a
+            // relayout per image buys nothing.
             var relayoutTimer = null;
             var relayoutPending = false;
             var isArranging = false;
@@ -175,6 +176,16 @@
             }
 
             $grid.imagesLoaded().progress(scheduleRelayout);
+
+            // Let the container height animate from here on. Isotope has already
+            // written the initial height inline by now, so turning the transition
+            // on one frame later keeps page load instant while filters get a
+            // height that shrinks in step with the cards (see .is-height-animated).
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    $grid.addClass('is-height-animated');
+                });
+            });
 
             $grid.on('arrangeComplete', function () {
                 isArranging = false;
