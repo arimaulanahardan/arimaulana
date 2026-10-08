@@ -701,6 +701,85 @@ textarea.form-control {
         }
     }
 }
+// Testimonials section: equal-height cards across the full container.
+.section-testimonials-1 {
+    .slider-testimonials {
+        // room for the hover lift and the pagination dots
+        padding: 6px 2px 56px;
+        .swiper-slide {
+            height: auto;
+        }
+        .swiper-pagination {
+            bottom: 0;
+        }
+    }
+    .card-testimonial-1 {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 32px;
+        transition: transform 0.25s ease;
+        &:hover {
+            transform: translateY(-4px);
+        }
+        &__stars {
+            gap: 3px;
+            margin-bottom: 20px;
+            i {
+                font-size: 1rem;
+                line-height: 1;
+            }
+        }
+        &__quote {
+            flex: 1 1 auto;
+            font-size: 1.0625rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        &__author {
+            margin-top: 28px;
+            padding-top: 20px;
+            // neutral grey at low alpha reads as a hairline on both the
+            // white and the dark card, where a theme token came out too heavy
+            border-top: 1px solid rgba(128, 128, 128, 0.25);
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+    .testimonial-nav__btn {
+        width: 48px;
+        height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid var(--tc-theme-primary-1);
+        background: transparent;
+        color: var(--tc-theme-primary-1);
+        font-size: 1.25rem;
+        transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+        &:hover:not(.swiper-button-disabled) {
+            background: var(--tc-theme-primary-1);
+            color: #fff;
+        }
+        &.swiper-button-disabled {
+            opacity: 0.35;
+            cursor: default;
+        }
+        &.swiper-button-lock {
+            display: none;
+        }
+    }
+    @media (max-width: 575.98px) {
+        .card-testimonial-1 {
+            padding: 24px;
+        }
+    }
+}
 .card-testimonial-1 {
     border: 1px solid transparent;
     background:

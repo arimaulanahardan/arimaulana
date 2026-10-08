@@ -318,6 +318,28 @@
             },
         });
     }
+    // Testimonials: 1 / 2 / 3 cards per view. No loop, so the arrows can
+    // show a real start and end instead of cycling four cards forever.
+    function testimonialSlider() {
+        if (!document.querySelector('.slider-testimonials')) return;
+        new Swiper('.slider-testimonials', {
+            slidesPerView: 1,
+            spaceBetween: 24,
+            watchOverflow: true,
+            breakpoints: {
+                768: { slidesPerView: 2 },
+                1200: { slidesPerView: 3 },
+            },
+            navigation: {
+                prevEl: '.testimonial-prev',
+                nextEl: '.testimonial-next',
+            },
+            pagination: {
+                el: '.slider-testimonials .swiper-pagination',
+                clickable: true,
+            },
+        });
+    }
     function carauselScroll() {
         $('.carouselTicker-left').each(function () {
             $(this).carouselTicker({
@@ -622,6 +644,7 @@
         aosAnimation();
         counterState();
         customSwiper();
+        testimonialSlider();
         magnificPopup();
         wowAnimation();
         carauselScroll();

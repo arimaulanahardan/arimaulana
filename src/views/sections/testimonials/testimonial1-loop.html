@@ -1,32 +1,19 @@
 <div class="swiper-slide">
-    <div class="bg-white card-testimonial-1 p-lg-7 p-md-5 mx-3 mx-md-0 p-4 border-2 rounded-4 position-relative">
-        <!-- No company logo: the template's two logo files are real firms' marks,
-             which would present them as clients. Add a logo here only for a
-             client who has agreed to be shown. -->
-        <div class="d-flex mb-5">
-            <i class="ri-star-fill fs-7 text-primary"></i>
-            <i class="ri-star-fill fs-7 text-primary"></i>
-            <i class="ri-star-fill fs-7 text-primary"></i>
-            <i class="ri-star-fill fs-7 text-primary"></i>
-            <i class="ri-star-fill fs-7 text-500 @@fivestar"></i>
+    <figure class="card-testimonial-1 bg-white rounded-4 position-relative mb-0">
+        <div class="card-testimonial-1__stars d-flex" aria-label="5 out of 5 stars">
+            <i class="ri-star-fill text-primary"></i>
+            <i class="ri-star-fill text-primary"></i>
+            <i class="ri-star-fill text-primary"></i>
+            <i class="ri-star-fill text-primary"></i>
+            <i class="ri-star-fill text-primary"></i>
         </div>
-        <h6 class="mb-7">“@@quote”</h6>
-        <a href="@@link" class="d-flex align-items-center">
-            <img class="icon_65 avatar" src="@@avatar" alt="@@name" />
-            <h6 class="ms-2 mb-0">@@name <span class="fs-6 fw-regular"> - @@role</span></h6>
-        </a>
-        <div class="position-absolute top-0 end-0 m-5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
-                <g clip-path="url(#clip0_551_13914)">
-                    <path d="M0 29.7144H11.1428L3.71422 44.5715H14.8571L22.2857 29.7144V7.42871H0V29.7144Z" fill="#D1D5DB" />
-                    <path d="M29.7148 7.42871V29.7144H40.8577L33.4291 44.5715H44.5719L52.0005 29.7144V7.42871H29.7148Z" fill="#D1D5DB" />
-                </g>
-                <defs>
-                    <clipPath>
-                        <rect width="52" height="52" fill="white" />
-                    </clipPath>
-                </defs>
-            </svg>
-        </div>
-    </div>
+        <blockquote class="card-testimonial-1__quote text-dark mb-0">“@@quote”</blockquote>
+        <figcaption class="card-testimonial-1__author d-flex align-items-center">
+            <img class="avatar" src="@@avatar" alt="" width="48" height="48" loading="lazy" decoding="async" />
+            <div class="ms-3">
+                <div class="fs-6 fw-bold text-dark lh-sm">@@name</div>
+                <div class="fs-7 text-300">@@role</div>
+            </div>
+        </figcaption>
+    </figure>
 </div>
