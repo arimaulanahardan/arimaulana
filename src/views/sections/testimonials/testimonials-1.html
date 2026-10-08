@@ -1,51 +1,66 @@
 <!-- testimonials 1
-     MOCKUP: the quotes, names, roles and avatars below are placeholders for
-     layout only. Replace every entry with a real client's words (and their
+     MOCKUP: the quotes, names, roles, avatars and logos below are placeholders
+     for layout only. Replace every entry with a real client's words (and their
      permission) before treating this section as finished. -->
 <section class="section-testimonials-1 position-relative pt-120 pb-120 bg-900 overflow-hidden">
     <div class="container">
-        <div class="d-flex align-items-end justify-content-between gap-4 mb-7">
-            <div>
-                <h3 class="ds-3 mb-3 text-primary">What Clients Say</h3>
-                <p class="fs-5 fw-medium text-200 mb-0">Feedback from founders and teams I have built products with.</p>
-            </div>
-            <div class="testimonial-nav d-none d-md-flex gap-2 flex-shrink-0">
-                <button type="button" class="testimonial-nav__btn testimonial-prev" aria-label="Previous testimonial"><i class="ri-arrow-left-line"></i></button>
-                <button type="button" class="testimonial-nav__btn testimonial-next" aria-label="Next testimonial"><i class="ri-arrow-right-line"></i></button>
-            </div>
-        </div>
-        <div class="swiper slider-testimonials">
-            <div class="swiper-wrapper">
-                <!-- prettier-ignore -->
-                @@loop('testimonial1-loop.html', [
+        <div class="row">
+            <div class="col-lg-8">
+                <h3 class="ds-3 mt-3 mb-3 text-primary">What Clients Say</h3>
+                <span class="fs-5 fw-medium text-200">
+                    Feedback from founders and teams I have built products with.
+                </span>
+                <div class="row mt-8">
+                    <div class="swiper slider-2 pt-2 pb-3">
+                        <div class="swiper-wrapper">
+                            <!-- prettier-ignore -->
+                            @@loop('testimonial1-loop.html', [
                             {
                             "avatar": "assets/imgs/testimonials/testimonials-1/avatar-1.png",
                             "name": "Client Name",
                             "role": "Role, Company Name",
-                            "quote": "Ari turned a rough brief into a working product faster than we expected, and the code was clean enough that our own team could pick it up without a rewrite."
+                            "quote": "Ari turned a rough brief into a working product faster than we expected, and the code was clean enough that our own team could pick it up without a rewrite.",
+                            "fivestar": "",
+                            "link": "#"
                             },
                             {
                             "avatar": "assets/imgs/testimonials/testimonials-1/avatar-2.png",
                             "name": "Client Name",
                             "role": "Role, Company Name",
-                            "quote": "He treated the product like it was his own. He pushed back when a feature did not make sense and explained the trade-offs in plain language."
+                            "quote": "He treated the product like it was his own. He pushed back when a feature did not make sense and explained the trade-offs in plain language.",
+                            "fivestar": "text-primary",
+                            "link": "#"
                             },
                             {
                             "avatar": "assets/imgs/testimonials/testimonials-1/avatar-1.png",
                             "name": "Client Name",
                             "role": "Role, Company Name",
-                            "quote": "The AI feature he built took a manual review step off our team's plate. Communication was clear across time zones the whole way through."
+                            "quote": "The AI feature he built took a manual review step off our team's plate. Communication was clear across time zones the whole way through.",
+                            "fivestar": "text-primary",
+                            "link": "#"
                             },
                             {
                             "avatar": "assets/imgs/testimonials/testimonials-1/avatar-2.png",
                             "name": "Client Name",
                             "role": "Role, Company Name",
-                            "quote": "We got a working sample before committing to anything, which made the decision easy. Delivery after that matched what he had shown us."
+                            "quote": "We got a working sample before committing to anything, which made the decision easy. Delivery after that matched what he had shown us.",
+                            "fivestar": "",
+                            "link": "#"
                             }
                             ]
                             )
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="text-center mt-8 position-relative z-3"></div>
+                    </div>
+                </div>
             </div>
-            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="shape-1 position-absolute bottom-0 start-50 z-1 ms-10 ps-10 d-none d-md-block">
+        <img class="position-relative z-1" src="assets/imgs/testimonials/testimonials-1/man.png" alt="man" />
+        <div class="position-absolute top-50 start-50 translate-middle z-0 mt-5">
+            <img class="ribbonRotate" src="assets/imgs/testimonials/testimonials-1/decorate.png" alt="Decorate" />
         </div>
     </div>
 </section>
