@@ -540,8 +540,8 @@
         var $h1 = $rotator.closest('h1');
         var titles = [
             'AI Product Engineer',
-            'Software Engineer',
-            'MVP Builder',
+            'Full-Stack Engineer',
+            'Product Builder',
         ];
         var currentIndex = 0;
         var intervalTime = 3200;
