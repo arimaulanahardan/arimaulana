@@ -3,8 +3,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <!-- Back button & badge -->
-                <div class="d-flex align-items-center justify-content-between mb-4">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
                     <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
                         <i class="ri-arrow-left-line"></i> Back to Works
                     </a>
