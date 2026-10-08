@@ -25,10 +25,18 @@ function cleanDist() {
     // its children makes it lstat paths the recursive delete just removed.
     return gulp.src('dist/*', { read: false, allowEmpty: true, dot: true }).pipe(clean());
 }
+// Pages that are kept in src/views/pages but deliberately not published.
+// They are not built into dist, so they are not served, linked or indexed;
+// delete a name from this list to bring that page back.
+const HIDDEN_PAGES = ['pricing'];
+
 // Include HTML files
 function includeHtml() {
+    const hidden = HIDDEN_PAGES.map(function (name) {
+        return '!src/views/pages/' + name + '.html';
+    });
     return gulp
-        .src(['src/views/pages/*.html'])
+        .src(['src/views/pages/*.html'].concat(hidden))
         .pipe(
             includeHTML({
                 prefix: '@@',
@@ -407,7 +415,6 @@ const SITEMAP_PAGES = [
     { loc: '/services', changefreq: 'monthly', priority: '0.9' },
     { loc: '/work', changefreq: 'monthly', priority: '0.9' },
     { loc: '/templates', changefreq: 'monthly', priority: '0.9' },
-    { loc: '/pricing', changefreq: 'monthly', priority: '0.9' },
     { loc: '/blog-list', changefreq: 'weekly', priority: '0.8' },
     { loc: '/work-ai-avatar-chatbot', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-ai-career-accelerator', changefreq: 'monthly', priority: '0.7' },
