@@ -28,7 +28,7 @@ function cleanDist() {
 // Pages that are kept in src/views/pages but deliberately not published.
 // They are not built into dist, so they are not served, linked or indexed;
 // delete a name from this list to bring that page back.
-const HIDDEN_PAGES = ['pricing'];
+const HIDDEN_PAGES = ['pricing', 'work-single', 'coming-soon', 'blog-details'];
 
 // Include HTML files
 function includeHtml() {
