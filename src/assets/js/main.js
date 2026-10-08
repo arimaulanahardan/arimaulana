@@ -297,8 +297,9 @@
                 delay: 4000,
             },
             breakpoints: {
+                // three testimonials once the full-width row has room for them
                 1200: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                 },
                 992: {
                     slidesPerView: 2,
