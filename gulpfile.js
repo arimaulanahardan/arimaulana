@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const clean = require('gulp-clean');
 const sass = require('gulp-sass')(require('sass'));
 const sassOptions = {
@@ -382,6 +383,48 @@ function stampShowcaseDimensions(done) {
 }
 exports.stampShowcaseDimensions = stampShowcaseDimensions;
 
+// Append a content hash to every local stylesheet and script URL
+// (assets/css/main.css -> assets/css/main.css?v=1a2b3c4d).
+//
+// vercel.json serves /assets with a one-year `immutable` cache, so without
+// this a returning visitor keeps the old main.css / main.js after a deploy
+// and sees new markup with stale styles. The hash only changes when the file
+// does, so untouched vendor files stay cached across deploys.
+function stampAssetVersions(done) {
+    const dir = path.join(__dirname, 'dist');
+    const cache = new Map();
+    const version = function (rel) {
+        if (!cache.has(rel)) {
+            const abs = path.join(dir, rel);
+            cache.set(rel, fs.existsSync(abs) ? crypto.createHash('md5').update(fs.readFileSync(abs)).digest('hex').slice(0, 8) : null);
+        }
+        return cache.get(rel);
+    };
+
+    let stamped = 0;
+    const missing = new Set();
+    fs.readdirSync(dir)
+        .filter(function (f) { return f.endsWith('.html'); })
+        .forEach(function (f) {
+            const file = path.join(dir, f);
+            const html = fs.readFileSync(file, 'utf8').replace(/\b(href|src)="(assets\/[^"?#]+\.(?:css|js))"/g, function (attr, name, rel) {
+                const v = version(rel);
+                if (!v) {
+                    missing.add(rel);
+                    return attr;
+                }
+                stamped++;
+                return name + '="' + rel + '?v=' + v + '"';
+            });
+            fs.writeFileSync(file, html);
+        });
+
+    if (missing.size) console.warn('[asset-version] not found in dist, left unversioned: ' + Array.from(missing).join(', '));
+    console.log('[asset-version] ' + stamped + ' CSS/JS references versioned');
+    done();
+}
+exports.stampAssetVersions = stampAssetVersions;
+
 // Fail the build on unresolved @@include placeholders. A leaked @@canonical
 // renders as a relative URL and points the canonical tag at a 404, which is
 // exactly the kind of bug that is invisible in the browser but costly in Search.
@@ -440,7 +483,7 @@ exports.generateSitemap = generateSitemap;
 // Build task: clean dist first, then rebuild everything fresh.
 // generateSitemap runs after copyRootFiles so the generated sitemap
 // (fresh lastmod) overwrites the static copy from src/.
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, stampShowcaseDimensions, copyRootFiles, generateSitemap, verifyBuild));
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, stampShowcaseDimensions, stampAssetVersions, copyRootFiles, generateSitemap, verifyBuild));
 
 // Initialize BrowserSync and track changes
 gulp.task(
