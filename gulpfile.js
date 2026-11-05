@@ -108,13 +108,29 @@ function extractFirstImage(html) {
     return '';
 }
 
+// The blog list the current production deploy serves. Rebuilds also run
+// unattended (.github/workflows/blog-refresh.yml), so a Medium outage during
+// a build must not ship an empty blog: fall back to what is already live.
+async function fetchLiveSnapshot() {
+    try {
+        const res = await fetch(SITE_URL + '/assets/js/blog-feed.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const parsed = await res.json();
+        return parsed.items || [];
+    } catch (err) {
+        console.warn('[blog-feed] live snapshot unavailable too:', err.message);
+        return [];
+    }
+}
+
 async function fetchBlogFeed(done) {
+    let items = [];
     try {
         const res = await fetch(MEDIUM_FEED_URL, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; zelio-build)' } });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const xml = await res.text();
         const itemBlocks = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
-        const items = itemBlocks.map(function (block) {
+        items = itemBlocks.map(function (block) {
             const pick = function (tag) {
                 const m = block.match(new RegExp('<' + tag + '>([\\s\\S]*?)<\\/' + tag + '>'));
                 return m ? decodeCdata(m[1]) : '';
@@ -146,13 +162,19 @@ async function fetchBlogFeed(done) {
                 thumbnail: thumbnail,
             };
         });
-        const out = path.join(__dirname, 'dist', 'assets', 'js', 'blog-feed.json');
-        fs.mkdirSync(path.dirname(out), { recursive: true });
-        fs.writeFileSync(out, JSON.stringify({ status: 'ok', items: items }, null, 2));
-        console.log('[blog-feed] snapshot written: ' + items.length + ' items');
+        if (!items.length) throw new Error('feed returned 0 items');
     } catch (err) {
-        console.warn('[blog-feed] fetch failed, skipping snapshot:', err.message);
+        console.warn('[blog-feed] Medium fetch failed (' + err.message + '), using the live snapshot instead');
+        items = await fetchLiveSnapshot();
     }
+    if (!items.length) {
+        console.warn('[blog-feed] no items from Medium or the live site, skipping snapshot');
+        return done();
+    }
+    const out = path.join(__dirname, 'dist', 'assets', 'js', 'blog-feed.json');
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.writeFileSync(out, JSON.stringify({ status: 'ok', items: items }, null, 2));
+    console.log('[blog-feed] snapshot written: ' + items.length + ' items');
     done();
 }
 exports.fetchBlogFeed = fetchBlogFeed;
