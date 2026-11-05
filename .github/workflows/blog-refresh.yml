@@ -1,0 +1,58 @@
+# Rebuild the site when a Medium article is published, renamed or removed.
+#
+# The blog cards are baked into the HTML at build time, so the site only
+# picks up a new article on the next deploy. This compares the Medium feed
+# with what production serves every 3 hours and, only when they differ,
+# triggers a Vercel deploy through a Deploy Hook.
+#
+# Setup (once): Vercel > Project > Settings > Git > Deploy Hooks, create a
+# hook for the master branch, then save its URL as the repository secret
+# VERCEL_DEPLOY_HOOK_URL (GitHub > Settings > Secrets and variables > Actions).
+
+name: Refresh blog from Medium
+
+on:
+    schedule:
+        - cron: '17 */3 * * *'
+    workflow_dispatch:
+        inputs:
+            force:
+                description: 'Redeploy even if the blog is already up to date'
+                type: boolean
+                default: false
+
+permissions:
+    contents: read
+    # GitHub pauses scheduled workflows in public repos after 60 days without
+    # commits. Re-enabling the workflow on every run resets that counter.
+    actions: write
+
+concurrency:
+    group: blog-refresh
+
+jobs:
+    refresh:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - name: Keep the schedule alive
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/blog-refresh.yml/enable"
+
+            - uses: actions/checkout@v5
+
+            - name: Compare Medium with the live site
+              id: check
+              run: node tools/check-blog-feed.js
+
+            - name: Trigger Vercel deploy
+              if: steps.check.outputs.changed == 'true' || inputs.force
+              env:
+                  DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+              run: |
+                  if [ -z "$DEPLOY_HOOK" ]; then
+                      echo "::error::Repository secret VERCEL_DEPLOY_HOOK_URL is not set. See the setup note at the top of this workflow."
+                      exit 1
+                  fi
+                  curl -fsS -X POST "$DEPLOY_HOOK"
