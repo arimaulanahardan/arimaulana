@@ -249,7 +249,8 @@
 // masonry
 .masonry-active {
     .filter-item {
-        transition-duration: 0.4s;
+        // No transition here: Isotope moves cards by rewriting left/top
+        // inline, and any duration on the card animates that move too.
         .project-item {
             margin: 15px 0;
             border: 1px solid transparent;
@@ -284,7 +285,6 @@
             }
         }
         &:hover {
-            transition-duration: 0.4s;
             .project-item {
                 background:
                     linear-gradient(var(--tc-neutral-1000), var(--tc-neutral-1000)) padding-box,
@@ -303,20 +303,23 @@
 .grid-item {
     width: 50%;
 }
-// Isotope writes the container height inline the instant a filter is applied,
-// while the cards themselves glide to their new spots over its 0.4s transition.
-// With 100 showcase cards that is a ~27000px height collapse in a single frame,
-// so everything below the grid (footer, and the scroll position with it) snaps
-// before the cards have moved at all. Transitioning height on the same curve
-// and duration lets the container shrink in step with them instead.
-// The class is added a frame after init so the very first layout still lands
-// instantly rather than animating up from zero on page load.
-.masonry-active.is-height-animated {
-    transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+// Filtering swaps the cards in place (transitionDuration: 0 in main.js) and
+// fades the whole grid in once, instead of flying up to 100 cards to new
+// spots. main.js restarts the animation on every filter click.
+.masonry-active.is-fading-in {
+    animation: masonry-fade-in 0.25s ease-out;
+}
+@keyframes masonry-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
-    .masonry-active.is-height-animated {
-        transition: none;
+    .masonry-active.is-fading-in {
+        animation: none;
     }
 }
 .section-case-studies {

@@ -139,6 +139,9 @@
             var $grid = $($filter).isotope({
                 itemSelector: $filterItem,
                 filter: '*',
+                // Cards swap into place instead of flying and scaling there;
+                // the only motion on a filter is the short grid fade below.
+                transitionDuration: 0,
                 masonry: {
                     // use outer width of grid-sizer for columnWidth
                     // columnWidth: 1,
@@ -177,16 +180,6 @@
 
             $grid.imagesLoaded().progress(scheduleRelayout);
 
-            // Let the container height animate from here on. Isotope has already
-            // written the initial height inline by now, so turning the transition
-            // on one frame later keeps page load instant while filters get a
-            // height that shrinks in step with the cards (see .is-height-animated).
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    $grid.addClass('is-height-animated');
-                });
-            });
-
             $grid.on('arrangeComplete', function () {
                 isArranging = false;
                 if (relayoutPending && !relayoutTimer) runRelayout();
@@ -199,6 +192,10 @@
                 $grid.isotope({
                     filter: filterValue,
                 });
+                // Restart the fade on every click (see .is-fading-in).
+                $grid.removeClass('is-fading-in');
+                void $grid[0].offsetWidth;
+                $grid.addClass('is-fading-in');
             });
             // Menu Active Class
             $($filterMenu).on('click', 'button', function (event) {
