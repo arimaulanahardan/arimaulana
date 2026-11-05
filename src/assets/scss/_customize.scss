@@ -353,6 +353,13 @@
             linear-gradient(var(--tc-bg-1), var(--tc-bg-1)) padding-box,
             (var(--tc-linear-3)) border-box;
         .blog-card__image {
+            // Medium covers come in any shape (a 1024x306 screenshot sits
+            // next to a 1024x683 diagram) but the box is a fixed 250px tall
+            // from the img's height attribute, so fill it by cropping
+            // instead of stretching the picture.
+            img {
+                object-fit: cover;
+            }
             .blog-card__link {
                 opacity: 0;
                 transition: all 0.2s ease-in-out;
@@ -391,6 +398,10 @@ textarea.form-control {
             linear-gradient(var(--tc-neutral-1000), var(--tc-neutral-1000)) padding-box,
             (var(--tc-linear-3)) border-box;
         .blog-card__image {
+            // Crop, don't stretch: see .section-blog-1 above.
+            img {
+                object-fit: cover;
+            }
             .blog-card__link {
                 opacity: 0;
                 transition: all 0.2s ease-in-out;
