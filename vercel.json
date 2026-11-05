@@ -5,6 +5,9 @@
     "framework": null,
     "cleanUrls": true,
     "trailingSlash": false,
+    "crons": [
+        { "path": "/api/refresh-blog", "schedule": "0 23 * * *" }
+    ],
     "headers": [
         {
             "source": "/assets/css/(.*)",

@@ -2,14 +2,14 @@
 //
 // The blog cards are baked into the HTML at build time (fetchBlogFeed +
 // renderBlogCards in gulpfile.js), so a new Medium article only appears after
-// a rebuild. The blog-refresh workflow runs this on a schedule and triggers a
-// Vercel deploy only when it reports changed=true.
+// a rebuild. api/refresh-blog.js runs this once a day (Vercel Cron) and
+// triggers a deploy only when it reports a change.
 //
 // Items are matched the same way fetchBlogFeed builds them: link (without the
 // ?source= tracking query) plus title, so a new, removed or renamed article
 // all count as a change.
-const fs = require('fs');
-
+//
+// Run it locally to see the current state: node tools/check-blog-feed.js
 const MEDIUM_FEED_URL = 'https://medium.com/feed/@ari-dev';
 const LIVE_SNAPSHOT_URL = 'https://aridev.vercel.app/assets/js/blog-feed.json';
 
@@ -33,12 +33,8 @@ function mediumKeys(xml) {
     });
 }
 
-function setOutput(changed) {
-    console.log('changed=' + changed);
-    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changed=' + changed + '\n');
-}
-
-async function main() {
+// Throws when Medium itself cannot be read: that is "unknown", not "changed".
+async function blogFeedChanged() {
     const res = await fetch(MEDIUM_FEED_URL, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; zelio-build)' } });
     if (!res.ok) throw new Error('Medium feed HTTP ' + res.status);
     const latest = mediumKeys(await res.text());
@@ -47,6 +43,7 @@ async function main() {
     // A missing or unreadable live snapshot counts as "behind": rebuilding is
     // the fix for that too.
     let live = [];
+    let liveError = null;
     try {
         const liveRes = await fetch(LIVE_SNAPSHOT_URL);
         if (!liveRes.ok) throw new Error('HTTP ' + liveRes.status);
@@ -54,20 +51,29 @@ async function main() {
             return itemKey(item.link, item.title);
         });
     } catch (err) {
-        console.warn('Live snapshot unreadable (' + err.message + '), treating the site as out of date');
+        liveError = err.message;
     }
 
     const added = latest.filter(function (k) { return live.indexOf(k) === -1; });
     const removed = live.filter(function (k) { return latest.indexOf(k) === -1; });
-    console.log('Medium: ' + latest.length + ' items, live site: ' + live.length + ' items');
-    added.forEach(function (k) { console.log('  + ' + k); });
-    removed.forEach(function (k) { console.log('  - ' + k); });
-    setOutput(added.length > 0 || removed.length > 0);
+    return {
+        changed: added.length > 0 || removed.length > 0,
+        medium: latest.length,
+        live: live.length,
+        liveError: liveError,
+        added: added,
+        removed: removed,
+    };
 }
 
-main().catch(function (err) {
-    // Medium being unreachable is not worth a failed run: the next scheduled
-    // run checks again, and nothing is deployed in the meantime.
-    console.log('::warning::Could not read the Medium feed: ' + err.message);
-    setOutput(false);
-});
+module.exports = { blogFeedChanged: blogFeedChanged };
+
+if (require.main === module) {
+    blogFeedChanged().then(
+        function (result) { console.log(JSON.stringify(result, null, 2)); },
+        function (err) {
+            console.error('Could not read the Medium feed: ' + err.message);
+            process.exitCode = 1;
+        },
+    );
+}
