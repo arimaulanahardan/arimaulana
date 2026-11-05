@@ -335,6 +335,21 @@
 // masonry end
 // hero
 .section-hero-1 {
+    // "Or hire me on" links: same tile as the tool logos above, widened to
+    // fit a wordmark and kept at the tiles' 3.5rem height.
+    .hire-platform {
+        height: 3.5rem;
+        padding: 0 1.5rem;
+        &--upwork {
+            color: #14a800;
+        }
+        &--contra {
+            color: var(--tc-neutral-0);
+        }
+        &__logo {
+            display: block;
+        }
+    }
     .brand-logo {
         border: 1px solid var(--tc-neutral-800);
         transition: all 0.2s ease-in-out;
