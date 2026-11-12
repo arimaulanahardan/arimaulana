@@ -442,6 +442,10 @@
             const cards = document.querySelectorAll('.card-custom');
             cardsContainer.style.setProperty('--cards-count', cards.length);
             cardsContainer.style.setProperty('--card-height', `${cards[0].clientHeight}px`);
+            // The rows are sized from the first card, but each later card gets
+            // 20px more top padding below, so the last one overflows its row by
+            // (count - 1) * 20px and eats into the section's bottom spacing.
+            cardsContainer.style.paddingBottom = `${(cards.length - 1) * 20}px`;
             Array.from(cards).forEach((card, index) => {
                 const offsetTop = 20 + index * 20;
                 card.style.paddingTop = `${offsetTop}px`;

@@ -938,6 +938,12 @@ textarea.form-control {
                             padding-bottom: 14px;
                             margin-bottom: 14px;
                             border-bottom: 1px solid var(--tc-neutral-600);
+                            // Keep the label column a fixed width so every value
+                            // starts at the same x, however long the value is.
+                            > .w-40 {
+                                flex: 0 0 40%;
+                                padding-right: 16px;
+                            }
                             .card__description {
                                 line-height: 1.4;
                                 font-size: 24px;
