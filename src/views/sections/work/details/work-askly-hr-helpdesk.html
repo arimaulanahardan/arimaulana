@@ -14,7 +14,7 @@
 
                 <h1 class="ds-3 text-dark fw-bold mb-4">Askly: an anonymous AI helpdesk for HR questions</h1>
                 <p class="fs-5 text-300 mb-6">
-                    HR teams answer the same questions every single day. How many leave days do I get? Where's the address change form? Can I take leave in half days? Askly answers them first, from the company's own Notion pages and an FAQ that HR approves, and employees can ask without anyone knowing who asked.
+                    HR teams answer the same questions every single day. How many leave days do I get? Where's the address change form? Can I take leave in half days? Askly answers them first, from the company's own Notion pages and an FAQ that HR approves, and employees can ask without anyone knowing who asked. A 2D animated assistant answers with them, lip syncing every reply and reading it out loud when asked.
                 </p>
 
                 <!-- Project Meta Details Grid -->
@@ -29,11 +29,11 @@
                     </div>
                     <div class="col-6 col-md-3">
                         <span class="fs-7 text-uppercase text-secondary d-block mb-1">Timeline</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">1 month</h6>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">2 months</h6>
                     </div>
                     <div class="col-6 col-md-3">
                         <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">Next.js, Fastify, PostgreSQL, Qdrant, Dify, OpenAI, Notion API</h6>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Next.js, Fastify, PostgreSQL, Qdrant, Dify, OpenAI, Notion API, Live2D, Web Speech API</h6>
                     </div>
                 </div>
 
@@ -79,7 +79,14 @@
                         <i class="ri-chat-smile-3-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
                             <span class="text-dark fw-bold">A chat that feels like ChatGPT, with no login.</span>
-                            <span class="text-300"> Employees open it from a desktop shortcut or by scanning a QR code on the office wall, so it's designed for the phone first. They pick a source, company documents or the approved FAQ, and the answer streams in word by word. They can stop it, rate it, rename or delete the conversation.</span>
+                            <span class="text-300"> Employees open it from a desktop shortcut or by scanning a QR code on the office wall, so it's designed for the phone first. They pick a source, company documents or the approved FAQ, and the answer streams in word by word, in Japanese or English. They can stop it, rate it, rename or delete the conversation.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-user-smile-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A 2D animated assistant with lip sync and a voice.</span>
+                            <span class="text-300"> A Live2D character sits beside the chat, moves her mouth in time with each answer, shows a mood, and reads the answer out loud with text to speech when someone presses play. More on her below.</span>
                         </div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
@@ -88,6 +95,33 @@
                             <span class="text-dark fw-bold">An admin panel HR can actually use.</span>
                             <span class="text-300"> Dashboard with good and bad ratings, a Notion sync card, FAQ management with nested categories, conversation logs with the rating of every turn, admin accounts, and file upload with progress you can cancel.</span>
                         </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The animated assistant: a 2D character that talks back</h3>
+                <p class="text-300 mb-4">
+                    A plain text box can feel cold, especially when the question is personal. So the chat has a small 2D anime style character next to the answers. She reacts while the answer comes in, moves her mouth with the words, and can read the answer out loud. It makes the tool feel friendly, and a friendly tool is one people actually open instead of calling HR.
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-emotion-happy-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Lip sync that follows the answer.</span><span class="text-300"> As the answer streams in, every letter becomes a mouth shape: a, i, u, e, o, and closed on spaces and punctuation. Japanese works too. Each kana maps to its vowel, and kanji keep the mouth moving, so she looks right in both languages.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-volume-up-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Text to speech, only when you ask.</span><span class="text-300"> Every answer has a play button. She reads it out loud while her mouth follows the spoken words, then stops when you press it again. She never talks on her own, which matters in a quiet office. The voice is the browser's own text to speech, so there is no cost per answer and no extra server. It picks the most natural Japanese or English voice the device has: Microsoft's natural voices on Edge, Google's on Chrome, Apple's on an iPhone.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-emotion-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">She shows how the answer feels.</span><span class="text-300"> Four moods, neutral, positive, negative and alert, arrive with the first words of each answer. While the AI is still thinking she strikes a thinking pose. In between she blinks, breathes and her hair moves, the way a VTuber model does.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-eye-off-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">She stays out of the way.</span><span class="text-300"> A switch in the header hides her, and the chat remembers the choice. People who have reduced motion turned on start with her hidden. On a new chat she waves next to the title instead of covering the how to cards. And she only loads when she's shown, so the chat stays quick for anyone who turns her off.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-swap-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Easy to make yours.</span><span class="text-300"> The character in the demo is Live2D's official sample model, credited in the chat. For your company I'd swap in your own mascot, since one config file names the model, its faces and its mouth. The voice sits behind a small interface too, so moving to a premium cloud voice like OpenAI or ElevenLabs later doesn't touch the screens.</span></div>
                     </li>
                 </ul>
 
@@ -140,6 +174,13 @@
                         <div>
                             <span class="text-dark fw-bold d-block mb-1">Typing in Japanese.</span>
                             <span class="text-300">When you type Japanese, Enter confirms the characters you picked. A normal chat box treats that same Enter as send, so every Japanese user ends up sending half a sentence. The chat tells the two apart, so Enter only sends when you're actually done.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-mic-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Making her talk the same way on every phone.</span>
+                            <span class="text-300">Every browser does speech a little differently. An iPhone only allows a voice that starts from a tap, so the first sentence starts right inside the click. Chrome sometimes drops speech after a stop, or never says it has finished, so a watchdog keeps things moving. Some voices don't report which word they're on, so the mouth falls back to a natural speaking pace. And long answers are read sentence by sentence, because some browsers cut long speech off halfway.</span>
                         </div>
                     </li>
                 </ul>
@@ -250,7 +291,7 @@
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Quick to open.</span><span class="text-300"> On a work laptop the chat is ready in under a second. The landing page and the HR admin score a perfect 100 on Google's own speed check, and the chat scores 99.</span></div>
+                        <div><span class="text-dark fw-bold">Quick to open.</span><span class="text-300"> On a work laptop the chat's first screen shows up in about a second, and nothing jumps around while it loads. Anyone who would rather skip the animated assistant can switch her off, and the chat remembers.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
