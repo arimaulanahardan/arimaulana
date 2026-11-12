@@ -8,6 +8,9 @@
     "crons": [
         { "path": "/api/refresh-blog", "schedule": "0 23 * * *" }
     ],
+    "redirects": [
+        { "source": "/work-hr-voice-reservation", "destination": "/work-voxa-ai-reservation", "permanent": true }
+    ],
     "headers": [
         {
             "source": "/assets/css/(.*)",

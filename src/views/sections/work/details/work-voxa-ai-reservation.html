@@ -1,0 +1,284 @@
+<section class="section-work-single section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+                    <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
+                        <i class="ri-arrow-left-line"></i> Back to Works
+                    </a>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">Voice AI &amp; Automation</span>
+                </div>
+
+                <h1 class="ds-3 text-dark fw-bold mb-4">Voxa: an AI phone receptionist that books appointments</h1>
+                <p class="fs-5 text-300 mb-6">
+                    A salon chain in Japan kept losing bookings for one simple reason: the phone rang while everyone was busy with a client, or after closing. So we put an AI on the line. It picks up, understands what the caller wants, checks the booking rules, reads the booking back, and logs every call with its recording and transcript for the staff to review.
+                </p>
+
+                <!-- Project Meta Details Grid -->
+                <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Multi store hair salon brand in Japan, via 80&amp;Company</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Engineer on the original PoC, sole builder of the public rebuild</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Rebuild Timeline</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">3 days, 79 commits (Nov 2026)</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Twilio, OpenAI Realtime, Fastify, PostgreSQL, TanStack Start, Astro</h6>
+                    </div>
+                </div>
+
+                <!-- Live demo links. The admin runs on mock data, so the demo login is public. -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                    <a href="https://voxa-landing-sigma.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-gradient d-inline-flex align-items-center">
+                        See the landing page <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                    <a href="https://voxa-admin-one.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                        Try the admin panel <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                </div>
+                <p class="fs-7 text-300 mb-0">Admin demo login: <span class="text-dark">password</span> / <span class="text-dark">password</span>. Every call, name and phone number in there is made up.</p>
+
+                <!-- Showcase Image -->
+                <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
+                    <img src="assets/imgs/projects/projects-1/work-voxa-ai-reservation.webp" alt="Voxa landing page, call log list and call detail screens" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                </div>
+
+                <!-- Case Study Details -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">First, a quick honest note</h3>
+                <p class="text-300 mb-4">
+                    The real system belongs to the client, so I can't show its code, its data or its name. What I can show you is how I work. I studied the original, then rebuilt the whole staff side from scratch under a new brand called Voxa, with fictional data, and put it live so you can click around. The architecture, the rules and the security choices below come from the original. The screens you see are the rebuild.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
+                <p class="text-300 mb-4">
+                    A salon lives on its booking calendar, and most bookings still come in by phone. When a stylist is halfway through a color job, nobody picks up. When the shop is closed on Monday, nobody picks up. Every one of those missed calls is a customer who probably books somewhere else.
+                </p>
+                <p class="text-300 mb-4">
+                    The ask was simple to say and hard to build: answer every call in natural spoken Japanese, take new bookings, changes and cancellations, never promise a slot that doesn't exist, and give the 1 to 3 staff per store a clean place to check what happened on each call.
+                </p>
+
+                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">How the call actually works</h4>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-phone-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Twilio streams the audio, OpenAI Realtime does the talking.</span>
+                            <span class="text-300"> The caller dials the salon number, Twilio opens a live audio stream to our Fastify backend, and the backend bridges it to the OpenAI Realtime API. Speech goes in, the model reasons and calls tools, speech comes back out. No robotic menu, no "press 1".</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-route-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">The AI sorts the call first, then follows a script for that job.</span>
+                            <span class="text-300"> Every call gets classified into one of five intents: new booking, change, cancel, question, or other. If it's unclear, the AI asks again, up to three times. Once it knows, the backend swaps in only the instructions and tools for that flow.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-calendar-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Business rules live in code, not in the prompt.</span>
+                            <span class="text-300"> Closed days, opening hours, a 30 minute slot grid, at least 60 minutes notice for same day bookings, up to 7 days ahead. When a request breaks a rule, the AI always comes back with alternatives instead of a flat no.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-chat-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Two turn read back before anything is booked.</span>
+                            <span class="text-300"> The AI repeats the date, time and menu, asks "is that correct?", and waits for an explicit yes. Availability gets checked one more time right before confirming.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-shield-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A guard against fake success.</span>
+                            <span class="text-300"> This is the one I like the most. Language models love to say "you're all set!" The system won't let the AI report a booking as done unless the confirm tool actually ran. If it didn't, the call is logged as failed with a reason the staff can read.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <p class="text-300 mb-4">
+                    I try to write code the next engineer can read without calling me. In practice that means a few habits I don't skip.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">TypeScript in strict mode everywhere.</span><span class="text-300"> Unused code fails the type check, so dead code doesn't pile up.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Validate everything that comes from outside.</span><span class="text-300"> Forms, URL parameters and environment variables all go through Zod. A broken link like ?page=abc falls back to page 1 instead of crashing the screen.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Every screen has all its states.</span><span class="text-300"> Loading, empty, error, and the happy path. The call log list alone has a skeleton loader, an empty row, an error row with retry, and pagination for 10, 20, 50 or 100 rows.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Errors a human can understand.</span><span class="text-300"> A failed call doesn't just say "error". It says the caller hung up before the booking was confirmed, so the staff knows to call them back.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Small commits with clear names.</span><span class="text-300"> One feature per branch, Conventional Commits like feat(call-logs) or fix(ui), merged without squashing so the history tells the story of the build.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The process, step by step</h3>
+                <p class="text-300 mb-4">
+                    I use a method I call ATM, which in Indonesian stands for Amati, Tiru, Modifikasi: observe, imitate, modify. You study what already works, rebuild it faithfully, and only then change things on purpose.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">1</span>
+                        <div><span class="text-dark fw-bold">Observe.</span><span class="text-300"> I read the original end to end and wrote it all down: screens, call flow, business rules, API shapes, design tokens. Before writing a single line, I knew exactly what "done" meant.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">2</span>
+                        <div><span class="text-dark fw-bold">Design first.</span><span class="text-300"> Every screen and every state got designed before code, including the date picker open, the failed call and the 404 page.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">3</span>
+                        <div><span class="text-dark fw-bold">Plan in stages with a dependency map.</span><span class="text-300"> Setup, login, app shell, call logs, call detail, system pages, landing page, final check. Each stage has its own branch and can't start until the one it depends on is verified.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">4</span>
+                        <div><span class="text-dark fw-bold">Build with AI agents, review like a lead.</span><span class="text-300"> I run AI coding agents in parallel, each in its own git worktree. My job is the one a tech lead has: split the work, check each stage against the design, and only then merge. The agents type fast. I'm the one who says what's good enough.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">5</span>
+                        <div><span class="text-dark fw-bold">Prove it with screenshots.</span><span class="text-300"> Every stage left evidence behind: 74 screenshots across desktop, tablet and phone, plus a final report of 18 screen and state checks. All 18 passed, with type check and build both clean.</span></div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: real screenshots of the live rebuild (fictional data). -->
+                <div class="row g-4 my-5">
+                    <div class="col-md-6">
+                        <div class="rounded-4 overflow-hidden border border-800">
+                            <img src="assets/imgs/projects/case-studies/voxa-ai-reservation-1.webp" alt="Voxa call log list with request type, status and date filters" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="rounded-4 overflow-hidden border border-800">
+                            <img src="assets/imgs/projects/case-studies/voxa-ai-reservation-2.webp" alt="Voxa call detail with failure reason, masked phone number, recording and transcript" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Security, and how I checked it</h3>
+                <p class="text-300 mb-4">
+                    A phone line that can create bookings is a door into the business, so I treat it like one. This is what the original system does:
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Only Twilio can talk to the voice endpoint.</span><span class="text-300"> Every request, both the HTTP webhook and the live audio socket, has its Twilio signature verified. A fake request gets dropped.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Staff login done properly.</span><span class="text-300"> Passwords hashed with argon2. The session lives in a signed, httpOnly, SameSite strict cookie backed by a session row in the database, so it can be revoked. Requests from other origins are rejected.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Rate limits and security headers</span><span class="text-300"> on every route, including a Content Security Policy.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Customer data stays private, even from staff.</span><span class="text-300"> Phone numbers come out of the API masked to the last 4 digits, and sensitive fields are redacted from the server logs.</span></div>
+                    </li>
+                </ul>
+                <p class="text-300 mb-4">
+                    And in the rebuild itself: the login redirect blocks open redirect tricks (javascript:, data:, protocol relative and cross origin URLs), every route behind login has a guard, a 401 anywhere clears the session and sends you back to login, and there isn't a single real customer record anywhere in the repo. I also took the client and vendor names out of every public file, and kept my own analysis of the original out of the repo entirely.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance</h3>
+                <p class="text-300 mb-4">
+                    On a phone call, speed isn't a nice to have. A two second pause sounds like the line dropped. So the voice side is built to keep every turn short:
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">No audio conversion in the middle.</span><span class="text-300"> Audio stays in Twilio's native g711 μ-law format end to end, so there's no transcoding step adding delay.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The caller can interrupt.</span><span class="text-300"> Semantic voice activity detection knows when someone finished a sentence, and barge in cancels the AI's reply the moment the caller starts talking. Just like a real receptionist.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Smaller prompts, faster answers.</span><span class="text-300"> Once the intent is known, the backend trims the instructions down to that one flow. Fewer tokens per turn means lower latency and a lower bill.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">A snappy admin panel.</span><span class="text-300"> Pages preload when you hover a link, recordings are cached after the first play, and the landing page is static Astro with almost no JavaScript. No horizontal scroll at 1440, 768 or 375 pixels wide.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The original ran as a working PoC on AWS in Tokyo: the backend in a container on ECS, PostgreSQL next to it, secrets in SSM Parameter Store, and GitHub Actions running lint, type check and tests on every pull request, then deploying automatically once the code is merged. The rebuild is split into two apps, each one its own Vercel project deployed straight from main. Every change goes out the same way and can be rolled back in one click.
+                </p>
+                <p class="text-300 mb-4">
+                    What you'd get at the end is not just a link. You get the repo, a plan that shows what was built in what order, a README that gets a new developer running in minutes, and the evidence folder that proves each screen works.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What I guarantee when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">You see it running before you commit.</span><span class="text-300"> I build a small working piece of your idea first. If you don't like it, you walk away.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">"Done" means checked.</span><span class="text-300"> Nothing is marked done until the type check and build pass and every state of the screen has been looked at, on desktop and on a phone.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">No made up numbers.</span><span class="text-300"> If a metric isn't real yet, I label it as sample content. You saw that on the Voxa pricing section, and you'll see it in your product too.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">You own everything.</span><span class="text-300"> Code, repo, docs and deploys are yours, written so your next hire won't have to rebuild it.</span></div>
+                    </li>
+                </ul>
+
+                <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">The rebuild in numbers</h5>
+                    <div class="row g-4 text-center">
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">3 days</h3>
+                            <p class="fs-7 text-white-50 mb-0">From empty repo to live demo</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">18/18</h3>
+                            <p class="fs-7 text-white-50 mb-0">Screen and state checks passed</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0</h3>
+                            <p class="fs-7 text-white-50 mb-0">Real customer records in the repo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prev / Next Navigation -->
+                <div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top border-800">
+                    <a href="/work-ai-avatar-chatbot" class="btn btn-outline-secondary text-uppercase fs-7">
+                        <i class="ri-arrow-left-line me-2"></i>Previous<span class="d-none d-sm-inline">&nbsp;Project</span>
+                    </a>
+                    <a href="/work-askly-hr-helpdesk" class="btn btn-gradient text-uppercase fs-7">
+                        Next<span class="d-none d-sm-inline">&nbsp;Project</span> <i class="ri-arrow-right-line ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
