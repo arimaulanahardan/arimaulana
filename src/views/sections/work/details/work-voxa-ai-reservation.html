@@ -67,41 +67,55 @@
                     The ask was simple to say and hard to build: answer every call in natural spoken Japanese, take new bookings, changes and cancellations, never promise a slot that doesn't exist, and give the 1 to 3 staff per store a clean place to check what happened on each call.
                 </p>
 
-                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">How the call actually works</h4>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    Here's the whole thing on one page. The caller dials the salon number, Twilio streams the live audio to our Fastify backend, and the backend bridges it to the OpenAI Realtime API. Speech goes in, the model reasons and calls our tools, speech comes back out. No robotic menu, no "press 1". Every call lands in PostgreSQL, and the staff review them in the admin panel.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/voxa-ai-reservation-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Voxa architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/voxa-ai-reservation-architecture.webp" alt="Voxa architecture: caller to Twilio Voice, live audio to a Fastify backend on AWS ECS, which talks to OpenAI Realtime over WebSocket, saves every call to PostgreSQL, checks availability with the salon booking system, and serves the staff admin panel" width="2480" height="1380" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">How a booking call flows through the system. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <p class="text-300 mb-4">
+                    Putting an AI on a phone line sounds easy until a real person calls. These are the problems that took actual engineering.
+                </p>
                 <ul class="list-unstyled mb-5">
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-phone-line text-primary fs-5 me-3 mt-1"></i>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-timer-flash-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">Twilio streams the audio, OpenAI Realtime does the talking.</span>
-                            <span class="text-300"> The caller dials the salon number, Twilio opens a live audio stream to our Fastify backend, and the backend bridges it to the OpenAI Realtime API. Speech goes in, the model reasons and calls tools, speech comes back out. No robotic menu, no "press 1".</span>
+                            <span class="text-dark fw-bold d-block mb-1">Silence kills a phone call.</span>
+                            <span class="text-300">On a website, a two second wait is fine. On the phone it sounds like the line dropped, and people hang up. So I kept the audio in Twilio's native μ-law format end to end with no conversion step, used the Realtime API so speech goes straight in and straight out, and trimmed the prompt down to just the current task once the AI knows what the caller wants. Fewer tokens per turn, faster replies.</span>
                         </div>
                     </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-route-line text-primary fs-5 me-3 mt-1"></i>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-chat-voice-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">The AI sorts the call first, then follows a script for that job.</span>
-                            <span class="text-300"> Every call gets classified into one of five intents: new booking, change, cancel, question, or other. If it's unclear, the AI asks again, up to three times. Once it knows, the backend swaps in only the instructions and tools for that flow.</span>
+                            <span class="text-dark fw-bold d-block mb-1">Real callers interrupt, and change their mind.</span>
+                            <span class="text-300">Nobody waits politely for a bot to finish. Semantic voice activity detection works out when someone actually finished a sentence, and the moment the caller starts talking, the AI stops. If the caller corrects the booking, the AI takes the correction, up to three times. After that it ends the call politely and logs it for staff to follow up, instead of looping forever.</span>
                         </div>
                     </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-calendar-check-line text-primary fs-5 me-3 mt-1"></i>
-                        <div>
-                            <span class="text-dark fw-bold">Business rules live in code, not in the prompt.</span>
-                            <span class="text-300"> Closed days, opening hours, a 30 minute slot grid, at least 60 minutes notice for same day bookings, up to 7 days ahead. When a request breaks a rule, the AI always comes back with alternatives instead of a flat no.</span>
-                        </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-chat-check-line text-primary fs-5 me-3 mt-1"></i>
-                        <div>
-                            <span class="text-dark fw-bold">Two turn read back before anything is booked.</span>
-                            <span class="text-300"> The AI repeats the date, time and menu, asks "is that correct?", and waits for an explicit yes. Availability gets checked one more time right before confirming.</span>
-                        </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
+                    <li class="mb-4 d-flex align-items-start">
                         <i class="ri-shield-check-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">A guard against fake success.</span>
-                            <span class="text-300"> This is the one I like the most. Language models love to say "you're all set!" The system won't let the AI report a booking as done unless the confirm tool actually ran. If it didn't, the call is logged as failed with a reason the staff can read.</span>
+                            <span class="text-dark fw-bold d-block mb-1">Language models love to say yes.</span>
+                            <span class="text-300">The scariest bug in a booking bot is "you're all set!" when nothing was booked. So the system won't let the AI report success unless the confirm tool actually ran. If it didn't, the call is logged as failed with a reason the staff can read and act on.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-user-voice-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Names and numbers over a phone line.</span>
+                            <span class="text-300">Japanese names, phone numbers, dates, all spoken over a cheap phone line. The AI finds a free slot first and only then asks for a name and number, so nobody spells their name for a time that isn't available. Then comes a two turn read back: the AI repeats everything, asks "is that correct?", and waits for a clear yes.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-calendar-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Rules that can't bend.</span>
+                            <span class="text-300">Closed days, opening hours, a 30 minute slot grid, at least 60 minutes notice for same day bookings, up to 7 days ahead. These live in code, not in the prompt, so the AI can't talk its way around them. When a request breaks a rule, the caller always hears alternatives instead of a flat no, and availability is checked one last time right before confirming.</span>
                         </div>
                     </li>
                 </ul>
@@ -160,6 +174,14 @@
                     </li>
                 </ul>
 
+                <!-- Documentation photo from a client session; the other participant and the workspace are blurred on purpose. -->
+                <figure class="my-5">
+                    <div class="rounded-4 overflow-hidden border border-800">
+                        <img src="assets/imgs/projects/case-studies/client-meeting-japan.webp" alt="Ari Maulana in a video call with the team in Japan, walking through the project documents in Notion" width="1400" height="708" class="img-fluid w-100" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">A working session with the team in Japan, going through the project docs in Notion. Names and client details are blurred on purpose.</figcaption>
+                </figure>
+
                 <!-- Project gallery: real screenshots of the live rebuild (fictional data). -->
                 <div class="row g-4 my-5">
                     <div class="col-md-6">
@@ -197,29 +219,29 @@
                     </li>
                 </ul>
                 <p class="text-300 mb-4">
-                    And in the rebuild itself: the login redirect blocks open redirect tricks (javascript:, data:, protocol relative and cross origin URLs), every route behind login has a guard, a 401 anywhere clears the session and sends you back to login, and there isn't a single real customer record anywhere in the repo. I also took the client and vendor names out of every public file, and kept my own analysis of the original out of the repo entirely.
+                    And in the rebuild itself: the login redirect blocks open redirect tricks (javascript:, data:, protocol relative and cross origin URLs), every route behind login has a guard, and a 401 anywhere clears the session and sends you back to login. I also took the client and vendor names out of every public file, and kept my own analysis of the original out of the repo entirely.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance, measured</h3>
                 <p class="text-300 mb-4">
-                    On a phone call, speed isn't a nice to have. A two second pause sounds like the line dropped. So the voice side is built to keep every turn short:
+                    The voice side is tuned for short turns, as you read above. For the web side, I don't want you to take my word for it, so I ran Google Lighthouse against the live demo.
                 </p>
                 <ul class="list-unstyled mb-4">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">No audio conversion in the middle.</span><span class="text-300"> Audio stays in Twilio's native g711 μ-law format end to end, so there's no transcoding step adding delay.</span></div>
+                        <div><span class="text-dark fw-bold">Landing page: 100 out of 100</span><span class="text-300"> in all four Lighthouse categories on desktop, performance, accessibility, best practices and SEO. On a mobile profile, performance still scores 99.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">The caller can interrupt.</span><span class="text-300"> Semantic voice activity detection knows when someone finished a sentence, and barge in cancels the AI's reply the moment the caller starts talking. Just like a real receptionist.</span></div>
+                        <div><span class="text-dark fw-bold">The page is on screen in 0.3 seconds</span><span class="text-300"> on desktop (largest contentful paint), and in 1.1 seconds on a throttled mobile connection.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Smaller prompts, faster answers.</span><span class="text-300"> Once the intent is known, the backend trims the instructions down to that one flow. Fewer tokens per turn means lower latency and a lower bill.</span></div>
+                        <div><span class="text-dark fw-bold">42 KB for the whole page.</span><span class="text-300"> It's static Astro with almost no JavaScript, so there's nothing heavy to download. Most websites ship more than that in fonts alone.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">A snappy admin panel.</span><span class="text-300"> Pages preload when you hover a link, recordings are cached after the first play, and the landing page is static Astro with almost no JavaScript. No horizontal scroll at 1440, 768 or 375 pixels wide.</span></div>
+                        <div><span class="text-dark fw-bold">The admin panel feels instant.</span><span class="text-300"> Pages preload when you hover a link and recordings are cached after the first play. Even on a mobile profile it scores 91 for performance with 100 for accessibility.</span></div>
                     </li>
                 </ul>
 
@@ -231,19 +253,19 @@
                     What you'd get at the end is not just a link. You get the repo, a plan that shows what was built in what order, a README that gets a new developer running in minutes, and the evidence folder that proves each screen works.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What I guarantee when you work with me</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
                 <ul class="list-unstyled mb-5">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">You see it running before you commit.</span><span class="text-300"> I build a small working piece of your idea first. If you don't like it, you walk away.</span></div>
+                        <div><span class="text-dark fw-bold">A working piece before you commit.</span><span class="text-300"> I build a small part of your idea first, running for real. You decide after you've used it.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">"Done" means checked.</span><span class="text-300"> Nothing is marked done until the type check and build pass and every state of the screen has been looked at, on desktop and on a phone.</span></div>
+                        <div><span class="text-dark fw-bold">AI that's safe to put in front of customers.</span><span class="text-300"> Guardrails like the fake success check are part of how I build, not an extra you have to ask for.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">No made up numbers.</span><span class="text-300"> If a metric isn't real yet, I label it as sample content. You saw that on the Voxa pricing section, and you'll see it in your product too.</span></div>
+                        <div><span class="text-dark fw-bold">Fast by default, and proven.</span><span class="text-300"> Every screen is checked on desktop and on a phone, and you get the Lighthouse numbers, not just my word.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
@@ -252,19 +274,19 @@
                 </ul>
 
                 <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
-                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">The rebuild in numbers</h5>
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">Measured on the live demo</h5>
                     <div class="row g-4 text-center">
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">3 days</h3>
-                            <p class="fs-7 text-white-50 mb-0">From empty repo to live demo</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100</h3>
+                            <p class="fs-7 text-white-50 mb-0">Lighthouse score in all 4 categories</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">18/18</h3>
-                            <p class="fs-7 text-white-50 mb-0">Screen and state checks passed</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0.3s</h3>
+                            <p class="fs-7 text-white-50 mb-0">Until the page is on screen</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0</h3>
-                            <p class="fs-7 text-white-50 mb-0">Real customer records in the repo</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">42 KB</h3>
+                            <p class="fs-7 text-white-50 mb-0">Total landing page weight</p>
                         </div>
                     </div>
                 </div>

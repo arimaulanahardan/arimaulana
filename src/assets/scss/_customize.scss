@@ -1240,3 +1240,19 @@ h1.hero-flip-run .text-primary {
     transform: translateY(0) !important;
     transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
+
+/* Case study architecture diagrams (work-*.html). The drawing has its own
+   paper background, so it reads the same in light and dark mode. On narrow
+   screens it keeps a readable minimum width and scrolls sideways instead of
+   shrinking the labels to nothing; the link opens it full size. */
+.arch-diagram {
+    background: #fbfaf6;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    img {
+        display: block;
+        width: 100%;
+        min-width: 720px;
+        height: auto;
+    }
+}
