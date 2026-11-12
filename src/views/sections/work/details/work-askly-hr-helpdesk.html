@@ -239,30 +239,26 @@
                     In the rebuild I mirrored the same rules so you can see them working: the member role gets a 403 on anything that changes data and sees forms as read only, inactive accounts can't log in, every form is validated with Zod, the developer playground returns 404 in production, and the switch I use to simulate errors is ignored in production builds. Those role rules are covered by tests, not just clicked through once.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance, measured</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast where employees feel it</h3>
                 <p class="text-300 mb-4">
-                    I don't want you to take my word for it, so I ran Google Lighthouse against all three live apps.
+                    Someone scanning a QR code between meetings gives a tool a few seconds. If it feels slow, they pick up the phone and call HR again.
                 </p>
                 <ul class="list-unstyled mb-4">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">100 for performance</span><span class="text-300"> on the landing page and the HR admin, on desktop. The chat app scores 99. Accessibility is 98 to 100 across all three.</span></div>
+                        <div><span class="text-dark fw-bold">Answers start appearing right away.</span><span class="text-300"> The reply shows up word by word while the AI is still writing, so nobody stares at a spinner. A long answer can be stopped halfway.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">On screen in under a second.</span><span class="text-300"> Largest contentful paint is 0.5 seconds for the landing page, 0.8 for the chat and 0.3 for the admin on desktop.</span></div>
+                        <div><span class="text-dark fw-bold">Quick to open.</span><span class="text-300"> On a work laptop the chat is ready in under a second. The landing page and the HR admin score a perfect 100 on Google's own speed check, and the chat scores 99.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Zero layout shift.</span><span class="text-300"> Nothing jumps around while a page loads, on any of the three apps. Lighthouse measures it as a layout shift score of 0, the best possible.</span></div>
+                        <div><span class="text-dark fw-bold">Stays up on a busy morning.</span><span class="text-300"> When everyone asks about the new leave policy at once, the server slows down gracefully instead of falling over.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Answers stream, they don't load.</span><span class="text-300"> The reply comes in over server sent events, so the first words show up while the model is still writing. A stopped answer is actually cancelled, not left running in the background.</span></div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Smart about cost and load.</span><span class="text-300"> In development, embeddings run locally on Ollama for free, and production switches to OpenAI automatically. On the server, a health monitor turns requests away before memory or the event loop gets overloaded, so a busy morning slows things down instead of taking them down.</span></div>
+                        <div><span class="text-dark fw-bold">Keeps the AI bill low.</span><span class="text-300"> During development the AI search runs on a free local model, so no money is burned on testing. Production switches to OpenAI automatically.</span></div>
                     </li>
                 </ul>
 
@@ -290,24 +286,24 @@
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Fast by default, and proven.</span><span class="text-300"> You get the Lighthouse numbers and the test results, not just my word.</span></div>
+                        <div><span class="text-dark fw-bold">Fast, and checked.</span><span class="text-300"> Every screen is tested on desktop and on a phone, and the core logic is covered by automated tests.</span></div>
                     </li>
                 </ul>
 
                 <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
-                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">Measured on the live apps</h5>
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the HR team gets</h5>
                     <div class="row g-4 text-center">
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100</h3>
-                            <p class="fs-7 text-white-50 mb-0">Lighthouse performance, landing and admin</p>
-                        </div>
-                        <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0.8s</h3>
-                            <p class="fs-7 text-white-50 mb-0">Until the chat is on screen</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">24/7</h3>
+                            <p class="fs-7 text-white-50 mb-0">Answers for employees, without a call to HR</p>
                         </div>
                         <div class="col-4">
                             <h3 class="ds-4 text-white-keep fw-bold mb-1">0</h3>
-                            <p class="fs-7 text-white-50 mb-0">Layout shift across all 3 apps</p>
+                            <p class="fs-7 text-white-50 mb-0">Logins needed, so asking stays anonymous</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100%</h3>
+                            <p class="fs-7 text-white-50 mb-0">Of AI written FAQs checked by HR before going live</p>
                         </div>
                     </div>
                 </div>

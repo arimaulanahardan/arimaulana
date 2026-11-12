@@ -214,26 +214,22 @@
                     And in the rebuild itself: the login redirect blocks open redirect tricks (javascript:, data:, protocol relative and cross origin URLs), every route behind login has a guard, and a 401 anywhere clears the session and sends you back to login. I also took the client and vendor names out of every public file, and kept my own analysis of the original out of the repo entirely.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance, measured</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast where your customers feel it</h3>
                 <p class="text-300 mb-4">
-                    The voice side is tuned for short turns, as you read above. For the web side, I don't want you to take my word for it, so I ran Google Lighthouse against the live demo.
+                    A caller won't sit through silence, and someone checking you out on their phone won't wait for a slow page. Both cost you bookings.
                 </p>
                 <ul class="list-unstyled mb-4">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Landing page: 100 out of 100</span><span class="text-300"> in all four Lighthouse categories on desktop, performance, accessibility, best practices and SEO. On a mobile profile, performance still scores 99.</span></div>
+                        <div><span class="text-dark fw-bold">No awkward silence on the line.</span><span class="text-300"> Replies come back quickly enough to sound like a conversation, and the AI stops the moment the caller cuts in. Nobody wonders if the line dropped.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">The page is on screen in 0.3 seconds</span><span class="text-300"> on desktop (largest contentful paint), and in 1.1 seconds on a throttled mobile connection.</span></div>
+                        <div><span class="text-dark fw-bold">Opens instantly, even on a weak signal.</span><span class="text-300"> The website loads in about a second on a slow mobile connection and scores a perfect 100 on Google's own speed and quality check. Fewer people leave before they get to the booking button.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">42 KB for the whole page.</span><span class="text-300"> It's static Astro with almost no JavaScript, so there's nothing heavy to download. Most websites ship more than that in fonts alone.</span></div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">The admin panel feels instant.</span><span class="text-300"> Pages preload when you hover a link and recordings are cached after the first play. Even on a mobile profile it scores 91 for performance with 100 for accessibility.</span></div>
+                        <div><span class="text-dark fw-bold">Staff never wait either.</span><span class="text-300"> Call logs open instantly, and a recording plays right away once it has been opened before. Checking yesterday's calls takes minutes, not a coffee break.</span></div>
                     </li>
                 </ul>
 
@@ -257,7 +253,7 @@
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Fast by default, and proven.</span><span class="text-300"> Every screen is checked on desktop and on a phone, and you get the Lighthouse numbers, not just my word.</span></div>
+                        <div><span class="text-dark fw-bold">Fast where it matters.</span><span class="text-300"> Every screen is checked on desktop and on a phone before you ever see it.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
@@ -266,19 +262,19 @@
                 </ul>
 
                 <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
-                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">Measured on the live demo</h5>
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the salon gets</h5>
                     <div class="row g-4 text-center">
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100</h3>
-                            <p class="fs-7 text-white-50 mb-0">Lighthouse score in all 4 categories</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">24/7</h3>
+                            <p class="fs-7 text-white-50 mb-0">Every call answered, even after closing</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0.3s</h3>
-                            <p class="fs-7 text-white-50 mb-0">Until the page is on screen</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">5</h3>
+                            <p class="fs-7 text-white-50 mb-0">Call types handled: book, change, cancel, questions, other</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">42 KB</h3>
-                            <p class="fs-7 text-white-50 mb-0">Total landing page weight</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100%</h3>
+                            <p class="fs-7 text-white-50 mb-0">Of calls recorded with a transcript for staff</p>
                         </div>
                     </div>
                 </div>
