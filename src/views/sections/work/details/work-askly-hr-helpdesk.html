@@ -1,0 +1,280 @@
+<section class="section-work-single section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+                    <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
+                        <i class="ri-arrow-left-line"></i> Back to Works
+                    </a>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">AI Helpdesk &amp; RAG</span>
+                </div>
+
+                <h1 class="ds-3 text-dark fw-bold mb-4">Askly: an anonymous AI helpdesk for HR questions</h1>
+                <p class="fs-5 text-300 mb-6">
+                    HR teams answer the same questions every single day. How many leave days do I get? Where's the address change form? Can I take leave in half days? Askly answers them first, from the company's own Notion pages and an FAQ that HR approves, and employees can ask without anyone knowing who asked.
+                </p>
+
+                <!-- Project Meta Details Grid -->
+                <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">HR team of a client company, via 80&amp;Company</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Engineer on the original platform, sole builder of the public rebuild</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Rebuild Timeline</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">3 days, 240 commits (Nov 2026)</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Next.js, Fastify, PostgreSQL, Qdrant, Dify, OpenAI, Notion API</h6>
+                    </div>
+                </div>
+
+                <!-- Live demo links. Everything runs on mock data, so the demo login is public. -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                    <a href="https://askly-chat.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-gradient d-inline-flex align-items-center">
+                        Ask the chatbot <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                    <a href="https://askly-admin.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                        Try the HR admin <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                    <a href="https://askly-landing.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                        Landing page <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                </div>
+                <p class="fs-7 text-300 mb-0">Admin demo login: <span class="text-dark">password</span> / <span class="text-dark">password</span>. The chat needs no login, that's the point.</p>
+
+                <!-- Showcase Image -->
+                <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
+                    <img src="assets/imgs/projects/projects-1/work-askly-hr-helpdesk.webp" alt="Askly landing page, mobile chat, conversation logs and HR dashboard" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                </div>
+
+                <!-- Case Study Details -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">First, a quick honest note</h3>
+                <p class="text-300 mb-4">
+                    The original platform was built for one client company and its code stays private, so I won't name them or show their data. To show you how I work, I studied the original and rebuilt all three apps from scratch under a new name, Askly, running on fictional data. You can open every screen yourself. The AI pipeline, the security and the infrastructure below describe the original. The screens are the rebuild.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
+                <p class="text-300 mb-4">
+                    The company kept all its HR rules in Notion: moving house, getting married, tax adjustments, commute passes, and the paperwork that goes with each one. Nobody reads Notion, though. People just phoned HR.
+                </p>
+                <p class="text-300 mb-4">
+                    That caused three problems. The phone tied up both sides. Forms and documents are hard to explain by voice. And the big one: it wasn't anonymous. Nobody wants HR or their boss to know they asked about marriage leave, living together, or harassment. The client had already tried Notion AI and dropped it because the answers weren't accurate enough.
+                </p>
+                <p class="text-300 mb-4">
+                    So the brief came down to five things. Answer from Notion. Include files attached in Notion. Handle a big workspace. Let people ask anonymously. And be more accurate than Notion AI.
+                </p>
+
+                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">What I built</h4>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-chat-smile-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A chat that feels like ChatGPT, with no login.</span>
+                            <span class="text-300"> Employees open it from a desktop shortcut or by scanning a QR code on the office wall, so it's designed for the phone first. They pick a source, company documents or the approved FAQ, and the answer streams in word by word. They can stop it, rate it, rename or delete the conversation.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-database-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Answers grounded in the company's own pages.</span>
+                            <span class="text-300"> Notion pages and their attachments get split into chunks of about 1,000 tokens, each one keeping track of its parent pages for context, then embedded and stored in Qdrant. When someone asks, Dify runs the conversation and calls back into our backend to search the right chunks or FAQs before the model writes a word.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-refresh-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Notion stays in sync on its own.</span>
+                            <span class="text-300"> A Notion webhook picks up new, edited, moved and deleted pages. If HR would rather control timing, there's a manual mode: changes queue up and someone clicks "Sync now" on the dashboard.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-user-follow-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">AI suggests, a human approves.</span>
+                            <span class="text-300"> HR can upload PDFs, Word files, spreadsheets or a ZIP, and an LLM pulls question and answer pairs out of them. A scheduled job also proposes new FAQs from real conversations. None of it goes live by itself. Every candidate lands as pending until someone on the HR team publishes or rejects it.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-dashboard-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">An admin panel HR can actually use.</span>
+                            <span class="text-300"> Dashboard with good and bad ratings, FAQ management with nested categories, conversation logs with the rating of every turn, admin accounts, and file upload with progress you can cancel.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">One monorepo, shared building blocks.</span><span class="text-300"> pnpm and Turborepo with three Next.js apps on top of a shared UI package of 23 components, a shared config, and a typed mock layer. Change a button once, all three apps get it.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Tests where the logic is.</span><span class="text-300"> 47 Vitest cases cover the parts that would hurt if they broke: auth, roles, chat, streaming and the data store.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Details that matter to real users.</span><span class="text-300"> Pressing Enter while typing in Japanese confirms the word, it doesn't send the message. Small thing, but get it wrong and every Japanese user sends half a sentence. Messages are capped at 10,000 characters, uploads at 5 MB, with a clear message when you hit the limit.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Clean history.</span><span class="text-300"> 240 commits in Conventional Commits style, 17 feature branches merged without squashing, so you can trace any line back to the task it came from.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The process, step by step</h3>
+                <p class="text-300 mb-4">
+                    Same method I use everywhere: ATM, short for Amati, Tiru, Modifikasi in Indonesian. Observe, imitate, then modify.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">1</span>
+                        <div><span class="text-dark fw-bold">Observe.</span><span class="text-300"> I read the original, app by app, and wrote a full analysis: the business problem, the architecture, the data model, every screen. I skipped the .env files on purpose. No secrets were read or copied.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">2</span>
+                        <div><span class="text-dark fw-bold">Design and audit before code.</span><span class="text-300"> 23 frames designed and then audited. The audit caught input borders with a contrast of 1.26 to 1, basically invisible. I fixed them to 3.45 to 1 before a single component was built.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">3</span>
+                        <div><span class="text-dark fw-bold">A kanban of 20 tasks with owner gates.</span><span class="text-300"> Each task has a branch and a definition of done. At two milestones the work stops until the owner signs off. That's where you would come in as the founder.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">4</span>
+                        <div><span class="text-dark fw-bold">AI agents build, I review and merge.</span><span class="text-300"> Several AI coding agents work in parallel, each in its own git worktree. They're not allowed to push. Nothing reaches main until I've checked it.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">5</span>
+                        <div><span class="text-dark fw-bold">Visual QA, then ship.</span><span class="text-300"> A final pass compares every screen against the design on desktop and mobile, then all three apps go live.</span></div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: real screenshots of the live rebuild (fictional data). -->
+                <div class="row g-4 my-5">
+                    <div class="col-md-6">
+                        <div class="rounded-4 overflow-hidden border border-800">
+                            <img src="assets/imgs/projects/case-studies/askly-hr-helpdesk-1.webp" alt="Askly chat answering a question about paid leave, with conversation history" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="rounded-4 overflow-hidden border border-800">
+                            <img src="assets/imgs/projects/case-studies/askly-hr-helpdesk-2.webp" alt="Askly HR dashboard with AI suggested FAQ candidates waiting for approval and Notion sync" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Security, and how I checked it</h3>
+                <p class="text-300 mb-4">
+                    An HR bot sits on top of company rules and very personal questions. Anonymity is only worth something if it's built into the system, not just promised on the landing page. In the original:
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Anonymous by design.</span><span class="text-300"> Employees chat with a guest token, not an account. There's no login tying a question to a name.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Only Notion can trigger a sync.</span><span class="text-300"> Every webhook has its signature verified, and the internal routes Dify calls back into are protected with HMAC signed URLs.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Roles enforced on the server.</span><span class="text-300"> Admin passwords are hashed with Argon2, sessions use JWT cookies, and every route that changes data checks for the admin role. A member can look, not touch.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Hardened at the edge.</span><span class="text-300"> Security headers, rate limiting and CORS on the API, behind a load balancer with a web application firewall.</span></div>
+                    </li>
+                </ul>
+                <p class="text-300 mb-4">
+                    In the rebuild I mirrored the same rules so you can see them working: the member role gets a 403 on anything that changes data and sees forms as read only, inactive accounts can't log in, every form is validated with Zod, the developer playground returns 404 in production, and the switch I use to simulate errors is ignored in production builds. Those role rules are covered by tests, not just clicked through once.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance</h3>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Answers stream, they don't load.</span><span class="text-300"> The reply comes in over server sent events, so the first words show up while the model is still writing. You can stop a long answer midway, and a stopped request is actually cancelled, not left running in the background.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Search only what matters.</span><span class="text-300"> Vector search in Qdrant over small chunks, with Notion reads cached, keeps each question cheap and quick even on a big workspace.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Smart about cost.</span><span class="text-300"> In development, embeddings run locally on Ollama for free. Production switches to OpenAI automatically. Nobody burns API credits while testing.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The server protects itself.</span><span class="text-300"> A health monitor watches memory and event loop delay and turns away requests before the server falls over. On the frontend, chat data is cached for a minute and doesn't refetch every time you switch tabs.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The original runs in Docker on AWS behind a load balancer and firewall, all set up with Terraform so the environment can be recreated from code. GitHub Actions builds the apps, runs the backend tests, and runs automated code review and security scan workflows on top of that.
+                </p>
+                <p class="text-300 mb-4">
+                    The rebuild ships as three separate Vercel projects, landing, chat and admin, each deployed from main. Separate projects mean a fix to the admin can't break the chat employees are using. You'd get the repo, the analysis, the implementation plan, the kanban and the audit reports. Enough for anyone to pick it up after me.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What I guarantee when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">You see it running before you commit.</span><span class="text-300"> I build a small working piece of your idea first. You decide after you've used it.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">You sign off at every milestone.</span><span class="text-300"> No surprise at the end. The work stops at agreed gates until you've seen it and said yes.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">AI never gets the last word on your data.</span><span class="text-300"> When an AI writes something your users will rely on, a human approves it first. That's how Askly works, and that's how I'd build yours.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Your secrets stay yours.</span><span class="text-300"> I don't read or copy credentials I don't need, and no real customer data ends up in a demo or a repo.</span></div>
+                    </li>
+                </ul>
+
+                <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">The rebuild in numbers</h5>
+                    <div class="row g-4 text-center">
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">3 apps</h3>
+                            <p class="fs-7 text-white-50 mb-0">Live on Vercel in 3 days</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">47</h3>
+                            <p class="fs-7 text-white-50 mb-0">Automated test cases</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">17</h3>
+                            <p class="fs-7 text-white-50 mb-0">Feature branches reviewed and merged</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prev / Next Navigation -->
+                <div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top border-800">
+                    <a href="/work-voxa-ai-reservation" class="btn btn-outline-secondary text-uppercase fs-7">
+                        <i class="ri-arrow-left-line me-2"></i>Previous<span class="d-none d-sm-inline">&nbsp;Project</span>
+                    </a>
+                    <a href="/work-qarigenerator" class="btn btn-gradient text-uppercase fs-7">
+                        <span class="d-none d-sm-inline">Back to&nbsp;</span>First Project <i class="ri-arrow-right-line ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
