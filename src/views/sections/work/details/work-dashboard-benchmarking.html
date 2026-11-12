@@ -1,4 +1,4 @@
-﻿<section class="section-work-single section-padding">
+<section class="section-work-single section-padding">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -9,104 +9,223 @@
                     <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
                         <i class="ri-arrow-left-line"></i> Back to Works
                     </a>
-                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">Data Analytics & Enterprise</span>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">Data Dashboard &amp; Telecom</span>
                 </div>
 
-                <h1 class="ds-3 text-dark fw-bold mb-4">Enterprise Real-Time Geospatial Dashboard & Benchmarking Tool</h1>
+                <h1 class="ds-3 text-dark fw-bold mb-4">A network benchmark dashboard: where a mobile operator wins and loses, city by city</h1>
                 <p class="fs-5 text-300 mb-6">
-                    A high-performance geospatial intelligence and spatial benchmarking platform designed to process massive geographical datasets, evaluate regional KPIs, and monitor resource distribution with sub-second responsiveness.
+                    A national mobile operator in Indonesia needed one answer every week: in which cities is our network better than the other three operators, where are we losing, and why. I built the dashboard that answers it, from a nationwide map down to the single site that needs fixing.
                 </p>
 
                 <!-- Project Meta Details Grid -->
                 <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
                     <div class="col-6 col-md-3">
                         <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">GeoSpatial Enterprise Group</h6>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">National mobile operator in Indonesia, via Neural Technologies Indonesia</h6>
                     </div>
                     <div class="col-6 col-md-3">
-                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Role</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">Lead Full-Stack & GIS Engineer</h6>
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Frontend engineer, built the dashboard end to end</h6>
                     </div>
                     <div class="col-6 col-md-3">
                         <span class="fs-7 text-uppercase text-secondary d-block mb-1">Timeline</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">3 Months (Aug 2024)</h6>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">About 1 month (2024)</h6>
                     </div>
                     <div class="col-6 col-md-3">
                         <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
-                        <h6 class="fs-6 text-dark fw-bold mb-0">React, Mapbox GL, Redux, Node.js</h6>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">React, TypeScript, Mapbox, ECharts, Redux, Ant Design</h6>
                     </div>
                 </div>
 
                 <!-- Showcase Image -->
                 <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
-                    <img src="assets/imgs/projects/projects-1/img-2.png" alt="Geospatial Benchmarking Dashboard" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                    <img src="assets/imgs/projects/projects-1/work-dashboard-benchmarking.webp" alt="Network benchmark dashboard: map of Indonesia colored by winning and losing cities, regional table, fail contributor and flip flop screens" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
                 </div>
 
                 <!-- Case Study Details -->
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Project Overview</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
                 <p class="text-300 mb-4">
-                    Large-scale field operations and commercial enterprises often struggle to benchmark regional efficiency across hundreds of administrative districts. Traditional BI dashboards fail to render dense coordinate arrays fluidly, causing frustrating UI lag during spatial comparisons.
+                    In telecom, customers don't compare coverage maps. They compare how their phone feels: does the video buffer, does the game lag, is the download fast. Independent firms like Tutela and Open Signal measure exactly that, using tests that run on real phones across the country, for every operator.
                 </p>
                 <p class="text-300 mb-4">
-                    As Lead Engineer, I architected this end-to-end Geospatial Benchmarking Platform using custom Mapbox GL layers and optimized client-side state caching. The application empowers analysts and C-level decision-makers to overlay multi-layered geographic indicators, cluster millions of geo-points, and generate comparative metric side-by-sides seamlessly.
+                    So the data existed. What the operator's teams needed was a way to act on it. Four operators, hundreds of cities, 13 regions, 9 quality metrics, every week, measured against quarterly targets. Each regional team had to know three things fast: which of our cities are losing, what exactly is making them lose, and is it getting better or worse.
                 </p>
 
-                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">Core Challenges & Architectural Solutions</h4>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What the dashboard answers</h3>
                 <ul class="list-unstyled mb-5">
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-map-2-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">Massive Point-Cluster Optimization:</span>
-                            <span class="text-300"> Implemented client-side GeoJSON tiling with Supercluster and Web Workers, rendering 100,000+ data nodes at a buttery-smooth 60 FPS without UI thread freezing.</span>
+                            <span class="text-dark fw-bold d-block mb-1">"Where are we winning?"</span>
+                            <span class="text-300">The summary page colors every city on the map: green when the operator wins all services, yellow or orange when it wins only some, red when it loses everything. Next to it, a table per region shows this week against last week and against the quarterly target, and a chart ranks where the biggest opportunities for improvement are.</span>
                         </div>
                     </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-search-eye-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">Dynamic Spatial Benchmarking:</span>
-                            <span class="text-300"> Designed split-screen choropleth heatmaps and polygon boundary queries, allowing analysts to compare province-to-province or city-to-city growth indicators synchronously.</span>
+                            <span class="text-dark fw-bold d-block mb-1">"Why did we lose there?"</span>
+                            <span class="text-300">The fail contributor page breaks a loss down by metric: latency, packet loss, jitter, download or upload speed. You can drill from region to regency to district, weekly or monthly, as numbers or percentages, for any operator.</span>
                         </div>
                     </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-swap-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
-                            <span class="text-dark fw-bold">Sub-Second Spatial Aggregations:</span>
-                            <span class="text-300"> Built a specialized PostGIS and caching layer that handles boundary intersection calculations and aggregated regional metrics in under 300ms.</span>
+                            <span class="text-dark fw-bold d-block mb-1">"Is it stable, or just luck this week?"</span>
+                            <span class="text-300">Some cities flip between winning and losing every few weeks. The flip flop page finds them, plots each operator against its upper and lower bands and moving average, and lists the exact sites with bad samples, so the field team knows which tower to look at.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-line-chart-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">"How is it trending?"</span>
+                            <span class="text-300">Daily, weekly and monthly trends for each metric, nationwide, by region or by city, plus the OKR achievement line against its target. Charts and tables can be exported to CSV for the weekly report.</span>
                         </div>
                     </li>
                 </ul>
 
-                <!-- Project gallery.
-                     PLACEHOLDER stock photos (public domain), not product screenshots.
-                     Swap for real screenshots when available; sources are listed in
-                     assets/imgs/projects/case-studies/CREDITS.md -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    Real phones run speed, video and game tests. Tutela and Open Signal collect them, and a backend API turns them into scores per city, region and week. My part is everything the team touches: a filter bar, a store that remembers the view, and the map, charts and tables that turn those scores into a decision.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/dashboard-benchmarking-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the benchmark dashboard architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-architecture.webp" alt="Architecture: real phones run tests, Tutela and Open Signal collect them, a benchmark API scores them per city, region and week; in the dashboard a filter bar updates a Redux store, which asks the API for the view and feeds the city map, trend charts and tables that regional network teams use to decide" width="2480" height="1460" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">From a test on someone's phone to a regional team's decision. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-earth-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Hundreds of cities on one map, still readable.</span>
+                            <span class="text-300">Indonesia has more than 500 cities and regencies. I drew each one as its real boundary and colored it with just four states, so a manager sees the whole country at a glance. The legend counts each state, and clicking a city shows which service it won or lost, and to which competitor.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-file-text-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Too many charts, too little time.</span>
+                            <span class="text-300">Nobody in a weekly meeting reads twelve charts. Under every KPI chart the dashboard writes the takeaway in plain words, like how many cities were won this week and which three regions are at the bottom. Read one sentence, then look at the chart only if you need to.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-filter-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Lots of filters, nobody wants to set them twice.</span>
+                            <span class="text-300">Data source, view, week, region, city. The dashboard remembers your last selection, so when a regional lead opens it on Monday, it comes back on the view they used last time.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-git-branch-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Building before the backend was ready.</span>
+                            <span class="text-300">I didn't wait. Every one of the 40+ data endpoints got a realistic mock response, so the whole dashboard could be built and clicked through end to end before the backend was finished. Switching to the real data needed no change to the screens.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-database-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Two data vendors, one way of reading them.</span>
+                            <span class="text-300">Tutela and Open Signal measure things a bit differently. Instead of two separate tools, the team switches the source from one dropdown and keeps the same map, table and charts they already know.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: real screens from the dashboard (already public in the project repo). -->
                 <div class="row g-4 my-5">
-                    <div class="col-md-6">
+                    <div class="col-12">
                         <div class="rounded-4 overflow-hidden border border-800">
-                            <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-1.webp" alt="Charts open on a laptop next to a tablet" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-screen-2.webp" alt="KPI trend charts for four operators with a plain language summary under each chart" width="1200" height="604" class="img-fluid w-100" loading="lazy" decoding="async">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="rounded-4 overflow-hidden border border-800">
-                            <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-2.webp" alt="Close-up of a printed road map" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-screen-3.webp" alt="Fail performance page showing which metrics caused losses in one region" width="1200" height="606" class="img-fluid w-100" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="rounded-4 overflow-hidden border border-800">
+                            <img src="assets/imgs/projects/case-studies/dashboard-benchmarking-screen-4.webp" alt="Flip flop winning cities page comparing four operators in one city with site level details" width="1200" height="610" class="img-fluid w-100" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">One folder per feature.</span><span class="text-300"> Map, KPI, fail contributor, flip flop: each has its own services, mock data, hooks and components. A new developer can work on one page without reading the whole app.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">TypeScript in strict mode.</span><span class="text-300"> Every API response has a type, so a renamed field breaks the build instead of quietly showing a blank chart.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Tests on the numbers.</span><span class="text-300"> The functions that turn raw data into what you see on the map and in the charts have unit tests, because a wrong color on a city is a wrong decision.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Built on the company's shared libraries.</span><span class="text-300"> Maps, charts and the API layer come from the team's internal packages, so this dashboard looks and behaves like the rest of their tools.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast enough for a live meeting</h3>
+                <p class="text-300 mb-4">
+                    This dashboard gets opened on a big screen with the whole team watching. If it hesitates, people stop trusting it.
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Only loads what you're looking at.</span><span class="text-300"> Changing a filter fetches the data for that view, not the whole database.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Search that waits for you.</span><span class="text-300"> City and district search waits until you stop typing before it asks the server, so typing a long name doesn't fire twenty requests.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">No jumping layout.</span><span class="text-300"> Placeholders hold the shape of each chart while it loads, and charts only redraw when their own data changes.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The build packages the whole dashboard into a single file, ready to drop onto the client's own server under its own path, next to their other internal tools. No new infrastructure for their team to manage.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Dashboards that answer a question.</span><span class="text-300"> I start from the decision your team needs to make, then design the screen around it, not the other way around.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">No waiting on other teams.</span><span class="text-300"> Mock data lets you see and click the real screens while the backend is still being built.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Fits into what you already run.</span><span class="text-300"> Your libraries, your servers, your conventions.</span></div>
+                    </li>
+                </ul>
+
                 <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
-                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">Impact & Key Deliverables</h5>
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the operator's teams get</h5>
                     <div class="row g-4 text-center">
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">&lt;300ms</h3>
-                            <p class="fs-7 text-white-50 mb-0">Query Latency</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">4</h3>
+                            <p class="fs-7 text-white-50 mb-0">Operators compared side by side, every city</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100k+</h3>
-                            <p class="fs-7 text-white-50 mb-0">Concurrent Geo-Nodes</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">9</h3>
+                            <p class="fs-7 text-white-50 mb-0">Quality metrics tracked every week</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">4.8x</h3>
-                            <p class="fs-7 text-white-50 mb-0">Analysis Speedup</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">1</h3>
+                            <p class="fs-7 text-white-50 mb-0">Screen from nationwide map to the site to fix</p>
                         </div>
                     </div>
                 </div>
