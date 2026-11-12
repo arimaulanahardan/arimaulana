@@ -83,31 +83,63 @@
                         </div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-database-2-line text-primary fs-5 me-3 mt-1"></i>
-                        <div>
-                            <span class="text-dark fw-bold">Answers grounded in the company's own pages.</span>
-                            <span class="text-300"> Notion pages and their attachments get split into chunks of about 1,000 tokens, each one keeping track of its parent pages for context, then embedded and stored in Qdrant. When someone asks, Dify runs the conversation and calls back into our backend to search the right chunks or FAQs before the model writes a word.</span>
-                        </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-refresh-line text-primary fs-5 me-3 mt-1"></i>
-                        <div>
-                            <span class="text-dark fw-bold">Notion stays in sync on its own.</span>
-                            <span class="text-300"> A Notion webhook picks up new, edited, moved and deleted pages. If HR would rather control timing, there's a manual mode: changes queue up and someone clicks "Sync now" on the dashboard.</span>
-                        </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="ri-user-follow-line text-primary fs-5 me-3 mt-1"></i>
-                        <div>
-                            <span class="text-dark fw-bold">AI suggests, a human approves.</span>
-                            <span class="text-300"> HR can upload PDFs, Word files, spreadsheets or a ZIP, and an LLM pulls question and answer pairs out of them. A scheduled job also proposes new FAQs from real conversations. None of it goes live by itself. Every candidate lands as pending until someone on the HR team publishes or rejects it.</span>
-                        </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-start">
                         <i class="ri-dashboard-3-line text-primary fs-5 me-3 mt-1"></i>
                         <div>
                             <span class="text-dark fw-bold">An admin panel HR can actually use.</span>
-                            <span class="text-300"> Dashboard with good and bad ratings, FAQ management with nested categories, conversation logs with the rating of every turn, admin accounts, and file upload with progress you can cancel.</span>
+                            <span class="text-300"> Dashboard with good and bad ratings, a Notion sync card, FAQ management with nested categories, conversation logs with the rating of every turn, admin accounts, and file upload with progress you can cancel.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    Two flows run side by side. On top, an employee asks a question: the chat streams it to our Fastify backend, Dify runs the conversation and calls back into the backend to search Qdrant, and the LLM writes the answer from what it found. At the bottom, knowledge stays fresh: Notion pages flow through ingestion and embeddings into the same vector store. HR sits on the right, approving what the AI suggests.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/askly-hr-helpdesk-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Askly architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/askly-hr-helpdesk-architecture.webp" alt="Askly architecture: employee to the Next.js chat app, streamed to a Fastify backend, which talks to Dify and an LLM, searches Qdrant, logs to PostgreSQL, and serves the HR admin; Notion pages go through ingestion and embeddings into Qdrant" width="2480" height="1520" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">How a question gets answered, and how the knowledge behind it stays up to date. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <p class="text-300 mb-4">
+                    An HR chatbot is easy to demo and hard to trust. These are the problems that made it worth building properly.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-focus-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Beating Notion AI on accuracy.</span>
+                            <span class="text-300">The client had already tried Notion AI and given up on it, so "good enough" wasn't good enough. Pages and their attachments are split into chunks of about 1,000 tokens, and every chunk remembers the pages above it. A chunk about year two leave still knows it lives under Leave, then Paid leave. That context is what keeps answers specific instead of vague. Employees can also switch to the FAQ source, where every answer was approved by HR.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-spy-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Anonymous has to mean anonymous.</span>
+                            <span class="text-300">People only ask about marriage leave or harassment if they trust nobody will know. So there is no login at all on the chat. Each visitor gets a guest token, and nothing ties a question to a name.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-refresh-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Knowledge goes stale the day HR edits a page.</span>
+                            <span class="text-300">A signed Notion webhook catches new, edited, moved and deleted pages and re-indexes them. For teams that want control over timing, there's a manual mode: changes queue up and HR clicks "Sync now" on the dashboard.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-user-follow-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">An AI shouldn't write HR policy on its own.</span>
+                            <span class="text-300">HR can upload PDFs, Word files, spreadsheets or a ZIP, and an LLM pulls question and answer pairs out of them. A scheduled job also proposes new FAQs from real conversations. None of it goes live by itself. Every draft waits as pending until someone on the HR team publishes or rejects it.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-translate-2 text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Typing in Japanese.</span>
+                            <span class="text-300">When you type Japanese, Enter confirms the characters you picked. A normal chat box treats that same Enter as send, so every Japanese user ends up sending half a sentence. The chat tells the two apart, so Enter only sends when you're actually done.</span>
                         </div>
                     </li>
                 </ul>
@@ -124,7 +156,7 @@
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Details that matter to real users.</span><span class="text-300"> Pressing Enter while typing in Japanese confirms the word, it doesn't send the message. Small thing, but get it wrong and every Japanese user sends half a sentence. Messages are capped at 10,000 characters, uploads at 5 MB, with a clear message when you hit the limit.</span></div>
+                        <div><span class="text-dark fw-bold">Limits with clear messages.</span><span class="text-300"> Messages are capped at 10,000 characters and uploads at 5 MB, and each limit tells you plainly what happened instead of failing silently.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
@@ -158,6 +190,14 @@
                         <div><span class="text-dark fw-bold">Visual QA, then ship.</span><span class="text-300"> A final pass compares every screen against the design on desktop and mobile, then all three apps go live.</span></div>
                     </li>
                 </ul>
+
+                <!-- Documentation photo from a client session; the other participant and the workspace are blurred on purpose. -->
+                <figure class="my-5">
+                    <div class="rounded-4 overflow-hidden border border-800">
+                        <img src="assets/imgs/projects/case-studies/client-meeting-japan.webp" alt="Ari Maulana in a video call with the team in Japan, walking through the project documents in Notion" width="1400" height="708" class="img-fluid w-100" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">A working session with the team in Japan, going through the HR documents in Notion that Askly answers from. Names and client details are blurred on purpose.</figcaption>
+                </figure>
 
                 <!-- Project gallery: real screenshots of the live rebuild (fictional data). -->
                 <div class="row g-4 my-5">
@@ -199,23 +239,30 @@
                     In the rebuild I mirrored the same rules so you can see them working: the member role gets a 403 on anything that changes data and sees forms as read only, inactive accounts can't log in, every form is validated with Zod, the developer playground returns 404 in production, and the switch I use to simulate errors is ignored in production builds. Those role rules are covered by tests, not just clicked through once.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Performance, measured</h3>
+                <p class="text-300 mb-4">
+                    I don't want you to take my word for it, so I ran Google Lighthouse against all three live apps.
+                </p>
                 <ul class="list-unstyled mb-4">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Answers stream, they don't load.</span><span class="text-300"> The reply comes in over server sent events, so the first words show up while the model is still writing. You can stop a long answer midway, and a stopped request is actually cancelled, not left running in the background.</span></div>
+                        <div><span class="text-dark fw-bold">100 for performance</span><span class="text-300"> on the landing page and the HR admin, on desktop. The chat app scores 99. Accessibility is 98 to 100 across all three.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Search only what matters.</span><span class="text-300"> Vector search in Qdrant over small chunks, with Notion reads cached, keeps each question cheap and quick even on a big workspace.</span></div>
+                        <div><span class="text-dark fw-bold">On screen in under a second.</span><span class="text-300"> Largest contentful paint is 0.5 seconds for the landing page, 0.8 for the chat and 0.3 for the admin on desktop.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Smart about cost.</span><span class="text-300"> In development, embeddings run locally on Ollama for free. Production switches to OpenAI automatically. Nobody burns API credits while testing.</span></div>
+                        <div><span class="text-dark fw-bold">Zero layout shift.</span><span class="text-300"> Nothing jumps around while a page loads, on any of the three apps. Lighthouse measures it as a layout shift score of 0, the best possible.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">The server protects itself.</span><span class="text-300"> A health monitor watches memory and event loop delay and turns away requests before the server falls over. On the frontend, chat data is cached for a minute and doesn't refetch every time you switch tabs.</span></div>
+                        <div><span class="text-dark fw-bold">Answers stream, they don't load.</span><span class="text-300"> The reply comes in over server sent events, so the first words show up while the model is still writing. A stopped answer is actually cancelled, not left running in the background.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Smart about cost and load.</span><span class="text-300"> In development, embeddings run locally on Ollama for free, and production switches to OpenAI automatically. On the server, a health monitor turns requests away before memory or the event loop gets overloaded, so a busy morning slows things down instead of taking them down.</span></div>
                     </li>
                 </ul>
 
@@ -227,11 +274,11 @@
                     The rebuild ships as three separate Vercel projects, landing, chat and admin, each deployed from main. Separate projects mean a fix to the admin can't break the chat employees are using. You'd get the repo, the analysis, the implementation plan, the kanban and the audit reports. Enough for anyone to pick it up after me.
                 </p>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What I guarantee when you work with me</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
                 <ul class="list-unstyled mb-5">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">You see it running before you commit.</span><span class="text-300"> I build a small working piece of your idea first. You decide after you've used it.</span></div>
+                        <div><span class="text-dark fw-bold">A working piece before you commit.</span><span class="text-300"> I build a small part of your idea first, running for real. You decide after you've used it.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
@@ -239,28 +286,28 @@
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">AI never gets the last word on your data.</span><span class="text-300"> When an AI writes something your users will rely on, a human approves it first. That's how Askly works, and that's how I'd build yours.</span></div>
+                        <div><span class="text-dark fw-bold">AI with a human in the loop.</span><span class="text-300"> When an AI writes something your users will rely on, a person approves it first. That's how Askly works, and that's how I'd build yours.</span></div>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
-                        <div><span class="text-dark fw-bold">Your secrets stay yours.</span><span class="text-300"> I don't read or copy credentials I don't need, and no real customer data ends up in a demo or a repo.</span></div>
+                        <div><span class="text-dark fw-bold">Fast by default, and proven.</span><span class="text-300"> You get the Lighthouse numbers and the test results, not just my word.</span></div>
                     </li>
                 </ul>
 
                 <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
-                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">The rebuild in numbers</h5>
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">Measured on the live apps</h5>
                     <div class="row g-4 text-center">
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">3 apps</h3>
-                            <p class="fs-7 text-white-50 mb-0">Live on Vercel in 3 days</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">100</h3>
+                            <p class="fs-7 text-white-50 mb-0">Lighthouse performance, landing and admin</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">47</h3>
-                            <p class="fs-7 text-white-50 mb-0">Automated test cases</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0.8s</h3>
+                            <p class="fs-7 text-white-50 mb-0">Until the chat is on screen</p>
                         </div>
                         <div class="col-4">
-                            <h3 class="ds-4 text-white-keep fw-bold mb-1">17</h3>
-                            <p class="fs-7 text-white-50 mb-0">Feature branches reviewed and merged</p>
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0</h3>
+                            <p class="fs-7 text-white-50 mb-0">Layout shift across all 3 apps</p>
                         </div>
                     </div>
                 </div>
