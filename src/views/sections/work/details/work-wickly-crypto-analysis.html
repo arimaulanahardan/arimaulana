@@ -1,0 +1,327 @@
+<section class="section-work-single section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+                    <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
+                        <i class="ri-arrow-left-line"></i> Back to Works
+                    </a>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">Chrome Extension &amp; AI</span>
+                </div>
+
+                <h1 class="ds-3 text-dark fw-bold mb-4">Wickly: an AI chart reader for crypto traders, right inside Chrome</h1>
+                <p class="fs-5 text-300 mb-6">
+                    A trader looks at a chart and isn't sure what it's saying. Wickly sits in the browser toolbar. One click captures the chart, the whole tab or just the part you drag over, and a few seconds later the AI gives its read: bullish, bearish or neutral, how confident it is, why, and what to do next. Then you can ask it follow up questions. Pro adds what a chart can't show: on-chain flows, sentiment, what Crypto Twitter is saying, and the narratives leading the quarter.
+                </p>
+
+                <!-- Project Meta Details Grid -->
+                <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Trading tools startup (Europe)</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Engineer on the original extension, sole builder of the public rebuild</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Timeline</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">3 months</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">React, TypeScript, WXT (Chrome MV3), Firebase, Stripe, Claude, TradingView, Astro</h6>
+                    </div>
+                </div>
+
+                <!-- Live demo links. Everything runs on mock data, so the demo login is public. -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                    <a href="https://wickly-demo.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-gradient d-inline-flex align-items-center">
+                        Try the live demo <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                    <a href="https://wickly-landing.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                        Landing page <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                </div>
+                <p class="fs-7 text-300 mb-0">Demo login: <span class="text-dark">demo@wickly.app</span> / <span class="text-dark">wickly-demo</span>. No install needed, the real extension popup runs next to a live chart in your browser.</p>
+
+                <!-- Showcase Image -->
+                <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
+                    <img src="assets/imgs/projects/projects-1/work-wickly-crypto-analysis.webp" alt="Wickly analysis result next to a live BTCUSDT chart, the Narratives tab in the popup, the Pro dashboard and the landing page" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                </div>
+
+                <!-- Case Study Details -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">First, a quick honest note</h3>
+                <p class="text-300 mb-4">
+                    The original extension was built for a startup in Europe and its code stays private, so I won't name them or show their product. To show you how I work, I studied the original and rebuilt it from scratch under a new name, Wickly, running on sample data. You can try every screen yourself. The capture flow, the free and paid plans and the payment flow follow the original. The Pro data layers and the dashboard were added in the rebuild at the owner's request, built so real data providers can plug in later.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
+                <p class="text-300 mb-4">
+                    Traders already live on TradingView. When a chart looks unclear they want a second opinion, fast. Right now that means a screenshot pasted into a chatbot, then five more tabs for funding rates, whale flows, the Fear and Greed index and whatever Crypto Twitter is shouting about. By the time they've checked everything, the move is gone.
+                </p>
+                <p class="text-300 mb-4">
+                    The founder wanted a tool that lives where traders already are, gives a clear read in seconds, and pays for itself: a free plan good enough to get people hooked, and a monthly Pro plan for the ones who use it every day.
+                </p>
+
+                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">What I built</h4>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-screenshot-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A Chrome extension that reads the chart you're looking at.</span>
+                            <span class="text-300"> Capture the whole tab or drag over just the chart. The AI returns a direction with a confidence score, a quick take, a detailed analysis, numbered action items, and a technical check on trend strength, volume, support and resistance and market structure. The pair and timeframe are read from the chart itself.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-chat-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A chat for the follow up questions.</span>
+                            <span class="text-300"> Ask anything about the trade, and attach images, PDFs, JSON or text files up to 10 MB. Your last 20 analyses are one tap away, and a live BTC and SOL ticker sits on the home screen.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-vip-crown-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Free and Pro plans, with real billing.</span>
+                            <span class="text-300"> Free gets 5 actions a day, shared between analyses and chat. Pro is unlimited and paid monthly through Stripe, with a subscription page and clear success, cancelled and failed payment screens. Sign in with Google or email, and an onboarding that walks people from install to their first scan.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-line-chart-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Pro data layers and a dashboard.</span>
+                            <span class="text-300"> Under the chart read, Pro users see exchange netflow, active addresses, whale transfers and funding, social sentiment with the Fear and Greed index, the latest posts from tracked Crypto Twitter accounts, and the quarter's top narratives with the tokens leading them. A desktop dashboard puts all of it in one view.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-window-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A web demo and a landing page.</span>
+                            <span class="text-300"> Asking someone to install an extension just to see it is a big ask. So the exact same popup also runs in a normal web page, next to a live TradingView chart. Anyone can try it from a link. The landing page sends visitors straight there.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    The trader only ever sees the extension. Behind it, one small API does the sensitive work: it checks whether you're Free or Pro, counts your daily actions, sends the chart to Claude, and talks to Stripe. Market data comes in on a schedule and is stored, so the number of paid data calls depends on the schedule, not on how many people use the app. The demo runs the same screens on sample data behind the same interfaces, so switching to real data is a setting, not a rewrite.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Wickly architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture.webp" alt="Wickly architecture: a trader on TradingView uses the Chrome extension, which signs in with Firebase and talks to the Wickly API; the API checks the plan, sends the chart to Claude, handles Stripe checkout, stores data in PostgreSQL and serves the Pro dashboard; market data providers feed scheduled ingestion jobs that write snapshots to PostgreSQL" width="2480" height="1520" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">How a chart becomes a full read, with every key kept on the server. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <p class="text-300 mb-4">
+                    A chart reader is easy to fake in a screenshot. Making it work inside the browser, on a real chart, and earn money without annoying people, is where the work is.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-drag-drop-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Capturing just the part of the chart that matters.</span>
+                            <span class="text-300">Full screen captures pick up toolbars and noise. So there's an overlay you drag across the page, like a screenshot tool. It ignores accidental tiny boxes, Escape cancels it, and the popup gets out of the way during the capture and comes back already holding the cropped chart.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-layout-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">One product, two homes.</span>
+                            <span class="text-300">The same screens had to run as a Chrome extension and as a normal web page for the demo. Everything browser specific, like capturing the tab, storage and opening new pages, goes through one small adapter. The extension uses Chrome's own capture; the demo uses the browser's screen capture and falls back to a sample chart if you say no. One codebase, so a fix lands in both at once.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-lock-unlock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Selling Pro without teasing people.</span>
+                            <span class="text-300">Blurred fake numbers behind a paywall feel cheap. Instead, every new account's first analysis is a full Pro preview, so people see exactly what they'd pay for. After that, locked blocks say plainly what they hold and how to unlock them, and the Pro numbers aren't in the page at all. The 5 free actions are shared between analyses and chat, with a warning when two are left.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-key-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">An extension can't keep a secret.</span>
+                            <span class="text-300">Anyone can unzip a Chrome extension and read what's inside. So the extension holds no keys at all. The AI, the payments and every market data provider are called from the server, and the build only lets values marked public into the browser bundle.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-scales-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Honest numbers in a hype heavy market.</span>
+                            <span class="text-300">Crypto tools love rocket emoji and promises. Wickly doesn't. Every number says where it comes from, sample data is labelled as sample data, missing data says "no data" instead of guessing, and the landing page says clearly that it isn't financial advice. Calm design, numbers first.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">One monorepo, three apps.</span><span class="text-300"> pnpm and Turborepo with the extension, the web demo and the landing page on top of shared packages for the screens, the design tokens, the domain types and the sample data. Change a screen once, the extension and the demo both get it.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Ready for real data from day one.</span><span class="text-300"> Every data source sits behind a typed interface, and one setting decides whether it runs on sample data or the real provider. Providers can be switched on one at a time.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The database designed before the code.</span><span class="text-300"> Users, analyses, chats, daily usage, subscriptions and the market snapshots each have a written schema with seed data, and the sample data follows it exactly.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Clean history.</span><span class="text-300"> 309 small commits in Conventional Commits style, strict TypeScript, ESLint and Prettier on every app.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The process, step by step</h3>
+                <p class="text-300 mb-4">
+                    Same method I use everywhere: ATM, short for Amati, Tiru, Modifikasi in Indonesian. Observe, imitate, then modify.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">1</span>
+                        <div><span class="text-dark fw-bold">Observe.</span><span class="text-300"> I read the original extension and its server screen by screen and wrote a full analysis: every flow, every state, every plan. I skipped the .env files on purpose. No secrets were read or copied.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">2</span>
+                        <div><span class="text-dark fw-bold">Decisions in writing.</span><span class="text-300"> Brand, scope, pricing, what's copied and what's new: 21 owner decisions recorded before a line of code, so nobody argues later about what was agreed.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">3</span>
+                        <div><span class="text-dark fw-bold">Design and audit before code.</span><span class="text-300"> 22 screens designed and audited for accessibility, with a design system built for numbers: one accent color, data set like instrument readouts, no emoji as icons.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">4</span>
+                        <div><span class="text-dark fw-bold">AI agents build, I review and merge.</span><span class="text-300"> Work is split into phases with owner gates. Several AI coding agents build in parallel, and nothing reaches main until I've checked it.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">5</span>
+                        <div><span class="text-dark fw-bold">QA, then ship.</span><span class="text-300"> The whole flow tested in a real browser, from sign in to payment to the dashboard, plus the extension on a real TradingView chart. Two defects found and fixed before the final deploy.</span></div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: real screenshots of the live rebuild (sample data).
+                     CT posts quote real public X accounts, so they are blurred here. -->
+                <figure class="my-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="rounded-4 overflow-hidden border border-800">
+                                <img src="assets/imgs/projects/case-studies/wickly-crypto-analysis-result.webp" alt="Wickly popup showing a bullish read with 78 percent confidence, quick take and detailed analysis next to a live BTCUSDT chart" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rounded-4 overflow-hidden border border-800">
+                                <img src="assets/imgs/projects/case-studies/wickly-crypto-analysis-dashboard.webp" alt="Wickly Pro dashboard with the top narratives of the quarter, market sentiment and the CT feed" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Live demo screens on sample data. The CT feed quotes real public accounts, so it's blurred here.</figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Security, and how I checked it</h3>
+                <p class="text-300 mb-4">
+                    This tool touches people's money decisions and their card details, so trust is the product.
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">No secrets in the extension.</span><span class="text-300"> The AI key, the Stripe keys and every data provider key live only on the server. Real values sit in the hosting provider's secret settings, and only the names are in the repo.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Paying is handled by Stripe.</span><span class="text-300"> Card details never touch our code. Checkout and the subscription status go through Stripe's own pages and webhook.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Pro stays Pro.</span><span class="text-300"> The plan is checked before the data reaches the screen, so a Free account can't dig the locked numbers out of the page. I checked this in QA.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The demo calls nobody it shouldn't.</span><span class="text-300"> In QA every request from the demo went only to its own site and the TradingView chart. No trackers, no stray calls.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast, and usable by everyone</h3>
+                <p class="text-300 mb-4">
+                    A trader opening the popup mid move has no patience for spinners.
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The popup is ready when you are.</span><span class="text-300"> It ships inside the extension, so there's no website to load before you can capture.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">A landing page that keeps people.</span><span class="text-300"> On a laptop it loads in about half a second and scores a perfect 100 on Google's own speed, accessibility, best practices and SEO checks. On a phone the speed score is still 96. Fewer people bounce before they reach the demo button.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Accessible by default.</span><span class="text-300"> An automated accessibility check found zero issues on the six main screens, from sign in to the dashboard, and the demo and dashboard work on a phone too.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The web demo and the landing page ship as separate Vercel projects, so a change to the landing can't break the demo. The extension builds to a folder you load into Chrome, or a zip you can share or upload to the Chrome Web Store.
+                </p>
+                <p class="text-300 mb-4">
+                    You'd get the repo, the analysis, the plan with every decision, the database schema, the design system, the QA report and a kanban showing where everything stands. Enough for anyone to pick it up after me.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Something you can click, early.</span><span class="text-300"> A live demo link you can send to investors or users before the full product is done.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Every decision written down.</span><span class="text-300"> Scope, pricing and features agreed in writing, and you sign off at each gate.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Built to grow.</span><span class="text-300"> Sample data today, real providers tomorrow, without rebuilding the screens.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Your keys stay yours.</span><span class="text-300"> Nothing secret ships to the browser, and you own every account and every key.</span></div>
+                    </li>
+                </ul>
+
+                <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the trader gets</h5>
+                    <div class="row g-4 text-center">
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">5</h3>
+                            <p class="fs-7 text-white-50 mb-0">Layers in one read: chart, on-chain, sentiment, CT, narratives</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">0</h3>
+                            <p class="fs-7 text-white-50 mb-0">Installs needed to try it, the demo runs the real popup</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">1</h3>
+                            <p class="fs-7 text-white-50 mb-0">Free Pro preview on every new account</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prev / Next Navigation -->
+                <div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top border-800">
+                    <a href="/work-askly-hr-helpdesk" class="btn btn-outline-secondary text-uppercase fs-7">
+                        <i class="ri-arrow-left-line me-2"></i>Previous<span class="d-none d-sm-inline">&nbsp;Project</span>
+                    </a>
+                    <a href="/work-qarigenerator" class="btn btn-gradient text-uppercase fs-7">
+                        <span class="d-none d-sm-inline">Back to&nbsp;</span>First Project <i class="ri-arrow-right-line ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
