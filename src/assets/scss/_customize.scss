@@ -1271,3 +1271,20 @@ h1.hero-flip-run .text-primary {
         height: auto;
     }
 }
+
+/* "No public demo" warning on the confidential telecom dashboards
+   (work-dashboard-*.html). Amber in both themes so it reads as a warning. */
+.demo-note {
+    background: #fff8e1;
+    border: 1px solid #f2c94c;
+    .demo-note-icon {
+        color: #b7791f;
+    }
+}
+[data-bs-theme='dark'] .demo-note {
+    background: rgba(250, 204, 21, 0.08);
+    border-color: rgba(250, 204, 21, 0.45);
+    .demo-note-icon {
+        color: #facc15;
+    }
+}
