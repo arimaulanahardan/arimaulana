@@ -616,10 +616,52 @@
         }, intervalTime);
     }
     /*=============================================
+	=           Image Skeleton       =
+    =============================================*/
+    function imageSkeleton() {
+        // Every image that hasn't finished loading gets .is-loading, which
+        // the stylesheet draws as a shimmering placeholder in the image's
+        // reserved box. Logos, icons and SVGs are skipped. When an image
+        // lands inside a masonry grid, the grid is laid out again so cards
+        // never overlap or leave gaps.
+        var relayoutTimer = null;
+        function relayoutMasonry() {
+            if (typeof $.fn.isotope !== 'function') return;
+            clearTimeout(relayoutTimer);
+            relayoutTimer = setTimeout(function () {
+                $('.masonry-active').each(function () {
+                    if ($(this).data('isotope')) $(this).isotope('layout');
+                });
+            }, 120);
+        }
+        document.querySelectorAll('img').forEach(function (img) {
+            if (img.closest('header, footer, .navbar, #preloader, .offCanvas__info, .mobile-header-active')) return;
+            if (/\.svg(\?|#|$)/i.test(img.getAttribute('src') || '')) return;
+            if (img.complete && img.naturalWidth > 0) return;
+            img.classList.add('is-loading');
+            img.addEventListener(
+                'load',
+                function () {
+                    img.classList.remove('is-loading');
+                    if (img.closest('.masonry-active')) relayoutMasonry();
+                },
+                { once: true }
+            );
+            img.addEventListener(
+                'error',
+                function () {
+                    img.classList.remove('is-loading');
+                },
+                { once: true }
+            );
+        });
+    }
+    /*=============================================
 	=           Page Initialization       =
     =============================================*/
     function initAll() {
         preloader();
+        imageSkeleton();
         dataBackground();
         heroTitleRotator();
         progressPageLoad();
