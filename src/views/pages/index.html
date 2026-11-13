@@ -10,6 +10,8 @@
         })
         <meta name="description" content="Ari Maulana builds and ships AI-powered products for early-stage founders worldwide. Full-stack engineering and AI integration from one accountable person." />
         <meta name="robots" content="index, follow" />
+        <!-- Hero photo is the LCP image on the home page only, and it is hidden below 768px, so only preload it there. -->
+        <link rel="preload" as="image" href="assets/imgs/hero/hero-1/man.webp" type="image/webp" fetchpriority="high" media="(min-width: 768px)" />
         <script type="application/ld+json">
             {
                 "@context":"https://schema.org",
