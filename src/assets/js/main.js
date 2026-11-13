@@ -435,6 +435,21 @@
             }
         });
     }
+    /*=============================================
+	=           Navbar Height Variable       =
+    =============================================*/
+    function navHeightVar() {
+        // The header is sticky (see _customize.scss). Expose its height as
+        // --nav-h so anchors and the sticky work cards sit below it.
+        var nav = document.querySelector('header .navbar');
+        if (!nav) return 0;
+        function update() {
+            document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+        }
+        update();
+        window.addEventListener('resize', update);
+        return nav.offsetHeight;
+    }
     function cardScroll() {
         if ($('.cards').length > 0) {
             const { ScrollObserver, valueAtPercentage } = aat;
@@ -455,9 +470,12 @@
                 const toScale = 1 - (cards.length - 1 - index) * 0.1;
                 const nextCard = cards[index + 1];
                 const cardInner = card.querySelector('.card__inner');
+                // Cards stick below the navbar, so the scale effect starts
+                // that much lower too.
+                const navH = (document.querySelector('header .navbar') || { offsetHeight: 0 }).offsetHeight;
                 ScrollObserver.Element(nextCard, {
-                    offsetTop,
-                    offsetBottom: window.innerHeight - card.clientHeight,
+                    offsetTop: offsetTop + navH,
+                    offsetBottom: window.innerHeight - card.clientHeight - navH,
                 }).onScroll(({ percentageY }) => {
                     cardInner.style.scale = valueAtPercentage({
                         from: 1,
@@ -664,6 +682,7 @@
         masonryFillter();
         inputFocus();
         mobileHeaderActive();
+        navHeightVar();
         cardScroll();
         activeNavLink();
         contactFormWhatsApp();

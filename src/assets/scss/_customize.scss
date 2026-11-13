@@ -1318,3 +1318,19 @@ img.is-loading {
         animation: none;
     }
 }
+
+/* Permanent navbar: the header stays at the top while the page scrolls.
+   main.js keeps --nav-h equal to the navbar's height, so anchor jumps land
+   below it and the stacked cards on /work stick just under it instead of
+   sliding behind it. */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+html {
+    scroll-padding-top: var(--nav-h, 0px);
+}
+.card-scroll .cards .card-custom {
+    top: var(--nav-h, 0px) !important;
+}
