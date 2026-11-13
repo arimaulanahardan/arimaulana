@@ -477,25 +477,28 @@
 	=           Active Nav Link       =
     =============================================*/
     function activeNavLink() {
-        var path = window.location.pathname.split('/').pop();
-        if (!path || path === '') {
-            path = 'index.html';
+        // Menu links are clean URLs ("/work"), so compare normalised page keys
+        // rather than raw strings. Case study pages (/work-*) light up
+        // Portfolio, and a blog post lights up Blog.
+        function pageKey(url) {
+            var key = (url || '').split(/[?#]/)[0].replace(/\/+$/, '').split('/').pop().replace(/\.html$/, '');
+            if (!key || key === 'index') return 'home';
+            if (key.indexOf('work') === 0) return 'work';
+            if (key.indexOf('blog') === 0) return 'blog';
+            return key;
         }
-        $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').removeClass('active');
+        var current = pageKey(window.location.pathname);
+        var $links = $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a');
+        $links.removeClass('active').removeAttr('aria-current');
 
-        var matchFound = false;
-        $('.navbar-nav .nav-link, .mobile-menu .nav-link, .navbar-nav .sub-menu a, .mobile-menu .sub-menu a').each(function () {
+        $links.each(function () {
             var href = $(this).attr('href');
-            if (href && href === path) {
-                $(this).addClass('active');
+            if (!href || href.charAt(0) === '#' || /^[a-z]+:/i.test(href)) return;
+            if (pageKey(href) === current) {
+                $(this).addClass('active').attr('aria-current', 'page');
                 $(this).closest('.has-children').children('.nav-link').addClass('active');
-                matchFound = true;
             }
         });
-
-        if (!matchFound && (path === 'index.html' || path === '')) {
-            $('.navbar-nav > li:first-child > .nav-link, .mobile-menu > li:first-child > .nav-link').addClass('active');
-        }
 
         $('.navbar-nav .nav-link, .mobile-menu .nav-link').on('click', function () {
             var href = $(this).attr('href');
