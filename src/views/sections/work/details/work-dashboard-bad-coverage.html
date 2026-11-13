@@ -1,0 +1,231 @@
+<section class="section-work-single section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+                    <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
+                        <i class="ri-arrow-left-line"></i> Back to Works
+                    </a>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">Data Dashboard &amp; Telecom</span>
+                </div>
+
+                <h1 class="ds-3 text-dark fw-bold mb-4">A bad coverage dashboard: where the signal is weak, and what to fix first</h1>
+                <p class="fs-5 text-300 mb-6">
+                    A national mobile operator in Indonesia measures signal quality from customers' phones every week. Their regional teams needed to turn that into a to do list: which districts have weak coverage, are they getting better or worse, and should a spot be fixed by tuning a nearby site or does it need a new one. I built the dashboard that answers it, from the whole country down to a single antenna.
+                </p>
+
+                <!-- Project Meta Details Grid -->
+                <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">National mobile operator in Indonesia, via Neural Technologies Indonesia</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Full stack engineer, built the dashboard end to end</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Timeline</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">1 month</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">React, TypeScript, Mapbox, Turf, ECharts, Redux, Ant Design</h6>
+                    </div>
+                </div>
+
+                <!-- Showcase Image -->
+                <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
+                    <img src="assets/imgs/projects/projects-1/work-dashboard-bad-coverage.webp" alt="Bad coverage dashboard with good, bad priority 1 and bad priority 2 cards, weekly trend, largest and smallest change, a map of Indonesia and a regional table" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                </div>
+
+                <!-- Case Study Details -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
+                <p class="text-300 mb-4">
+                    Customers don't read coverage maps. They notice when a call drops in their own neighbourhood. The operator already had the data to find those places: signal strength and call counts from real phones, measured on small map tiles across the whole country, every single week.
+                </p>
+                <p class="text-300 mb-4">
+                    The hard part was turning millions of measurements into decisions. Thousands of districts across every region, and a new week of data every week. Each regional team needed to know fast: where is it bad, is it a priority area, is it getting worse, and what kind of fix does it need.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What the dashboard answers</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-signal-wifi-error-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">"How many of our areas are bad right now?"</span>
+                            <span class="text-300">Three cards: Good, Bad Priority 1 for weak districts on the operator's priority list, and Bad Priority 2 for weak districts outside it. Each shows the count, the share, and the change from last week, so a manager sees in one glance if things moved.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-map-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">"Where exactly?"</span>
+                            <span class="text-300">The map colors every area by how much of it is good. Click a region and it zooms into its cities, click a city and you see its districts. Switch to grid view and the district splits into small squares, each one good or bad, with the nearby antennas drawn on top so you can see which site covers the weak spot.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-line-chart-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">"Is it getting better or worse?"</span>
+                            <span class="text-300">A weekly trend of good versus bad, as numbers or percentages, from one month up to two years back. Next to it, two cards point at the biggest jump and the biggest drop between weeks, rotating through each status on their own.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-table-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">"Give me the list for my region."</span>
+                            <span class="text-300">A table per region, city or district with good and bad counts, shares and week over week change. Click a name to go one level down, and download the exact view as a CSV for the weekly report.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    Phones measure signal strength and calls on small map tiles every week. The operator's data team groups those tiles into grids and classifies each one: good or bad, priority or not, and whether a bad spot needs tuning on a nearby site or new engineering work. The dashboard sits on top: a filter bar and a store that remembers your view, asking the API for exactly that view and feeding the map, the trend and the table.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the bad coverage dashboard architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture.webp" alt="Architecture: customer phones measure signal every week, tiles are classified into good or bad grids, a bad coverage API serves them per district, grid and week; in the dashboard filters update a Redux store which asks the API for the view and feeds the map, weekly trend and drill table that regional teams act on" width="2480" height="1460" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">From a weak signal on someone's phone to a fix on the regional team's list. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-route-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Four ways to drill down, one answer.</span>
+                            <span class="text-300">You can go from nation to region to city to district by clicking the map, clicking the table, using the breadcrumb, or searching a location. All four move the same view, so the map, cards, trend and table never disagree. Pick a district from search and its city and region are filled in for you.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-broadcast-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Showing which antenna covers a weak spot.</span>
+                            <span class="text-300">Knowing a square is bad isn't enough. Click a bad grid and the map draws the nearby sites as wedges pointing the way each antenna faces, with its call count and CEI score. The engineer can see at once whether a site is aimed away from the problem.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-filter-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Not every bad number can be trusted.</span>
+                            <span class="text-300">A grid with very few measurements can look terrible by accident. The Focused view keeps only grids with enough samples, while All shows everything. One toggle, and a built in glossary explains each rule so nobody has to ask the data team what a status means.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-calendar-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Weeks, not dates.</span>
+                            <span class="text-300">Telecom teams talk in week numbers. Every filter, trend and comparison works on year and week, including the jump from the last week of one year to the first of the next, so "this week versus last week" is always right.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-contrast-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">A map that survives a theme switch.</span>
+                            <span class="text-300">The dashboard has a dark and a light mode, and switching the map style normally wipes every custom layer. The dashboard puts the areas, grids and antennas back on their own, so the view you were on stays exactly where it was.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: real screen from the dashboard; the operator's logo is removed. -->
+                <figure class="my-5">
+                    <div class="rounded-4 overflow-hidden border border-800">
+                        <img src="assets/imgs/projects/case-studies/dashboard-bad-coverage-screen.webp" alt="Bad coverage dashboard at nation level: status cards with week over week change, weekly trend of good and bad, largest and smallest change, map and regional table" width="1296" height="627" class="img-fluid w-100" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">The nation level view. The operator's logo is removed on purpose.</figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Mock data first.</span><span class="text-300"> Every endpoint has a realistic mock response in development, so the screens could be built and reviewed while the API was still being finished.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">TypeScript everywhere.</span><span class="text-300"> Every filter, level and API response has a type, so a renamed field breaks the build instead of showing an empty map.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Tests on the tricky helpers.</span><span class="text-300"> Week math, number formatting and the option lists have unit tests, because a wrong week label means the wrong comparison.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Built on the company's shared libraries.</span><span class="text-300"> The API layer comes from the team's internal package, so this dashboard behaves like the rest of their tools.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast enough for a weekly review</h3>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Long tables that still scroll smoothly.</span><span class="text-300"> The table only draws the rows on screen, so a list of hundreds of districts scrolls as smoothly as a list of ten.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Only what you're looking at.</span><span class="text-300"> Each filter change asks for that one view, and the biggest change cards are worked out in the browser from data already loaded.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Comes back where you left it.</span><span class="text-300"> Your filters and theme are remembered, so Monday's review opens on last week's view.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The build packages the whole dashboard into a single zip, ready to drop onto the operator's own portal under its own path, next to their other internal tools. No new infrastructure for their team to run.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Data turned into a to do list.</span><span class="text-300"> I design around the decision your team makes every week, not around the raw tables.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Maps that do real work.</span><span class="text-300"> Drill down, grids, site sectors, choropleths. Not just pins on a map.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Fits into what you already run.</span><span class="text-300"> Your libraries, your servers, your conventions.</span></div>
+                    </li>
+                </ul>
+
+                <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the operator's teams got</h5>
+                    <div class="row g-4 text-center">
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">1 month</h3>
+                            <p class="fs-7 text-white-50 mb-0">From brief to a dashboard ready for their portal</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">4</h3>
+                            <p class="fs-7 text-white-50 mb-0">Levels in one screen, from the whole nation down to a district</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">2 years</h3>
+                            <p class="fs-7 text-white-50 mb-0">Of weekly trend, one click away</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prev / Next Navigation -->
+                <div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top border-800">
+                    <a href="/work-dashboard-benchmarking" class="btn btn-outline-secondary text-uppercase fs-7">
+                        <i class="ri-arrow-left-line me-2"></i>Previous<span class="d-none d-sm-inline">&nbsp;Project</span>
+                    </a>
+                    <a href="/work-dashboard-golden-parameter" class="btn btn-gradient text-uppercase fs-7">
+                        Next<span class="d-none d-sm-inline">&nbsp;Project</span> <i class="ri-arrow-right-line ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
