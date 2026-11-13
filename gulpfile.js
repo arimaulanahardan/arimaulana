@@ -484,6 +484,8 @@ const SITEMAP_PAGES = [
     { loc: '/work-ai-avatar-chatbot', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-ai-career-accelerator', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-dashboard-benchmarking', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-dashboard-bad-coverage', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-dashboard-golden-parameter', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-voxa-ai-reservation', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-askly-hr-helpdesk', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-wickly-crypto-analysis', changefreq: 'monthly', priority: '0.7' },
