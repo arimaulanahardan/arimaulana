@@ -1,0 +1,318 @@
+<section class="section-work-single section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button & badge. Side by side from sm up; stacked on phones,
+                     where the two would otherwise squeeze each other onto two lines,
+                     so the badge sits on its own row directly above the title. -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+                    <a href="/work" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 text-uppercase fs-8">
+                        <i class="ri-arrow-left-line"></i> Back to Works
+                    </a>
+                    <span class="badge bg-linear-1 text-white-keep px-3 py-2 rounded-pill fs-8">HealthTech &amp; WhatsApp</span>
+                </div>
+
+                <h1 class="ds-3 text-dark fw-bold mb-4">Eling Bunda: WhatsApp reminders that keep pregnant mothers on their check up schedule</h1>
+                <p class="fs-5 text-300 mb-6">
+                    In Indonesia a pregnant mother should see her midwife at least six times. Many miss a visit simply because they forget, and the midwife only finds out after it's too late. Eling Bunda works out every visit from the first day of the last period, reminds the mother on WhatsApp three days and one day before, lets her confirm with a single reply, and tells the midwife who needs a call today. The mother installs nothing.
+                </p>
+
+                <!-- Project Meta Details Grid -->
+                <div class="row g-4 py-4 my-4 border-top border-bottom border-800">
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Client</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Midwife clinics for pregnant mothers (Tasikmalaya, Indonesia)</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">My Role</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Sole engineer: design, web app, WhatsApp worker and AI</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Timeline</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Ongoing</h6>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span class="fs-7 text-uppercase text-secondary d-block mb-1">Tech Stack</span>
+                        <h6 class="fs-6 text-dark fw-bold mb-0">Next.js, TypeScript, PostgreSQL (Supabase), Drizzle, WhatsApp (Baileys), Docker, Gemini</h6>
+                    </div>
+                </div>
+
+                <!-- Live links. The dashboard needs a clinic login, the demo does not. -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                    <a href="https://eling-bunda.vercel.app/demo" target="_blank" rel="noopener noreferrer" class="btn btn-gradient d-inline-flex align-items-center">
+                        Get a sample reminder <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                    <a href="https://eling-bunda.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                        Landing page <i class="ri-arrow-right-up-line ms-2"></i>
+                    </a>
+                </div>
+                <p class="fs-7 text-300 mb-0">Enter your WhatsApp number on the demo and a real reminder arrives in about 30 seconds. Reply 1 or 2 and see what happens. Demo numbers are deleted after 7 days.</p>
+
+                <!-- Showcase Image -->
+                <div class="my-6 rounded-4 overflow-hidden shadow-lg border border-800">
+                    <img src="assets/imgs/projects/projects-1/work-eling-bunda-anc.webp" alt="Eling Bunda landing page, WhatsApp reminder and AI assistant chats, the midwife dashboard and the monthly report" width="1200" height="1200" class="img-fluid w-100 object-fit-cover" style="max-height: 520px;">
+                </div>
+
+                <!-- Case Study Details -->
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">First, a quick honest note</h3>
+                <p class="text-300 mb-4">
+                    Eling Bunda started with two midwifery students at Poltekkes Kemenkes Tasikmalaya, who saw the problem first hand at their partner midwife clinics and researched it. I'm the engineer on the team: I designed and built the whole system around their research. The project is a national finalist at HSPO, the Mawapres Poltekkes Kemenkes 2026 competition. The clinics are real. The mothers you see on the dashboard are dummy data, and no real patient appears on this page.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The problem</h3>
+                <p class="text-300 mb-4">
+                    Antenatal check ups are how problems like pre eclampsia and anaemia get caught early. Indonesia asks for at least six visits, but nationally only about 80% of mothers reach even the fourth one, against a 95% target. At the partner clinics in Singaparna, between a quarter and more than a third of mothers came late or forgot their visit.
+                </p>
+                <p class="text-300 mb-4">
+                    The schedule lived only in the mother's paper KIA book. Every midwife reminded her mothers by typing WhatsApp messages one by one, between patients. Nobody had a clear list of who was due, who had confirmed, and who simply didn't show up.
+                </p>
+
+                <h4 class="fs-4 text-dark fw-bold mb-3 mt-5">What I built</h4>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-calendar-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A schedule that writes itself.</span>
+                            <span class="text-300"> The midwife enters the first day of the mother's last period, and all six visits are worked out following the Ministry of Health's rules. She can still move any visit by hand.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-whatsapp-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">WhatsApp reminders from the clinic's own number.</span>
+                            <span class="text-300"> Three days and one day before each visit. The mother replies 1 to confirm or 2 to ask for a new date, and the dashboard updates on its own. Miss a visit, and she gets a caring follow up the next day while the midwife is told to call.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-dashboard-3-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">A dashboard that answers "who do I call today".</span>
+                            <span class="text-300"> Today's visits with the reminder trail of each one, a "needs action" list, on time attendance over the months, and a monthly K1 to K6 report the clinic can download for the community health centre.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-robot-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Asisten Bunda, an AI for everyday questions.</span>
+                            <span class="text-300"> Mothers can ask simple things like "can I eat pineapple?" on the same WhatsApp chat, and the AI answers only from reviewed KIA book material. Anything that sounds like a danger sign skips the AI completely and goes straight to the midwife.</span>
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-edit-box-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold">Message templates the midwife controls.</span>
+                            <span class="text-300"> She edits the wording of every reminder with a live WhatsApp preview, so the messages sound like her clinic, not like a robot.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <p class="text-300 mb-4">
+                    Two parts. The web dashboard runs on Vercel and never talks to WhatsApp directly: it writes each message into a queue in the database. A small worker in Docker sends the queue, reads the replies and runs the reminder jobs. Because the worker only makes outgoing connections, it can run on the clinic's own laptop with no server, no open port and no monthly hosting bill. If it goes offline, the dashboard keeps working and messages simply wait.
+                </p>
+                <figure class="my-5">
+                    <a href="assets/imgs/projects/case-studies/eling-bunda-anc-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Eling Bunda architecture diagram in full size">
+                        <img src="assets/imgs/projects/case-studies/eling-bunda-anc-architecture.webp" alt="Eling Bunda architecture: the midwife enters HPHT in the Next.js dashboard on Vercel, which queues messages in PostgreSQL on Supabase; a WhatsApp worker in Docker reads the queue and sends reminders through the clinic WhatsApp to the mother; mothers' questions go through a danger sign check that alerts the midwife, and only safe questions reach the Gemini assistant" width="2480" height="1520" loading="lazy" decoding="async">
+                    </a>
+                    <figcaption class="fs-7 text-300 mt-2">From the midwife typing one date to the mother walking in. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
+                <p class="text-300 mb-4">
+                    A reminder app sounds simple. In a clinic, with real mothers and a real WhatsApp number, these were the problems that mattered.
+                </p>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-first-aid-kit-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">An AI must never play doctor.</span>
+                            <span class="text-300">The safety lives in plain code around the AI, not in the AI itself. Before any question reaches it, a check looks for danger signs like bleeding. If one shows up, the mother gets a fixed "come now" message and the midwife is alerted with one tap to open the mother's WhatsApp. After the AI answers, a second check blocks anything that looks like a drug name or dose. The team tests a set of 60 questions by hand, and the bar is 100% safe on the risky ones.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-chat-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">WhatsApp without the official API bill, and without getting banned.</span>
+                            <span class="text-300">Small clinics can't pay for the WhatsApp Business Platform yet, so the worker runs as a linked device on the clinic's number. To keep that number safe it sends one message at a time with a random 4 to 8 second gap, only during the day, and never puts a link in the first message to a new number. All the WhatsApp code sits in one file, so moving to the official API later is a single swap.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-repeat-2-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">A reminder must never arrive twice.</span>
+                            <span class="text-300">The worker runs on a laptop that can restart at any moment. Each reminder is tied to its visit and type in the database, so a restart picks up where it left off without sending anything twice. Every time and date is computed in Jakarta time, so a reminder for tomorrow really means tomorrow.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-reply-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Real mothers don't reply "1".</span>
+                            <span class="text-300">They write "iya bu", "insyaallah" or "tidak bisa". Every message is read in a fixed order: STOP first, then danger signs, then a yes like 1, iya or insyaallah, or a no like 2 or berhalangan, and only then a question for the assistant. A "1" with no reminder pending goes to the assistant instead of confirming some random visit.</span>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start">
+                        <i class="ri-smartphone-line text-primary fs-5 me-3 mt-1"></i>
+                        <div>
+                            <span class="text-dark fw-bold d-block mb-1">Built for cheap phones and busy hands.</span>
+                            <span class="text-300">Mothers read WhatsApp on shared, low end Android phones with little data, so there is nothing to install and every message is plain Indonesian. The midwife checks the dashboard between patients, often on her phone, so every screen works at 390 pixels wide with high contrast, something the first version's users asked for.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How I write the code</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">The medical rules live in one tested place.</span><span class="text-300"> The visit schedule, the reminder timing, reply reading, danger signs and phone number cleanup sit in a shared package used by both the web app and the worker, with unit tests on each.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Typed from the database up.</span><span class="text-300"> TypeScript everywhere and a Drizzle schema with migrations, so a column change is caught before it reaches a clinic.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Decisions written down.</span><span class="text-300"> Every feature has its own spec, and the big choices, like the database queue instead of a direct API call, are recorded with the reasons.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-check-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">One gate before every push.</span><span class="text-300"> Lint, type checks and tests run together, and nothing ships unless all three pass. Releases are tagged, so any version can be rolled back.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The process, step by step</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">1</span>
+                        <div><span class="text-dark fw-bold">Start from the research.</span><span class="text-300"> The team's field data and the Ministry's visit rules became a product brief: who the users are, what success looks like, and what the system must never do.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">2</span>
+                        <div><span class="text-dark fw-bold">One spec per feature.</span><span class="text-300"> Seventeen features, each with its own rules, edge cases and acceptance checks, written down before building.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">3</span>
+                        <div><span class="text-dark fw-bold">Design every screen first.</span><span class="text-300"> Landing, dashboard, patients, schedule, reports, settings and the four WhatsApp conversations, all designed and reviewed before the code.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">4</span>
+                        <div><span class="text-dark fw-bold">Build feature by feature.</span><span class="text-300"> Each feature on its own branch, merged only when the gate is green.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <span class="badge bg-linear-1 text-white-keep rounded-pill me-3 mt-1">5</span>
+                        <div><span class="text-dark fw-bold">Audit, then ship.</span><span class="text-300"> A full pass on contrast, wording, consent defaults and accessibility before release.</span></div>
+                    </li>
+                </ul>
+
+                <!-- Project gallery: design frames of the dashboard and the WhatsApp flow (illustrative data). -->
+                <figure class="my-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="rounded-4 overflow-hidden border border-800">
+                                <img src="assets/imgs/projects/case-studies/eling-bunda-anc-whatsapp.webp" alt="Four WhatsApp conversations: welcome and H-3 reminder, H-1 reminder with reply 1, reschedule and H+1 follow up, and the AI assistant answering a question then flagging a danger sign" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rounded-4 overflow-hidden border border-800">
+                                <img src="assets/imgs/projects/case-studies/eling-bunda-anc-dashboard.webp" alt="Midwife dashboard with today's visits and the reminder trail of each, on time attendance, the needs action list with a danger sign alert" width="1200" height="750" class="img-fluid w-100" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">The WhatsApp flow and the midwife dashboard, with illustrative names and numbers. The live dashboard sits behind the clinic's login.</figcaption>
+                </figure>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Security, and how I checked it</h3>
+                <p class="text-300 mb-4">
+                    Pregnancy data is sensitive personal data under Indonesia's data protection law. I treated it that way from the first commit.
+                </p>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Only what's needed.</span><span class="text-300"> No national ID number is collected or stored. Names and phone numbers only, with the mother's consent recorded, and replying STOP stops every automatic message.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Each clinic sees only its own mothers.</span><span class="text-300"> One account per midwife, public sign up is off, and every query is scoped to the clinic.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Real questions stay private.</span><span class="text-300"> Real mothers' questions only go to the AI on a paid tier that doesn't train on them. When an answer is blocked, the logs keep only the reason, never the mother's words.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-lock-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Dummy data can't reach a real phone.</span><span class="text-300"> Sample mothers are marked in the database and the worker refuses to message them. Secrets live only in environment settings, the WhatsApp login stays on one machine, and security headers go out on every page.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Fast on the phones that matter</h3>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Opens in a blink.</span><span class="text-300"> On a laptop the landing page loads in about half a second and scores 99 on Google's own speed check, and 91 on a phone. Nothing jumps around while it loads.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Light on data.</span><span class="text-300"> Mothers never open a web page at all. Everything they need arrives as a short WhatsApp text.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-flashlight-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">A dashboard that keeps up.</span><span class="text-300"> When a mother replies, her status changes on the midwife's screen without a refresh, and a banner warns right away if the clinic's WhatsApp goes offline.</span></div>
+                    </li>
+                </ul>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">Delivery</h3>
+                <p class="text-300 mb-4">
+                    The web app deploys to Vercel from tagged releases, so any version can be rolled back quickly. The WhatsApp worker runs in Docker on the clinic's laptop and restarts on its own. You'd get the repo, the product brief, a spec for every feature, the architecture decisions, the database schema and the design file.
+                </p>
+
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">What you get when you work with me</h3>
+                <ul class="list-unstyled mb-5">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Built on the channel your users already have.</span><span class="text-300"> If your customers live in WhatsApp, the product meets them there instead of asking for one more app.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">AI with guard rails.</span><span class="text-300"> When the stakes are high, the safety is in plain code you can read and test, and a human gets the final say.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Cheap to run.</span><span class="text-300"> No server bill for the messaging part, free tiers where they're safe, and a clear path to the official APIs when you grow.</span></div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="ri-checkbox-circle-line text-primary fs-5 me-3 mt-1"></i>
+                        <div><span class="text-dark fw-bold">Privacy by default.</span><span class="text-300"> Collect less, record consent, honour STOP. Your users' trust is the product.</span></div>
+                    </li>
+                </ul>
+
+                <div class="bg-linear-1 p-5 rounded-4 text-white-keep my-6">
+                    <h5 class="fs-5 fw-bold mb-4 text-white-keep text-center">What the clinics got in the first field trial</h5>
+                    <div class="row g-4 text-center">
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">86.7%</h3>
+                            <p class="fs-7 text-white-50 mb-0">Mothers on time for their visit, up from 40%</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">94%</h3>
+                            <p class="fs-7 text-white-50 mb-0">Midwives' rating for usefulness and ease of use</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="ds-4 text-white-keep fw-bold mb-1">15/15</h3>
+                            <p class="fs-7 text-white-50 mb-0">Mothers who got their reminders on time</p>
+                        </div>
+                    </div>
+                    <p class="fs-8 text-white-50 text-center mb-0 mt-4">Field trial of the first version at 5 midwife clinics with 15 mothers.</p>
+                </div>
+
+                <!-- Prev / Next Navigation -->
+                <div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top border-800">
+                    <a href="/work-wickly-crypto-analysis" class="btn btn-outline-secondary text-uppercase fs-7">
+                        <i class="ri-arrow-left-line me-2"></i>Previous<span class="d-none d-sm-inline">&nbsp;Project</span>
+                    </a>
+                    <a href="/work-qarigenerator" class="btn btn-gradient text-uppercase fs-7">
+                        <span class="d-none d-sm-inline">Back to&nbsp;</span>First Project <i class="ri-arrow-right-line ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

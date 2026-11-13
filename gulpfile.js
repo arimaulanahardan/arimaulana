@@ -487,6 +487,7 @@ const SITEMAP_PAGES = [
     { loc: '/work-voxa-ai-reservation', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-askly-hr-helpdesk', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-wickly-crypto-analysis', changefreq: 'monthly', priority: '0.7' },
+    { loc: '/work-eling-bunda-anc', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-neotechpark', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-hipmi-marketplace', changefreq: 'monthly', priority: '0.7' },
     { loc: '/work-qarigenerator', changefreq: 'monthly', priority: '0.7' },
