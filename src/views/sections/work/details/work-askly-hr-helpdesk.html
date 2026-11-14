@@ -136,6 +136,18 @@
                     <figcaption class="fs-7 text-300 mt-2">How a question gets answered, and how the knowledge behind it stays up to date. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
+                <p class="text-300 mb-4">
+                    Everything except Dify runs in Docker on one AWS Lightsail server, set up with Terraform. Dify runs on its own server and calls the backend whenever it needs to search. The animated assistant runs inside the chat app, right in the employee's browser.
+                </p>
+                <figure class="my-5">
+                    <div class="arch-diagram stack-diagram rounded-4 border border-800" role="img" aria-label="Askly stack diagram">
+                        <img class="stack-light" src="assets/imgs/projects/case-studies/askly-hr-helpdesk-stack-1240.webp" srcset="assets/imgs/projects/case-studies/askly-hr-helpdesk-stack-1240.webp 1240w, assets/imgs/projects/case-studies/askly-hr-helpdesk-stack.webp 2100w" sizes="(min-width: 992px) 860px, 100vw" alt="Askly stack: an employee asks in the Next.js chat app, which drives a Live2D assistant and streams to a Fastify backend; Fastify runs the chat flow in Dify, which uses OpenAI to write the answer; Fastify searches Qdrant and logs to PostgreSQL; the Next.js HR admin publishes through Fastify; Notion pages arrive by webhook, are embedded with OpenAI and upserted into Qdrant; all except Dify, OpenAI and Notion run in Docker on AWS Lightsail" width="2100" height="1320" loading="lazy" decoding="async">
+                        <img class="stack-dark" src="assets/imgs/projects/case-studies/askly-hr-helpdesk-stack-dark-1240.webp" srcset="assets/imgs/projects/case-studies/askly-hr-helpdesk-stack-dark-1240.webp 1240w, assets/imgs/projects/case-studies/askly-hr-helpdesk-stack-dark.webp 2100w" sizes="(min-width: 992px) 860px, 100vw" alt="Askly stack: an employee asks in the Next.js chat app, which drives a Live2D assistant and streams to a Fastify backend; Fastify runs the chat flow in Dify, which uses OpenAI to write the answer; Fastify searches Qdrant and logs to PostgreSQL; the Next.js HR admin publishes through Fastify; Notion pages arrive by webhook, are embedded with OpenAI and upserted into Qdrant; all except Dify, OpenAI and Notion run in Docker on AWS Lightsail" width="2100" height="1320" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Blue is the main path, grey is internal, dashed is a deploy. <span class="d-md-none">Swipe sideways to see all of it.</span></figcaption>
+                </figure>
+
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
                 <p class="text-300 mb-4">
                     An HR chatbot is easy to demo and hard to trust. These are the problems that made it worth building properly.

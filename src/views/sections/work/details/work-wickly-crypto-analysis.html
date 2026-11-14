@@ -117,6 +117,18 @@
                     <figcaption class="fs-7 text-300 mt-2">How a chart becomes a full read, with every key kept on the server. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
+                <p class="text-300 mb-4">
+                    The extension talks to one small API on Vercel, and that API holds every key: Claude for the chart read, Stripe for the Pro plan, and the database. Market data is pulled on a schedule, so the paid data calls don't grow with the number of users.
+                </p>
+                <figure class="my-5">
+                    <div class="arch-diagram stack-diagram rounded-4 border border-800" role="img" aria-label="Wickly stack diagram">
+                        <img class="stack-light" src="assets/imgs/projects/case-studies/wickly-crypto-analysis-stack-1240.webp" srcset="assets/imgs/projects/case-studies/wickly-crypto-analysis-stack-1240.webp 1240w, assets/imgs/projects/case-studies/wickly-crypto-analysis-stack.webp 1520w" sizes="(min-width: 992px) 860px, 100vw" alt="Wickly stack: the WXT and React Chrome extension captures a TradingView chart and signs in with Firebase; it talks to the Wickly API on Vercel, which sends the image and prompt to Claude, handles checkout with Stripe and stores analyses in PostgreSQL; scheduled ingestion jobs pull market data into PostgreSQL" width="1520" height="1300" loading="lazy" decoding="async">
+                        <img class="stack-dark" src="assets/imgs/projects/case-studies/wickly-crypto-analysis-stack-dark-1240.webp" srcset="assets/imgs/projects/case-studies/wickly-crypto-analysis-stack-dark-1240.webp 1240w, assets/imgs/projects/case-studies/wickly-crypto-analysis-stack-dark.webp 1520w" sizes="(min-width: 992px) 860px, 100vw" alt="Wickly stack: the WXT and React Chrome extension captures a TradingView chart and signs in with Firebase; it talks to the Wickly API on Vercel, which sends the image and prompt to Claude, handles checkout with Stripe and stores analyses in PostgreSQL; scheduled ingestion jobs pull market data into PostgreSQL" width="1520" height="1300" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Blue is the main path, grey is internal, dashed is a deploy. <span class="d-md-none">Swipe sideways to see all of it.</span></figcaption>
+                </figure>
+
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
                 <p class="text-300 mb-4">
                     A chart reader is easy to fake in a screenshot. Making it work inside the browser, on a real chart, and earn money without annoying people, is where the work is.

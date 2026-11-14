@@ -78,6 +78,18 @@
                     <figcaption class="fs-7 text-300 mt-2">How a booking call flows through the system. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
+                <p class="text-300 mb-4">
+                    Every tool in the production system, and where it runs. The call path is in blue: the phone line, the backend on Amazon ECS in Tokyo, and the voice model. The admin panel and landing page you can try are the rebuild, hosted on Vercel.
+                </p>
+                <figure class="my-5">
+                    <div class="arch-diagram stack-diagram rounded-4 border border-800" role="img" aria-label="Voxa stack diagram">
+                        <img class="stack-light" src="assets/imgs/projects/case-studies/voxa-ai-reservation-stack-1240.webp" srcset="assets/imgs/projects/case-studies/voxa-ai-reservation-stack-1240.webp 1240w, assets/imgs/projects/case-studies/voxa-ai-reservation-stack.webp 1980w" sizes="(min-width: 992px) 860px, 100vw" alt="Voxa stack: a caller reaches Twilio Voice, which streams audio to a Fastify backend on Amazon ECS in Tokyo; Fastify talks to OpenAI Realtime over WebSocket and saves every call to PostgreSQL; the TanStack Start admin panel calls Fastify over REST; the Astro landing page and admin run on Vercel; GitHub Actions deploys the backend" width="1980" height="960" loading="lazy" decoding="async">
+                        <img class="stack-dark" src="assets/imgs/projects/case-studies/voxa-ai-reservation-stack-dark-1240.webp" srcset="assets/imgs/projects/case-studies/voxa-ai-reservation-stack-dark-1240.webp 1240w, assets/imgs/projects/case-studies/voxa-ai-reservation-stack-dark.webp 1980w" sizes="(min-width: 992px) 860px, 100vw" alt="Voxa stack: a caller reaches Twilio Voice, which streams audio to a Fastify backend on Amazon ECS in Tokyo; Fastify talks to OpenAI Realtime over WebSocket and saves every call to PostgreSQL; the TanStack Start admin panel calls Fastify over REST; the Astro landing page and admin run on Vercel; GitHub Actions deploys the backend" width="1980" height="960" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Blue is the main path, grey is internal, dashed is a deploy. <span class="d-md-none">Swipe sideways to see all of it.</span></figcaption>
+                </figure>
+
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
                 <p class="text-300 mb-4">
                     Putting an AI on a phone line sounds easy until a real person calls. These are the problems that took actual engineering.

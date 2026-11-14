@@ -1334,3 +1334,21 @@ html {
 .card-scroll .cards .card-custom {
     top: var(--nav-h, 0px) !important;
 }
+
+/* Case study stack diagrams (work-*.html). Each one is rendered twice, light
+   and dark, and the one matching the site theme is shown. The hidden one is
+   lazy, so the browser never downloads it. */
+.stack-diagram {
+    background: none;
+    .stack-dark {
+        display: none;
+    }
+}
+[data-bs-theme='dark'] .stack-diagram {
+    .stack-light {
+        display: none;
+    }
+    .stack-dark {
+        display: block;
+    }
+}

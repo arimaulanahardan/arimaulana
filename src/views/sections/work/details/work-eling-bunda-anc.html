@@ -117,6 +117,18 @@
                     <figcaption class="fs-7 text-300 mt-2">From the midwife typing one date to the mother walking in. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
+                <p class="text-300 mb-4">
+                    The dashboard runs on Vercel and only ever writes to the database. The WhatsApp worker runs in Docker on the clinic's own laptop, so there's no server to rent. A question with a danger sign never reaches the AI: it goes straight to the midwife.
+                </p>
+                <figure class="my-5">
+                    <div class="arch-diagram stack-diagram rounded-4 border border-800" role="img" aria-label="Eling Bunda stack diagram">
+                        <img class="stack-light" src="assets/imgs/projects/case-studies/eling-bunda-anc-stack-1240.webp" srcset="assets/imgs/projects/case-studies/eling-bunda-anc-stack-1240.webp 1240w, assets/imgs/projects/case-studies/eling-bunda-anc-stack.webp 1840w" sizes="(min-width: 992px) 860px, 100vw" alt="Eling Bunda stack: the midwife enters the HPHT in a Next.js dashboard on Vercel, which queues messages in Supabase PostgreSQL with Drizzle; a WhatsApp worker in Docker on the clinic laptop reads and writes the queue and sends through WhatsApp via Baileys to the pregnant mother; questions pass a danger check before Gemini answers" width="1840" height="960" loading="lazy" decoding="async">
+                        <img class="stack-dark" src="assets/imgs/projects/case-studies/eling-bunda-anc-stack-dark-1240.webp" srcset="assets/imgs/projects/case-studies/eling-bunda-anc-stack-dark-1240.webp 1240w, assets/imgs/projects/case-studies/eling-bunda-anc-stack-dark.webp 1840w" sizes="(min-width: 992px) 860px, 100vw" alt="Eling Bunda stack: the midwife enters the HPHT in a Next.js dashboard on Vercel, which queues messages in Supabase PostgreSQL with Drizzle; a WhatsApp worker in Docker on the clinic laptop reads and writes the queue and sends through WhatsApp via Baileys to the pregnant mother; questions pass a danger check before Gemini answers" width="1840" height="960" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Blue is the main path, grey is internal, dashed is a deploy. <span class="d-md-none">Swipe sideways to see all of it.</span></figcaption>
+                </figure>
+
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
                 <p class="text-300 mb-4">
                     A reminder app sounds simple. In a clinic, with real mothers and a real WhatsApp number, these were the problems that mattered.

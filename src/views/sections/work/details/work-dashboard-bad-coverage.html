@@ -104,6 +104,18 @@
                     <figcaption class="fs-7 text-300 mt-2">From a weak signal on someone's phone to a fix on the regional team's list. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
+                <p class="text-300 mb-4">
+                    React and TypeScript on top of the Bad Coverage API. Redux keeps the filters and the drill level, Mapbox with Turf draws districts, grids and antenna sectors, ECharts draws the weekly trend, and Ant Design builds the drill table.
+                </p>
+                <figure class="my-5">
+                    <div class="arch-diagram stack-diagram rounded-4 border border-800" role="img" aria-label="Bad Coverage Dashboard stack diagram">
+                        <img class="stack-light" src="assets/imgs/projects/case-studies/dashboard-bad-coverage-stack-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-bad-coverage-stack-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-bad-coverage-stack.webp 1820w" sizes="(min-width: 992px) 860px, 100vw" alt="Bad coverage dashboard stack: customer phones measure signal every week, the data is classified into good and bad grids and served by the Bad Coverage API; a React and TypeScript dashboard asks the API for each view and serves the regional teams; inside it, Redux, Mapbox with Turf, ECharts and Ant Design" width="1820" height="1040" loading="lazy" decoding="async">
+                        <img class="stack-dark" src="assets/imgs/projects/case-studies/dashboard-bad-coverage-stack-dark-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-bad-coverage-stack-dark-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-bad-coverage-stack-dark.webp 1820w" sizes="(min-width: 992px) 860px, 100vw" alt="Bad coverage dashboard stack: customer phones measure signal every week, the data is classified into good and bad grids and served by the Bad Coverage API; a React and TypeScript dashboard asks the API for each view and serves the regional teams; inside it, Redux, Mapbox with Turf, ECharts and Ant Design" width="1820" height="1040" loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="fs-7 text-300 mt-2">Blue is the main path, grey is internal, dashed is a deploy. <span class="d-md-none">Swipe sideways to see all of it.</span></figcaption>
+                </figure>
+
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The hard parts, and how I solved them</h3>
                 <ul class="list-unstyled mb-5">
                     <li class="mb-4 d-flex align-items-start">
