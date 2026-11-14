@@ -93,15 +93,15 @@
                     </li>
                 </ul>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How it works</h3>
                 <p class="text-300 mb-4">
-                    Phones measure signal strength and calls on small map tiles every week. The operator's data team groups those tiles into grids and classifies each one: good or bad, priority or not, and whether a bad spot needs tuning on a nearby site or new engineering work. The dashboard sits on top: a filter bar and a store that remembers your view, asking the API for exactly that view and feeding the map, the trend and the table.
+                    Here's the path from millions of signal measurements to a regional team deciding which site to tune.
                 </p>
                 <figure class="my-5">
-                    <a href="assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the bad coverage dashboard architecture diagram in full size">
-                        <img src="assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-bad-coverage-architecture.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="Architecture: customer phones measure signal every week, tiles are classified into good or bad grids, a bad coverage API serves them per district, grid and week; in the dashboard filters update a Redux store which asks the API for the view and feeds the map, weekly trend and drill table that regional teams act on" width="2480" height="1460" loading="lazy" decoding="async">
+                    <a href="assets/imgs/projects/case-studies/dashboard-bad-coverage-how-it-works.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Bad Coverage Dashboard step by step drawing in full size">
+                        <img src="assets/imgs/projects/case-studies/dashboard-bad-coverage-how-it-works-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-bad-coverage-how-it-works-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-bad-coverage-how-it-works.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="How a weak signal area gets fixed: phones measure signal on small map tiles every week, tiles become good or bad grids with a priority, the team sees the counts and the change from last week, zooms from region to city to district, switches to grid view with the antennas drawn on top, finds the antenna covering each weak spot, and plans the fix. The biggest jump and drop between weeks are pointed out, and each region list downloads as a CSV" width="2480" height="1700" loading="lazy" decoding="async">
                     </a>
-                    <figcaption class="fs-7 text-300 mt-2">From a weak signal on someone's phone to a fix on the regional team's list. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                    <figcaption class="fs-7 text-300 mt-2">From a weak signal to a planned fix, step by step. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>

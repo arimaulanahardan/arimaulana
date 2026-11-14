@@ -93,15 +93,15 @@
                     </li>
                 </ul>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How it works</h3>
                 <p class="text-300 mb-4">
-                    Automation jobs change parameters on cells across 2G, 4G and 5G, and each cell's KPIs are measured before and after. The CSON API serves the jobs, results and KPIs per cell and per day. The dashboard sits on top: a filter bar and a store that remembers your view and reuses results that haven't changed, then the map, charts and detail table that point the engineers at the changes worth a second look.
+                    Here's the path from an automatic change on a cell to an engineer spotting the one that hurt it.
                 </p>
                 <figure class="my-5">
-                    <a href="assets/imgs/projects/case-studies/dashboard-golden-parameter-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the golden parameter dashboard architecture diagram in full size">
-                        <img src="assets/imgs/projects/case-studies/dashboard-golden-parameter-architecture-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-golden-parameter-architecture-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-golden-parameter-architecture.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="Architecture: automation jobs change parameters on 2G to 5G cells, their KPIs are measured before and after, a CSON API serves jobs, results and KPIs per cell and day; in the dashboard filters update a Redux store with a cache, which asks the API for the view and feeds the map, charts and detail table that network engineers act on" width="2480" height="1460" loading="lazy" decoding="async">
+                    <a href="assets/imgs/projects/case-studies/dashboard-golden-parameter-how-it-works.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Golden Parameter Dashboard step by step drawing in full size">
+                        <img src="assets/imgs/projects/case-studies/dashboard-golden-parameter-how-it-works-1240.webp" srcset="assets/imgs/projects/case-studies/dashboard-golden-parameter-how-it-works-1240.webp 1240w, assets/imgs/projects/case-studies/dashboard-golden-parameter-how-it-works.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="How a bad automatic change gets caught: a job changes cell parameters, KPIs are measured before and after on 2G, 4G and 5G, the team sees which jobs ran, which changes passed the health check, where they happened on the map, which parameter groups fail over time, and opens a cell to see its KPI trends. A change fails when traffic drops by more than half against the day and the week before, and a spike of failures stands out right away" width="2480" height="1700" loading="lazy" decoding="async">
                     </a>
-                    <figcaption class="fs-7 text-300 mt-2">From an automatic change on a cell to an engineer's second look. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                    <figcaption class="fs-7 text-300 mt-2">From an automatic change to a caught problem, step by step. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>

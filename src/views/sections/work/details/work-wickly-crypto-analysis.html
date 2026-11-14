@@ -106,15 +106,15 @@
                     </li>
                 </ul>
 
-                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The architecture</h3>
+                <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">How it works</h3>
                 <p class="text-300 mb-4">
-                    The trader only ever sees the extension. Behind it, one small API does the sensitive work: it checks whether you're Free or Pro, counts your daily actions, sends the chart to Claude, and talks to Stripe. Market data comes in on a schedule and is stored, so the number of paid data calls depends on the schedule, not on how many people use the app. The demo runs the same screens on sample data behind the same interfaces, so switching to real data is a setting, not a rewrite.
+                    Here's what a trader goes through, from opening a chart to paying for Pro. The notes show how the free plan, the paywall and the keys are handled.
                 </p>
                 <figure class="my-5">
-                    <a href="assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Wickly architecture diagram in full size">
-                        <img src="assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture-1240.webp" srcset="assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture-1240.webp 1240w, assets/imgs/projects/case-studies/wickly-crypto-analysis-architecture.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="Wickly architecture: a trader on TradingView uses the Chrome extension, which signs in with Firebase and talks to the Wickly API; the API checks the plan, sends the chart to Claude, handles Stripe checkout, stores data in PostgreSQL and serves the Pro dashboard; market data providers feed scheduled ingestion jobs that write snapshots to PostgreSQL" width="2480" height="1520" loading="lazy" decoding="async">
+                    <a href="assets/imgs/projects/case-studies/wickly-crypto-analysis-how-it-works.webp" target="_blank" rel="noopener" class="arch-diagram d-block rounded-4 border border-800" aria-label="Open the Wickly step by step drawing in full size">
+                        <img src="assets/imgs/projects/case-studies/wickly-crypto-analysis-how-it-works-1240.webp" srcset="assets/imgs/projects/case-studies/wickly-crypto-analysis-how-it-works-1240.webp 1240w, assets/imgs/projects/case-studies/wickly-crypto-analysis-how-it-works.webp 2480w" sizes="(min-width: 992px) 860px, 100vw" alt="How a trader gets a read: opens a chart on TradingView, captures the tab or an area, the system checks the Free or Pro plan, the AI reads the chart, the trader gets a direction, confidence and action items, asks follow ups in chat, Pro users see on-chain, sentiment and narratives, and upgrades through Stripe. A warning shows when two free actions are left, the extension holds no keys, and the first analysis is a full Pro preview" width="2480" height="1700" loading="lazy" decoding="async">
                     </a>
-                    <figcaption class="fs-7 text-300 mt-2">How a chart becomes a full read, with every key kept on the server. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
+                    <figcaption class="fs-7 text-300 mt-2">One chart read, from capture to Pro, step by step. <span class="d-md-none">Swipe sideways, or tap to open it full size.</span></figcaption>
                 </figure>
 
                 <h3 class="fs-3 text-dark fw-bold mb-3 mt-6">The stack</h3>
