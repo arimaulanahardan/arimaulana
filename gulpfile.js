@@ -507,10 +507,160 @@ function generateSitemap(done) {
 }
 exports.generateSitemap = generateSitemap;
 
+// Generate llms.txt (a short Markdown map of the site for AI assistants and
+// answer engines) and llms-full.txt (the full text of every case study) from
+// the built pages, so they never drift from what visitors actually read.
+// Case studies are taken in the order the /work page lists them, which keeps
+// hidden projects out automatically.
+function htmlToText(html) {
+    return html
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&quot;/g, '"')
+        .replace(/&#0?39;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/[ \t\r\n]+/g, ' ')
+        .trim();
+}
+
+function caseStudyToMarkdown(html) {
+    let body = html.slice(html.indexOf('<h1'));
+    body = body.slice(0, body.search(/<div class="d-flex justify-content-between align-items-center gap-2 pt-6 border-top/));
+    body = body
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/<(script|style|svg|figcaption)[\s\S]*?<\/\1>/g, '')
+        .replace(/<span class="d-md-none">[\s\S]*?<\/span>/g, '')
+        .replace(/<i [^>]*><\/i>/g, '');
+    // Project facts: an uppercase label followed by its value.
+    body = body.replace(/<span class="fs-7 text-uppercase text-secondary[^"]*">([\s\S]*?)<\/span>\s*<h6[^>]*>([\s\S]*?)<\/h6>/g, function (m, label, value) {
+        return '\n\n- **' + htmlToText(label) + ':** ' + htmlToText(value) + '\n\n';
+    });
+    // Result bands: a big number followed by what it means.
+    body = body.replace(/<h3 class="ds-4[^"]*">([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/g, function (m, value, label) {
+        return '\n\n- **' + htmlToText(value) + '** ' + htmlToText(label) + '\n\n';
+    });
+    // Numbered process steps lose their badge; the list itself keeps the order.
+    body = body.replace(/<span class="badge[^"]*">\s*\d+\s*<\/span>/g, '');
+    body = body.replace(/<a [^>]*href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/g, function (m, href, text) {
+        return '[' + htmlToText(text) + '](' + href + ')';
+    });
+    body = body.replace(/<span class="text-dark fw-bold[^"]*">([\s\S]*?)<\/span>/g, function (m, t) {
+        return '**' + htmlToText(t) + '** ';
+    });
+    body = body
+        .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/g, function (m, t) { return '\n\n# ' + htmlToText(t) + '\n\n'; })
+        .replace(/<h[2-5][^>]*>([\s\S]*?)<\/h[2-5]>/g, function (m, t) { return '\n\n## ' + htmlToText(t) + '\n\n'; })
+        .replace(/<li[^>]*>/g, '\n\n- ')
+        .replace(/<\/(p|div|li|ul|ol|figure)>/g, '\n\n');
+    return body
+        .split(/\n{2,}/)
+        .map(function (block) {
+            const lead = block.match(/^\s*(#+ |- )?/)[0].trim();
+            const text = htmlToText(block.replace(/^\s*(#+ |- )/, ''));
+            return text ? (lead ? lead + ' ' : '') + text : '';
+        })
+        .filter(Boolean)
+        .join('\n\n');
+}
+
+function generateLlmsTxt(done) {
+    const dist = path.join(__dirname, 'dist');
+    const read = function (f) { return fs.readFileSync(path.join(dist, f), 'utf8'); };
+    const metaDescription = function (html) {
+        const m = html.match(/<meta name="description" content="([^"]*)"/);
+        return m ? htmlToText(m[1]) : '';
+    };
+
+    const slugs = [];
+    (read('work.html').match(/href="\/(work-[a-z0-9-]+)"/g) || []).forEach(function (m) {
+        const slug = m.slice(7, -1);
+        if (slugs.indexOf(slug) < 0) slugs.push(slug);
+    });
+    if (!slugs.length) return done(new Error('[llms] no case studies found on /work'));
+
+    const studies = slugs.map(function (slug) {
+        const html = read(slug + '.html');
+        const facts = {};
+        html.replace(/<span class="fs-7 text-uppercase text-secondary[^"]*">([\s\S]*?)<\/span>\s*<h6[^>]*>([\s\S]*?)<\/h6>/g, function (m, label, value) {
+            facts[htmlToText(label)] = htmlToText(value);
+        });
+        return {
+            url: SITE_URL + '/' + slug,
+            title: htmlToText(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]),
+            description: metaDescription(html),
+            facts: facts,
+            markdown: caseStudyToMarkdown(html),
+        };
+    });
+
+    const home = read('index.html');
+    const services = [];
+    home.replace(/<span class="service-number">([\s\S]*?)<\/span>[\s\S]*?<p class="service-card-text[^"]*">([\s\S]*?)<\/p>/g, function (m, name, text) {
+        services.push('- [' + htmlToText(name) + '](' + SITE_URL + '/services): ' + htmlToText(text));
+    });
+
+    const intro = [
+        '# Ari Maulana',
+        '',
+        '> Ari Maulana Hardan is an AI Product Engineer based in Jakarta, Indonesia. He builds and ships AI-powered products for early-stage founders and companies: voice AI receptionists, AI helpdesks, Chrome extensions, WhatsApp automation, SaaS platforms and data dashboards. One engineer, accountable from the first call to launch.',
+        '',
+        'He has built for clients in Japan, Europe and Indonesia. Before a client commits, he builds a small working piece of their idea, free, so they can judge the result first. Every case study below names the client type, the timeline and the stack, and explains the hard parts and how they were solved.',
+    ];
+    const contact = [
+        '## Contact',
+        '',
+        '- Email: arimaulanahardan@gmail.com',
+        '- WhatsApp: +62 812-2851-2171 (https://wa.me/6281228512171)',
+        '- [Book a 30 minute call](https://calendly.com/arimaulanahardan/30min)',
+        '- [LinkedIn](https://www.linkedin.com/in/ari-maulana-hardan)',
+        '- [GitHub](https://github.com/arimaulanahardan)',
+        '- [Upwork](https://www.upwork.com/freelancers/~01fa93c8405f80605b)',
+        '- [Contra](https://contra.com/ari_maulana_j3ve6rta)',
+    ];
+    const factLine = function (s) {
+        return ['Client', 'Timeline', 'Tech Stack']
+            .filter(function (k) { return s.facts[k]; })
+            .map(function (k) { return k + ': ' + s.facts[k]; })
+            .join('. ');
+    };
+
+    const llms = intro.concat(
+        ['', '## Services', ''],
+        services,
+        ['', '## Case studies', ''],
+        studies.map(function (s) {
+            const facts = factLine(s);
+            return '- [' + s.title + '](' + s.url + '): ' + s.description + (facts ? ' ' + facts + '.' : '');
+        }),
+        [''],
+        contact,
+        ['', '## Optional', '', '- [Full text of every case study](' + SITE_URL + '/llms-full.txt)', '- [Services in detail](' + SITE_URL + '/services)', '- [Blog](' + SITE_URL + '/blog-list)', '']
+    );
+    fs.writeFileSync(path.join(dist, 'llms.txt'), llms.join('\n'));
+
+    const full = intro.concat(
+        ['', '## Services', ''],
+        services,
+        [''],
+        contact,
+        studies.map(function (s) {
+            return '\n---\n\nSource: ' + s.url + '\n\n' + s.markdown.replace(/^# /, '# Case study: ');
+        }),
+        ['']
+    );
+    fs.writeFileSync(path.join(dist, 'llms-full.txt'), full.join('\n'));
+
+    console.log('[llms] llms.txt + llms-full.txt generated with ' + studies.length + ' case studies and ' + services.length + ' services');
+    done();
+}
+exports.generateLlmsTxt = generateLlmsTxt;
+
 // Build task: clean dist first, then rebuild everything fresh.
 // generateSitemap runs after copyRootFiles so the generated sitemap
 // (fresh lastmod) overwrites the static copy from src/.
-gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, stampShowcaseDimensions, stampAssetVersions, copyRootFiles, generateSitemap, verifyBuild));
+gulp.task('build', gulp.series(cleanDist, includeHtml, beautifyHtml, buildStyles, copyAssets, fetchBlogFeed, renderBlogCards, stampShowcaseDimensions, stampAssetVersions, copyRootFiles, generateSitemap, generateLlmsTxt, verifyBuild));
 
 // Initialize BrowserSync and track changes
 gulp.task(
