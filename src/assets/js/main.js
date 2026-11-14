@@ -434,6 +434,16 @@
                 }
             }
         });
+        // A real link closes the menu. On the same page (#contact) nothing
+        // reloads, so without this the menu stayed open over the section the
+        // visitor just jumped to.
+        $offCanvasNav.on('click', 'li a', function () {
+            var href = $(this).attr('href');
+            if (!href || href === '#') return;
+            navbarTrigger.removeClass('burger-close');
+            container.removeClass('sidebar-visible');
+            wrapper4.removeClass('mobile-menu-active');
+        });
     }
     /*=============================================
 	=           Navbar Height Variable       =
