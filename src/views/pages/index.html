@@ -14,47 +14,74 @@
         <link rel="preload" as="image" href="assets/imgs/hero/hero-1/man.webp" type="image/webp" fetchpriority="high" media="(min-width: 768px)" />
         <script type="application/ld+json">
             {
-                "@context":"https://schema.org",
-                "@type":"Person",
-
-                "name":"Ari Maulana Hardan",
-
-                "givenName":"Ari",
-
-                "familyName":"Hardan",
-
-                "url":"https://aridev.vercel.app",
-
-                "image":"https://aridev.vercel.app/assets/imgs/hero/profile-og.jpg",
-
-                "jobTitle":"AI Product Engineer",
-
-                "description":"AI Product Engineer building production-ready AI software, developer tools, and modern web applications.",
-
-                "email":"mailto:arimaulanahardan@gmail.com",
-
-                "nationality":"Indonesia",
-
-                "knowsAbout":[
-                  "Artificial Intelligence",
-                  "Frontend Engineering",
-                  "Next.js",
-                  "React",
-                  "TypeScript",
-                  "UI Design",
-                  "Product Design",
-                  "Web3",
-                  "Developer Experience"
-                ],
-
-                "sameAs":[
-                  "https://github.com/arimaulanahardan",
-                  "https://linkedin.com/in/ari-maulana-hardan",
-                  "http://zenn.dev/neotechpark/",
-                  "https://x.com/akademiweb3",
-                  "https://www.instagram.com/codewith_ari/"
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "WebSite",
+                        "@id": "https://aridev.vercel.app/#website",
+                        "url": "https://aridev.vercel.app/",
+                        "name": "Ari Maulana",
+                        "inLanguage": "en",
+                        "publisher": {
+                            "@id": "https://aridev.vercel.app/#person"
+                        }
+                    },
+                    {
+                        "@type": "Person",
+                        "@id": "https://aridev.vercel.app/#person",
+                        "name": "Ari Maulana Hardan",
+                        "alternateName": "Ari Maulana",
+                        "givenName": "Ari",
+                        "familyName": "Hardan",
+                        "url": "https://aridev.vercel.app/",
+                        "image": "https://aridev.vercel.app/assets/imgs/hero/profile-og.jpg",
+                        "jobTitle": "AI Product Engineer",
+                        "description": "AI Product Engineer who builds and ships AI-powered products for early-stage founders and companies: voice AI receptionists, AI helpdesks, Chrome extensions, WhatsApp automation and data dashboards, from first call to launch.",
+                        "email": "mailto:arimaulanahardan@gmail.com",
+                        "nationality": {
+                            "@type": "Country",
+                            "name": "Indonesia"
+                        },
+                        "homeLocation": {
+                            "@type": "Place",
+                            "name": "Jakarta, Indonesia"
+                        },
+                        "knowsLanguage": [
+                            "en",
+                            "id"
+                        ],
+                        "knowsAbout": [
+                            "AI product development",
+                            "Voice AI",
+                            "OpenAI Realtime API",
+                            "Retrieval-augmented generation (RAG)",
+                            "LLM integration",
+                            "Live2D avatars and text to speech",
+                            "Chrome extension development",
+                            "WhatsApp automation",
+                            "Data dashboards and map-based analytics",
+                            "Full-stack web development",
+                            "SaaS development",
+                            "Stripe billing",
+                            "TypeScript",
+                            "React",
+                            "Next.js",
+                            "Node.js",
+                            "PostgreSQL",
+                            "Mapbox"
+                        ],
+                        "sameAs": [
+                            "https://github.com/arimaulanahardan",
+                            "https://www.linkedin.com/in/ari-maulana-hardan",
+                            "https://x.com/codewith_ari",
+                            "https://x.com/akademiweb3",
+                            "https://www.instagram.com/codewith_ari/",
+                            "https://www.upwork.com/freelancers/~01fa93c8405f80605b",
+                            "https://contra.com/ari_maulana_j3ve6rta"
+                        ]
+                    }
                 ]
-               }
+            }
         </script>
     </head>
     <body>
