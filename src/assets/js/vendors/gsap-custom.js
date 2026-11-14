@@ -61,6 +61,11 @@
     });
     //GSAP scrollTrigger
     gsap.registerPlugin(ScrollTrigger);
+    // On phones the address bar hides and shows while scrolling, which
+    // resizes the viewport. Without this every one of those resizes runs a
+    // refresh that jumps the page to the top to measure and then back, and
+    // mid fling the jump back gets lost, leaving the visitor at the hero.
+    ScrollTrigger.config({ ignoreMobileResize: true });
     let animationRotate = document.querySelectorAll('.animation-rotate');
     animationRotate.forEach((animationRotate) => {
         gsap.to(animationRotate, {
