@@ -1085,7 +1085,9 @@ textarea.form-control {
                 margin: 0 auto;
                 display: grid;
                 grid-template-rows: repeat(var(--cards-count), var(--card-height));
-                gap: 40px 0;
+                // Each card already sits 20px lower than the one before (the
+                // stacking offset in main.js), so on phones that is the gap.
+                gap: 0;
                 .card-custom {
                     position: sticky;
                     top: 0;

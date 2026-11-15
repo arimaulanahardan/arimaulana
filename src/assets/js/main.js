@@ -466,7 +466,23 @@
             const cardsContainer = document.querySelector('.cards');
             const cards = document.querySelectorAll('.card-custom');
             cardsContainer.style.setProperty('--cards-count', cards.length);
-            cardsContainer.style.setProperty('--card-height', `${cards[0].clientHeight}px`);
+            // Every row is as tall as the tallest card. Measured again whenever
+            // a card changes size, because the first measure runs before the
+            // web font and images land and came out too tall on phones.
+            function sizeRows() {
+                var tallest = 0;
+                cards.forEach(function (card) {
+                    tallest = Math.max(tallest, card.querySelector('.card__inner').offsetHeight);
+                });
+                cardsContainer.style.setProperty('--card-height', `${tallest}px`);
+            }
+            sizeRows();
+            if (window.ResizeObserver) {
+                var rowObserver = new ResizeObserver(sizeRows);
+                cards.forEach(function (card) {
+                    rowObserver.observe(card.querySelector('.card__inner'));
+                });
+            }
             // The rows are sized from the first card, but each later card gets
             // 20px more top padding below, so the last one overflows its row by
             // (count - 1) * 20px and eats into the section's bottom spacing.
