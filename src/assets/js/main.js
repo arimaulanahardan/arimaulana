@@ -180,6 +180,20 @@
 
             $grid.imagesLoaded().progress(scheduleRelayout);
 
+            // On a slow phone the grid is laid out while the web font and the
+            // stylesheet are still landing. The cards then shrink, but their
+            // positions stayed put until the page load event, leaving big
+            // holes between them. Relayout whenever a card changes size.
+            if (window.ResizeObserver) {
+                var cardObserver = new ResizeObserver(scheduleRelayout);
+                $($filter).find($filterItem).each(function () {
+                    cardObserver.observe(this);
+                });
+            }
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(scheduleRelayout);
+            }
+
             $grid.on('arrangeComplete', function () {
                 isArranging = false;
                 if (relayoutPending && !relayoutTimer) runRelayout();
