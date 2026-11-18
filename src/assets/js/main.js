@@ -489,8 +489,27 @@
                     tallest = Math.max(tallest, card.querySelector('.card__inner').offsetHeight);
                 });
                 cardsContainer.style.setProperty('--card-height', `${tallest}px`);
+                pinCards();
+            }
+            // A card sticks under the navbar, 20px lower than the one before
+            // it. On a short screen that pushes the bottom of a tall card
+            // (the client and tools rows) below the fold, and the next card
+            // covers it before it can be read. Such a card sticks higher
+            // instead, just far enough that its bottom stays on screen. On a
+            // screen with room to spare nothing changes.
+            function pinCards() {
+                var navH = (document.querySelector('header .navbar') || { offsetHeight: 0 }).offsetHeight;
+                var screenH = document.documentElement.clientHeight;
+                cards.forEach(function (card) {
+                    var pad = parseFloat(card.style.paddingTop) || 0;
+                    var innerH = card.querySelector('.card__inner').offsetHeight;
+                    var fits = screenH - 16 - pad - innerH;
+                    if (fits < navH) card.style.setProperty('top', `${fits}px`, 'important');
+                    else card.style.removeProperty('top');
+                });
             }
             sizeRows();
+            window.addEventListener('resize', pinCards);
             if (window.ResizeObserver) {
                 var rowObserver = new ResizeObserver(sizeRows);
                 cards.forEach(function (card) {
@@ -505,6 +524,7 @@
                 const offsetTop = 20 + index * 20;
                 card.style.paddingTop = `${offsetTop}px`;
                 if (index === cards.length - 1) {
+                    pinCards();
                     return;
                 }
                 const toScale = 1 - (cards.length - 1 - index) * 0.1;
