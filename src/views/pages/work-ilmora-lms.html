@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        @@include("../partials/head-links.html", {
+            "title": "Ari Maulana | Ilmora: Course Marketplace LMS",
+            "canonical": "https://aridev.vercel.app/work-ilmora-lms",
+            "ogTitle": "Ilmora: Course Marketplace LMS, a Case Study",
+            "ogDesc": "How I built a course marketplace LMS for an online education company in Dubai with Laravel and React: student, instructor and admin panels, checkout with coupons and revenue splits, a course player and verifiable certificates. Shown as a public demo, since the client platform is confidential.",
+            "ogImage": "https://aridev.vercel.app/assets/imgs/hero/profile-og.jpg"
+        })
+        <meta name="description" content="How I built a course marketplace LMS for an online education company in Dubai with Laravel and React: student, instructor and admin panels, checkout with coupons and revenue splits, a course player and verifiable certificates. Shown as a public demo, since the client platform is confidential." />
+        <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "CreativeWork",
+                        "@id": "https://aridev.vercel.app/work-ilmora-lms#project",
+                        "name": "Ilmora: Course Marketplace LMS",
+                        "headline": "Ilmora: Course Marketplace LMS",
+                        "description": "How I built a course marketplace LMS for an online education company in Dubai with Laravel and React: student, instructor and admin panels, checkout with coupons and revenue splits, a course player and verifiable certificates. Shown as a public demo, since the client platform is confidential.",
+                        "url": "https://aridev.vercel.app/work-ilmora-lms",
+                        "mainEntityOfPage": "https://aridev.vercel.app/work-ilmora-lms",
+                        "image": "https://aridev.vercel.app/assets/imgs/projects/projects-1/work-ilmora-lms.webp",
+                        "genre": "Learning Management System",
+                        "keywords": "Laravel, PHP, Inertia, React, TypeScript, Tailwind CSS, shadcn/ui, MySQL, LMS",
+                        "audience": {
+                            "@type": "BusinessAudience",
+                            "audienceType": "Online education company (Dubai, United Arab Emirates)"
+                        },
+                        "creator": {
+                            "@type": "Person",
+                            "@id": "https://aridev.vercel.app/#person",
+                            "name": "Ari Maulana Hardan",
+                            "url": "https://aridev.vercel.app/"
+                        },
+                        "author": {
+                            "@type": "Person",
+                            "@id": "https://aridev.vercel.app/#person",
+                            "name": "Ari Maulana Hardan",
+                            "url": "https://aridev.vercel.app/"
+                        },
+                        "isPartOf": {
+                            "@id": "https://aridev.vercel.app/#website"
+                        },
+                        "inLanguage": "en"
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://aridev.vercel.app/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Work",
+                                "item": "https://aridev.vercel.app/work"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Ilmora: Course Marketplace LMS",
+                                "item": "https://aridev.vercel.app/work-ilmora-lms"
+                            }
+                        ]
+                    }
+                ]
+            }
+        </script>
+    </head>
+    <body>
+        <!-- prettier-ignore -->
+        @@include("../partials/preloader.html")
+        @@include("../partials/header-home-1.html",{ "classList": "navbar-light w-100" })
+        <main>
+            <!-- prettier-ignore -->
+            @@include("../sections/work/details/work-ilmora-lms.html")
+            @@include("../sections/static/static-1.html", { "background": "bg-6" })
+            @@include("../sections/contact/contact-1.html")
+        </main>
+        <!-- prettier-ignore -->
+        @@include("../partials/footer-1.html")
+        @@include("../partials/btn-scroll-top.html")
+        @@include("../partials/scripts.html")
+    </body>
+</html>
